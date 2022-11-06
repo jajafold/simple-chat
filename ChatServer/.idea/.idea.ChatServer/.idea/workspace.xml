@@ -5,7 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0fa66e0f-2eaf-4223-bdf8-ff0502a36598" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Message.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatServer/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatServer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientObject.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IServerObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IServerObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ref/ChatServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ref/ChatServer.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ref/ChatServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ref/ChatServer.dll" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,12 +35,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="ChatServer" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -77,5 +88,24 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ClientObject.cs</url>
+          <line>38</line>
+          <properties documentPath="$PROJECT_DIR$/ClientObject.cs" initialLine="38" containingFunctionPresentation="method 'Process'">
+            <startOffsets>
+              <option value="1175" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1275" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

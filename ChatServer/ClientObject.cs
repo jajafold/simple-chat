@@ -27,24 +27,24 @@ namespace ChatServer
             {
                 Stream = Client.GetStream();
                 var message = GetMessage();
-                UserName = message;
+                UserName = message.Text;
 
-                message = UserName + " вошел в чат";
-                Server.BroadcastMessage(message, Id);
-                Console.WriteLine(message);
+                var messageHello = UserName + " вошел в чат";
+                Server.BroadcastMessage(new Message(messageHello, DateTime.Now, Id));
+                //Console.WriteLine(message);
                 while (true)
                     try
                     {
                         message = GetMessage();
-                        message = string.Format("{0}: {1}", UserName, message);
-                        Console.WriteLine(message);
-                        Server.BroadcastMessage(message, Id);
+                        var messageText = $"[{message.SendTime.Hour}:{message.SendTime.Minute}] {UserName}: {message.Text}";
+                        Console.WriteLine(messageText);
+                        Server.BroadcastMessage(message);
                     }
                     catch
                     {
-                        message = string.Format("{0}: покинул чат", UserName);
-                        Console.WriteLine(message);
-                        Server.BroadcastMessage(message, Id);
+                        var messageBye = $"[{message.SendTime.Hour}:{message.SendTime.Minute}] Server: {UserName} покинул чат";
+                        Console.WriteLine(messageBye);
+                        Server.BroadcastMessage(new Message(messageBye, DateTime.Now, "Server"));
                         break;
                     }
             }
@@ -67,7 +67,7 @@ namespace ChatServer
                 Client.Close();
         }
 
-        private string GetMessage()
+        private Message GetMessage()
         {
             var data = new byte[64];
             var builder = new StringBuilder();
@@ -76,8 +76,9 @@ namespace ChatServer
                 var bytes = Stream.Read(data, 0, data.Length);
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             } while (Stream.DataAvailable);
-
-            return builder.ToString();
+            
+            return builder.ToString() == "" ? throw new Exception(): new Message
+                (builder.ToString(), DateTime.Now, Id);
         }
     }
 }

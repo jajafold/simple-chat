@@ -7,6 +7,6 @@ namespace ChatServer
     {
         internal void AddConnection(IClientObject clientObject);
         internal void RemoveConnection(string id);
-        internal void BroadcastMessage(string message, string id);
+        internal void BroadcastMessage(Message message);
     }
 }
