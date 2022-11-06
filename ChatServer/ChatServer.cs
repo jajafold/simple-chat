@@ -1,28 +1,29 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
 namespace ChatServer
 {
-    public class ChatServer
+    public class ChatServer : IServerObject
     {
         static TcpListener tcpListener;
-        List<ClientObject> clients = new List<ClientObject>();
+        public List<IClientObject> Clients { get; } = new List<IClientObject>();
 
-        protected internal void AddConnection(ClientObject clientObject)
+        protected internal void AddConnection(IClientObject clientObject)
         {
-            clients.Add(clientObject);
+            Clients.Add(clientObject);
         }
 
         protected internal void RemoveConnection(string id)
         {
             // получаем по id закрытое подключение
-            ClientObject client = clients.FirstOrDefault(c => c.Id == id);
+            IClientObject client = Clients.FirstOrDefault(c => c.Id == id);
             // и удаляем его из списка подключений
             if (client != null)
-                clients.Remove(client);
+                Clients.Remove(client);
         }
 
         protected internal void Listen()
@@ -37,7 +38,7 @@ namespace ChatServer
                 {
                     TcpClient tcpClient = tcpListener.AcceptTcpClient();
 
-                    ClientObject clientObject = new ClientObject(tcpClient, this);
+                    IClientObject clientObject = new ClientObject(tcpClient, this);
                     Thread clientThread = new Thread(new ThreadStart(clientObject.Process));
                     clientThread.Start();
                 }
@@ -53,9 +54,9 @@ namespace ChatServer
         {
             tcpListener.Stop(); //остановка сервера
 
-            for (int i = 0; i < clients.Count; i++)
+            for (int i = 0; i < Clients.Count; i++)
             {
-                clients[i].Close(); //отключение клиента
+                Clients[i].Close(); //отключение клиента
             }
 
             Environment.Exit(0); //завершение процесса
