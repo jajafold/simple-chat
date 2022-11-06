@@ -6,46 +6,45 @@ namespace ChatServer
 {
     public class ClientObject : IClientObject
     {
-        private readonly TcpClient client;
-        private readonly IServerObject server; // объект сервера
-        private string userName;
-
         public ClientObject(TcpClient tcpClient, IServerObject serverObject)
         {
             Id = Guid.NewGuid().ToString();
-            client = tcpClient;
-            server = serverObject;
+            Client = tcpClient;
+            Server = serverObject;
             serverObject.AddConnection(this);
         }
 
+        private TcpClient Client { get; }
+        private IServerObject Server { get; } // объект сервера
+        private string UserName { get; set; }
+
         public string Id { get; set; }
         public NetworkStream Stream { get; set; }
-        public IServerObject ServerObject { get; }
 
         public void Process()
         {
             try
             {
-                Stream = client.GetStream();
+                Stream = Client.GetStream();
                 var message = GetMessage();
-                userName = message;
+                UserName = message;
 
-                message = userName + " вошел в чат";
-                server.BroadcastMessage(message, Id);
+                message = UserName + " вошел в чат";
+                Server.BroadcastMessage(message, Id);
                 Console.WriteLine(message);
                 while (true)
                     try
                     {
                         message = GetMessage();
-                        message = string.Format("{0}: {1}", userName, message);
+                        message = string.Format("{0}: {1}", UserName, message);
                         Console.WriteLine(message);
-                        server.BroadcastMessage(message, Id);
+                        Server.BroadcastMessage(message, Id);
                     }
                     catch
                     {
-                        message = string.Format("{0}: покинул чат", userName);
+                        message = string.Format("{0}: покинул чат", UserName);
                         Console.WriteLine(message);
-                        server.BroadcastMessage(message, Id);
+                        Server.BroadcastMessage(message, Id);
                         break;
                     }
             }
@@ -55,7 +54,7 @@ namespace ChatServer
             }
             finally
             {
-                server.RemoveConnection(Id);
+                Server.RemoveConnection(Id);
                 Close();
             }
         }
@@ -64,18 +63,17 @@ namespace ChatServer
         {
             if (Stream != null)
                 Stream.Close();
-            if (client != null)
-                client.Close();
+            if (Client != null)
+                Client.Close();
         }
 
         private string GetMessage()
         {
             var data = new byte[64];
             var builder = new StringBuilder();
-            var bytes = 0;
             do
             {
-                bytes = Stream.Read(data, 0, data.Length);
+                var bytes = Stream.Read(data, 0, data.Length);
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             } while (Stream.DataAvailable);
 

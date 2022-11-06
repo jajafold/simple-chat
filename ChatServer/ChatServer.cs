@@ -10,7 +10,7 @@ namespace ChatServer
 {
     public class ChatServer : IServerObject
     {
-        private static TcpListener tcpListener;
+        private static TcpListener TcpListener { get; set; }
         public List<IClientObject> Clients { get; } = new();
 
         public void AddConnection(IClientObject clientObject)
@@ -35,13 +35,13 @@ namespace ChatServer
         {
             try
             {
-                tcpListener = new TcpListener(IPAddress.Any, 8888);
-                tcpListener.Start();
+                TcpListener = new TcpListener(IPAddress.Any, 8888);
+                TcpListener.Start();
                 Console.WriteLine("Сервер запущен. Ожидание подключений...");
 
                 while (true)
                 {
-                    var tcpClient = tcpListener.AcceptTcpClient();
+                    var tcpClient = TcpListener.AcceptTcpClient();
 
                     IClientObject clientObject = new ClientObject(tcpClient, this);
                     var clientThread = new Thread(clientObject.Process);
@@ -57,7 +57,7 @@ namespace ChatServer
 
         protected internal void Disconnect()
         {
-            tcpListener.Stop();
+            TcpListener.Stop();
 
             foreach (var t in Clients) t.Close();
 

@@ -6,7 +6,6 @@ namespace ChatServer
     {
         string Id { get; set; }
         NetworkStream Stream { get; }
-        IServerObject ServerObject { get; }
         void Close();
         void Process();
     }
