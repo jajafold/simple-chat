@@ -5,8 +5,8 @@ namespace ChatServer
 {
     public interface IServerObject
     {
-        public void AddConnection(IClientObject clientObject);
-        public void RemoveConnection(string id);
-        public void BroadcastMessage(string message, string id);
+        internal void AddConnection(IClientObject clientObject);
+        internal void RemoveConnection(string id);
+        internal void BroadcastMessage(string message, string id);
     }
 }

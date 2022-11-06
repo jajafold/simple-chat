@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0fa66e0f-2eaf-4223-bdf8-ff0502a36598" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/ChatServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatServer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IClientObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IClientObject.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IServerObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IServerObject.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +58,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1667732408990</updated>
-      <workItem from="1667732412515" duration="2226000" />
+      <workItem from="1667732412515" duration="2505000" />
     </task>
     <servers />
   </component>

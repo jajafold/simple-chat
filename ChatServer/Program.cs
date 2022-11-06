@@ -5,20 +5,20 @@ namespace ChatServer
 {
     internal class Program
     {
-        private static ChatServer server;
-        private static Thread listenThread;
+        private static ChatServer _server;
+        private static Thread _listenThread;
 
         private static void Main(string[] args)
         {
             try
             {
-                server = new ChatServer();
-                listenThread = new Thread(server.Listen);
-                listenThread.Start();
+                _server = new ChatServer();
+                _listenThread = new Thread(_server.Listen);
+                _listenThread.Start();
             }
             catch (Exception ex)
             {
-                server.Disconnect();
+                _server.Disconnect();
                 Console.WriteLine(ex.Message);
             }
         }

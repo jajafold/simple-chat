@@ -13,19 +13,19 @@ namespace ChatServer
         private static TcpListener TcpListener { get; set; }
         public List<IClientObject> Clients { get; } = new();
 
-        public void AddConnection(IClientObject clientObject)
+        void IServerObject.AddConnection(IClientObject clientObject)
         {
             Clients.Add(clientObject);
         }
 
-        public void RemoveConnection(string id)
+        void IServerObject.RemoveConnection(string id)
         {
             var client = Clients.FirstOrDefault(c => c.Id == id);
             if (client != null)
                 Clients.Remove(client);
         }
 
-        public void BroadcastMessage(string message, string id)
+        void IServerObject.BroadcastMessage(string message, string id)
         {
             var data = Encoding.Unicode.GetBytes(message);
             foreach (var t in Clients.Where(t => t.Id != id)) t.Stream.Write(data, 0, data.Length);
