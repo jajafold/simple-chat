@@ -3,17 +3,18 @@ using System.Threading;
 
 namespace ChatServer
 {
-    class Program
+    internal class Program
     {
-        static ChatServer server; // сервер
-        static Thread listenThread; // потока для прослушивания
-        static void Main(string[] args)
+        private static ChatServer server;
+        private static Thread listenThread;
+
+        private static void Main(string[] args)
         {
             try
             {
                 server = new ChatServer();
-                listenThread = new Thread(new ThreadStart(server.Listen));
-                listenThread.Start(); //старт потока
+                listenThread = new Thread(server.Listen);
+                listenThread.Start();
             }
             catch (Exception ex)
             {

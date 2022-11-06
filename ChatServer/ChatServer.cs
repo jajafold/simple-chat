@@ -10,8 +10,8 @@ namespace ChatServer
 {
     public class ChatServer : IServerObject
     {
-        static TcpListener tcpListener;
-        public List<IClientObject> Clients { get; } = new List<IClientObject>();
+        private static TcpListener tcpListener;
+        public List<IClientObject> Clients { get; } = new();
 
         public void AddConnection(IClientObject clientObject)
         {
@@ -20,11 +20,15 @@ namespace ChatServer
 
         public void RemoveConnection(string id)
         {
-            // получаем по id закрытое подключение
-            IClientObject client = Clients.FirstOrDefault(c => c.Id == id);
-            // и удаляем его из списка подключений
+            var client = Clients.FirstOrDefault(c => c.Id == id);
             if (client != null)
                 Clients.Remove(client);
+        }
+
+        public void BroadcastMessage(string message, string id)
+        {
+            var data = Encoding.Unicode.GetBytes(message);
+            foreach (var t in Clients.Where(t => t.Id != id)) t.Stream.Write(data, 0, data.Length);
         }
 
         protected internal void Listen()
@@ -37,10 +41,10 @@ namespace ChatServer
 
                 while (true)
                 {
-                    TcpClient tcpClient = tcpListener.AcceptTcpClient();
+                    var tcpClient = tcpListener.AcceptTcpClient();
 
                     IClientObject clientObject = new ClientObject(tcpClient, this);
-                    var clientThread = new Thread(new ThreadStart(clientObject.Process));
+                    var clientThread = new Thread(clientObject.Process);
                     clientThread.Start();
                 }
             }
@@ -53,23 +57,11 @@ namespace ChatServer
 
         protected internal void Disconnect()
         {
-            tcpListener.Stop(); //остановка сервера
+            tcpListener.Stop();
 
-            for (int i = 0; i < Clients.Count; i++)
-            {
-                Clients[i].Close(); //отключение клиента
-            }
+            foreach (var t in Clients) t.Close();
 
-            Environment.Exit(0); //завершение процесса
-        }
-        
-        public void BroadcastMessage(string message, string id)
-        {
-            var data = Encoding.Unicode.GetBytes(message);
-            foreach (var t in Clients.Where(t => t.Id!= id))
-            {
-                t.Stream.Write(data, 0, data.Length);
-            }
+            Environment.Exit(0);
         }
     }
 }
