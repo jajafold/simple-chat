@@ -40,7 +40,7 @@ namespace ChatServer
                     TcpClient tcpClient = tcpListener.AcceptTcpClient();
 
                     IClientObject clientObject = new ClientObject(tcpClient, this);
-                    Thread clientThread = new Thread(new ThreadStart(clientObject.Process));
+                    var clientThread = new Thread(new ThreadStart(clientObject.Process));
                     clientThread.Start();
                 }
             }
@@ -63,15 +63,12 @@ namespace ChatServer
             Environment.Exit(0); //завершение процесса
         }
         
-        protected internal void BroadcastMessage(string message, string id)
+        public void BroadcastMessage(string message, string id)
         {
-            byte[] data = Encoding.Unicode.GetBytes(message);
-            for (int i = 0; i < Clients.Count; i++)
+            var data = Encoding.Unicode.GetBytes(message);
+            foreach (var t in Clients.Where(t => t.Id!= id))
             {
-                if (Clients[i].Id!= id) // если id клиента не равно id отправляющего
-                {
-                    Clients[i].Stream.Write(data, 0, data.Length); //передача данных
-                }
+                t.Stream.Write(data, 0, data.Length);
             }
         }
     }
