@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 
 namespace ChatServer
@@ -12,12 +13,12 @@ namespace ChatServer
         static TcpListener tcpListener;
         public List<IClientObject> Clients { get; } = new List<IClientObject>();
 
-        protected internal void AddConnection(IClientObject clientObject)
+        public void AddConnection(IClientObject clientObject)
         {
             Clients.Add(clientObject);
         }
 
-        protected internal void RemoveConnection(string id)
+        public void RemoveConnection(string id)
         {
             // получаем по id закрытое подключение
             IClientObject client = Clients.FirstOrDefault(c => c.Id == id);
@@ -60,6 +61,18 @@ namespace ChatServer
             }
 
             Environment.Exit(0); //завершение процесса
+        }
+        
+        protected internal void BroadcastMessage(string message, string id)
+        {
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            for (int i = 0; i < Clients.Count; i++)
+            {
+                if (Clients[i].Id!= id) // если id клиента не равно id отправляющего
+                {
+                    Clients[i].Stream.Write(data, 0, data.Length); //передача данных
+                }
+            }
         }
     }
 }

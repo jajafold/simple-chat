@@ -7,5 +7,8 @@ namespace ChatServer
     {
         static TcpListener TcpListener;
         List<IClientObject> Clients {get;}
+        public void AddConnection(IClientObject clientObject);
+        public void RemoveConnection(string id);
+        public void BroadcastMessage(string message, string id);
     }
 }
