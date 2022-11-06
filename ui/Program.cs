@@ -17,7 +17,7 @@ namespace chat
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AftorizationForm());
+            Application.Run(new AuthorizeForm());
         }
     }
 }

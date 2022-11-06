@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="ChatClient">
+      <HintPath>..\ChatClient\ChatClient\bin\Debug\net5.0\ChatClient.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

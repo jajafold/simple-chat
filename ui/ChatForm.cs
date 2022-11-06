@@ -1,45 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ChatClient;
 using System.Windows.Forms;
 
 namespace chat
 {
     public partial class ChatForm : Form
     {
-        public ChatForm()
+        private readonly Client _client;
+        public ChatForm(Client client)
         {
             InitializeComponent();
+            var writer = new ChatWriter(messages);
+            _client = client;
+            _client._writer = writer;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void SendButton_Click(object sender, EventArgs e)
         {
 
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Massages_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

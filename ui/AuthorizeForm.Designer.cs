@@ -1,7 +1,7 @@
 ﻿
 namespace chat
 {
-    partial class AftorizationForm
+    partial class AuthorizeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -40,18 +40,21 @@ namespace chat
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button1.Font = new System.Drawing.Font("Corbel", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button1.Location = new System.Drawing.Point(242, 142);
+            this.button1.Location = new System.Drawing.Point(194, 114);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(184, 42);
+            this.button1.Size = new System.Drawing.Size(147, 34);
             this.button1.TabIndex = 0;
             this.button1.Text = "Log in";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(119, 60);
+            this.richTextBox1.Location = new System.Drawing.Point(95, 48);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(432, 46);
+            this.richTextBox1.Size = new System.Drawing.Size(346, 38);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             // 
@@ -60,22 +63,24 @@ namespace chat
             this.name.AutoSize = true;
             this.name.Font = new System.Drawing.Font("Corbel", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.name.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(140)))), ((int)(((byte)(158)))));
-            this.name.Location = new System.Drawing.Point(39, 68);
+            this.name.Location = new System.Drawing.Point(31, 54);
+            this.name.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.name.Name = "name";
-            this.name.Size = new System.Drawing.Size(74, 29);
+            this.name.Size = new System.Drawing.Size(62, 24);
             this.name.TabIndex = 2;
             this.name.Text = "Name";
             // 
-            // AftorizationForm
+            // AuthorizeForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(22)))), ((int)(((byte)(33)))));
-            this.ClientSize = new System.Drawing.Size(643, 269);
+            this.ClientSize = new System.Drawing.Size(514, 215);
             this.Controls.Add(this.name);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button1);
-            this.Name = "AftorizationForm";
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Name = "AuthorizeForm";
             this.Text = "Name";
             this.ResumeLayout(false);
             this.PerformLayout();
