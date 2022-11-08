@@ -21,3 +21,4 @@ D:\UnityProject\from_git\simple-chat\ui\obj\Debug\net5.0-windows\chat.genruntime
 D:\UnityProject\from_git\simple-chat\ui\obj\Debug\net5.0-windows\chat.AuthorizeForm.resources
 D:\UnityProject\from_git\simple-chat\ui\bin\Debug\net5.0-windows\ChatClient.dll
 D:\UnityProject\from_git\simple-chat\ui\bin\Debug\net5.0-windows\ChatClient.pdb
+D:\UnityProject\from_git\simple-chat\ui\obj\Debug\net5.0-windows\chat.csproj.CopyComplete

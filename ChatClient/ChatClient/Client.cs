@@ -35,9 +35,8 @@ namespace ChatClient
                 var data = Encoding.Unicode.GetBytes(Name ?? string.Empty);
                 NetworkStream.Write(data, 0, data.Length);
                 
-                _receiveThread = new Thread(Receive);
-                receiveThread.Start();
-                _writer.WriteLine($"Добро пожаловать, {Name}");
+                _recieveThread = new Thread(Receive);
+                _recieveThread.Start();
             }
             catch (Exception e)
             {
