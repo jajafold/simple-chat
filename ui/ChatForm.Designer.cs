@@ -34,8 +34,8 @@ namespace chat
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChatForm));
             this.SendButton = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.String = new System.Windows.Forms.RichTextBox();
-            this.messages = new System.Windows.Forms.Label();
+            this.inputMessageField = new System.Windows.Forms.RichTextBox();
+            this.chatWindow = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // SendButton
@@ -55,44 +55,41 @@ namespace chat
             this.SendButton.UseVisualStyleBackColor = false;
             this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
-            // String
+            // inputMessageField
             // 
-            this.String.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(33)))), ((int)(((byte)(43)))));
-            this.String.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.String.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.String.Location = new System.Drawing.Point(2, 330);
-            this.String.Margin = new System.Windows.Forms.Padding(2);
-            this.String.Name = "String";
-            this.String.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.String.Size = new System.Drawing.Size(594, 48);
-            this.String.TabIndex = 1;
-            this.String.Text = "";
+            this.inputMessageField.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(33)))), ((int)(((byte)(43)))));
+            this.inputMessageField.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.inputMessageField.ForeColor = System.Drawing.SystemColors.InactiveBorder;
+            this.inputMessageField.Location = new System.Drawing.Point(2, 330);
+            this.inputMessageField.Margin = new System.Windows.Forms.Padding(2);
+            this.inputMessageField.Name = "inputMessageField";
+            this.inputMessageField.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.inputMessageField.Size = new System.Drawing.Size(594, 48);
+            this.inputMessageField.TabIndex = 1;
+            this.inputMessageField.Text = "";
             // 
-            // messages
+            // chatWindow
             // 
-            this.messages.AutoSize = true;
-            this.messages.Font = new System.Drawing.Font("Corbel", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.messages.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(33)))), ((int)(((byte)(43)))));
-            this.messages.Location = new System.Drawing.Point(2, 2);
-            this.messages.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.messages.Name = "messages";
-            this.messages.Size = new System.Drawing.Size(0, 24);
-            this.messages.TabIndex = 2;
+            this.chatWindow.Location = new System.Drawing.Point(12, 12);
+            this.chatWindow.Name = "chatWindow";
+            this.chatWindow.ReadOnly = true;
+            this.chatWindow.Size = new System.Drawing.Size(662, 313);
+            this.chatWindow.TabIndex = 3;
+            this.chatWindow.Text = "";
             // 
             // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(140)))), ((int)(((byte)(158)))));
-            this.ClientSize = new System.Drawing.Size(672, 378);
-            this.Controls.Add(this.messages);
-            this.Controls.Add(this.String);
+            this.ClientSize = new System.Drawing.Size(688, 377);
+            this.Controls.Add(this.chatWindow);
+            this.Controls.Add(this.inputMessageField);
             this.Controls.Add(this.SendButton);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ChatForm";
             this.Text = "Chat";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -100,8 +97,8 @@ namespace chat
 
         private System.Windows.Forms.Button SendButton;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.RichTextBox String;
-        public System.Windows.Forms.Label messages;
+        private System.Windows.Forms.RichTextBox inputMessageField;
+        internal System.Windows.Forms.RichTextBox chatWindow;
     }
 }
 

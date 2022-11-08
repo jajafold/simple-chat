@@ -10,8 +10,8 @@ namespace chat
 {
     class ChatWriter : IWriter
     {
-        private Label _messages;
-        public ChatWriter(Label messages)
+        private RichTextBox _messages;
+        public ChatWriter(RichTextBox messages)
         {
             _messages = messages;
         }

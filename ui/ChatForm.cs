@@ -12,23 +12,30 @@ namespace chat
         {
             InitializeComponent();
 
-            _writer = new ChatWriter(messages);
+            _writer = new ChatWriter(chatWindow);
             _client = new Client("127.0.0.1", 8888, _writer, name);
             _client.Connect();
-            FormClosed += FormClosedEvent;
+            FormClosed += FormClosedHandler;
+            chatWindow.TextChanged += ChatWindowChangedHandler;
         }
 
         private void SendButton_Click(object sender, EventArgs e)
         {
-            var msg = String.Text;
+            var msg = inputMessageField.Text;
             _client.Send(msg);
-            String.Clear();
-            String.Focus();
+            inputMessageField.Clear();
+            inputMessageField.Focus();
         }  
 
-        private void FormClosedEvent(object sender, EventArgs e)
+        private void FormClosedHandler(object sender, EventArgs e)
         {
             _client.Disconnect();
+        }
+
+        private void ChatWindowChangedHandler(object sender, EventArgs e)
+        {
+            chatWindow.SelectionStart = chatWindow.Text.Length;
+            chatWindow.ScrollToCaret();
         }
     }
 }
