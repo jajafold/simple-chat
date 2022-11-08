@@ -29,22 +29,22 @@ namespace ChatServer
                 var message = GetMessage();
                 UserName = message.Text;
 
-                var messageHello = UserName + " вошел в чат";
-                Server.BroadcastMessage(new Message(messageHello, DateTime.Now, Id));
-                //Console.WriteLine(message);
+                var messageHello = new Message($"{UserName} вошел в чат", DateTime.Now, "Server", "Server");
+                Server.BroadcastMessage(messageHello);
+                Console.WriteLine(messageHello);
                 while (true)
                     try
                     {
-                        message = GetMessage();
-                        var messageText = $"[{message.SendTime.Hour}:{message.SendTime.Minute}] {UserName}: {message.Text}";
-                        Console.WriteLine(messageText);
-                        Server.BroadcastMessage(message);
+                        var messageSay = GetMessage();
+                        Console.WriteLine(messageSay);
+                        Server.BroadcastMessage(messageSay);
                     }
-                    catch
+                    catch (Exception e)
                     {
-                        var messageBye = $"[{message.SendTime.Hour}:{message.SendTime.Minute}] Server: {UserName} покинул чат";
+                        var messageBye = new Message
+                            ($"{UserName} покинул чат", DateTime.Now, "Server", "Server");
                         Console.WriteLine(messageBye);
-                        Server.BroadcastMessage(new Message(messageBye, DateTime.Now, "Server"));
+                        Server.BroadcastMessage(messageBye);
                         break;
                     }
             }
@@ -78,7 +78,7 @@ namespace ChatServer
             } while (Stream.DataAvailable);
             
             return builder.ToString() == "" ? throw new Exception(): new Message
-                (builder.ToString(), DateTime.Now, Id);
+                (builder.ToString(), DateTime.Now, Id, UserName);
         }
     }
 }

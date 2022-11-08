@@ -27,8 +27,8 @@ namespace ChatServer
 
         void IServerObject.BroadcastMessage(Message message)
         {
-            var data = Encoding.Unicode.GetBytes(message.Text);
-            foreach (var t in Clients.Where(t => t.Id != message.SenderId))
+            var data = Encoding.Unicode.GetBytes(message.ToString());
+            foreach (var t in Clients)
                 t.Stream.Write(data, 0, data.Length);
         }
 
