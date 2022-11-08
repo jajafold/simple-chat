@@ -14,7 +14,7 @@ namespace ChatClient
         public NetworkStream NetworkStream { get; private set; }
 
         private IWriter _writer;
-        private Thread _recieveThread;
+        private Thread _receiveThread;
 
         public Client(string host, int port, IWriter writer, string name = "")
         {
@@ -35,8 +35,8 @@ namespace ChatClient
                 var data = Encoding.Unicode.GetBytes(Name ?? string.Empty);
                 NetworkStream.Write(data, 0, data.Length);
                 
-                _recieveThread = new Thread(Receive);
-                _recieveThread.Start();
+                _receiveThread = new Thread(Receive);
+                _receiveThread.Start();
             }
             catch (Exception e)
             {

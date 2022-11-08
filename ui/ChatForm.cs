@@ -7,13 +7,13 @@ namespace chat
     public partial class ChatForm : Form
     {
         private readonly Client _client;
-        private readonly ChatWriter _writer;
+        private readonly Writer<Chat> _chatWriter;
         public ChatForm(string name)
         {
             InitializeComponent();
 
-            _writer = new ChatWriter(chatWindow);
-            _client = new Client("127.0.0.1", 8888, _writer, name);
+            _chatWriter = new Writer<Chat>(new Chat(chatWindow));
+            _client = new Client("127.0.0.1", 8888, _chatWriter, name);
             _client.Connect();
             FormClosed += FormClosedHandler;
             chatWindow.TextChanged += ChatWindowChangedHandler;
