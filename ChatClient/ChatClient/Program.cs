@@ -6,7 +6,7 @@ namespace ChatClient
     {
         private static void Main()
         {
-            var cl = new Client("127.0.0.1", 8888, new ConsoleWriter(), "TEST");
+            var cl = new Client("127.0.0.1", 8888, new ConsoleWriter());
             cl.Connect();
         }
     }

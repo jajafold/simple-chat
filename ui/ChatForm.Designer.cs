@@ -59,10 +59,11 @@ namespace chat
             // 
             this.String.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(33)))), ((int)(((byte)(43)))));
             this.String.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.String.ForeColor = System.Drawing.SystemColors.InactiveBorder;
             this.String.Location = new System.Drawing.Point(2, 330);
             this.String.Margin = new System.Windows.Forms.Padding(2);
             this.String.Name = "String";
-            this.String.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.String.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.String.Size = new System.Drawing.Size(594, 48);
             this.String.TabIndex = 1;
             this.String.Text = "";
@@ -100,7 +101,7 @@ namespace chat
         private System.Windows.Forms.Button SendButton;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.RichTextBox String;
-        private System.Windows.Forms.Label messages;
+        public System.Windows.Forms.Label messages;
     }
 }
 

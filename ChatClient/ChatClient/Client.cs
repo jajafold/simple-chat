@@ -13,14 +13,14 @@ namespace ChatClient
         public TcpClient TcpClient { get; }
         public NetworkStream NetworkStream { get; private set; }
 
-        public IWriter _writer;
+        private IWriter _writer;
+        private Thread _recieveThread;
 
         public Client(string host, int port, IWriter writer, string name = "")
         {
-            Name = name == "" ? $"Guest#{host.GetHashCode() % 1000}" : name;
-            
             Host = host;
             Port = port;
+            Name = name;
             TcpClient = new TcpClient();
             _writer = writer;
         }
@@ -35,7 +35,7 @@ namespace ChatClient
                 var data = Encoding.Unicode.GetBytes(Name ?? string.Empty);
                 NetworkStream.Write(data, 0, data.Length);
                 
-                var receiveThread = new Thread(Receive);
+                _receiveThread = new Thread(Receive);
                 receiveThread.Start();
                 _writer.WriteLine($"Добро пожаловать, {Name}");
             }
@@ -72,7 +72,6 @@ namespace ChatClient
                         Disconnect();
                         throw;
                     }
-                    
                 } while (NetworkStream.DataAvailable);
 
                 _writer.WriteLine(builder.ToString());

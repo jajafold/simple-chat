@@ -7,6 +7,7 @@ namespace chat
 {
     public partial class AuthorizeForm : Form
     {
+        private ChatForm _chatForm;
         public AuthorizeForm()
         {
             InitializeComponent();
@@ -15,18 +16,10 @@ namespace chat
         private void button1_Click(object sender, EventArgs e)
         {
             var name = richTextBox1.Text;
-            var client = new Client("127.0.0.1", 8888, name);
-            var tcpThread = new Thread(() =>
-            {
-                client.Connect();
-            });
-            tcpThread.Start();
 
-            var form = new ChatForm(client);
-            form.Visible = true;
-
+            _chatForm = new ChatForm(name);
+            _chatForm.Visible = true;
             this.Visible = false;
-
         }
     }
 }
