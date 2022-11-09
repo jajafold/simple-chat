@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Form1 - Копировать.resx">
+      <DependentUpon>ChatForm.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Chat.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Application\bin\Debug\net5.0\Chat.Application.dll</HintPath>
+    </Reference>
+    <Reference Include="Chat.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Infrastructure\bin\Debug\net5.0\Chat.Infrastructure.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

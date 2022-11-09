@@ -1,0 +1,15 @@
+D:\UnityProject\from_git\simple-chat\Client\Application\bin\Debug\net5.0\Chat.Application.deps.json
+D:\UnityProject\from_git\simple-chat\Client\Application\bin\Debug\net5.0\Chat.Application.dll
+D:\UnityProject\from_git\simple-chat\Client\Application\bin\Debug\net5.0\ref\Chat.Application.dll
+D:\UnityProject\from_git\simple-chat\Client\Application\bin\Debug\net5.0\Chat.Application.pdb
+D:\UnityProject\from_git\simple-chat\Client\Application\obj\Debug\net5.0\Chat.Application.csproj.AssemblyReference.cache
+D:\UnityProject\from_git\simple-chat\Client\Application\obj\Debug\net5.0\Chat.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\UnityProject\from_git\simple-chat\Client\Application\obj\Debug\net5.0\Chat.Application.AssemblyInfoInputs.cache
+D:\UnityProject\from_git\simple-chat\Client\Application\obj\Debug\net5.0\Chat.Application.AssemblyInfo.cs
+D:\UnityProject\from_git\simple-chat\Client\Application\obj\Debug\net5.0\Chat.Application.csproj.CoreCompileInputs.cache
+D:\UnityProject\from_git\simple-chat\Client\Application\obj\Debug\net5.0\Chat.Application.dll
+D:\UnityProject\from_git\simple-chat\Client\Application\obj\Debug\net5.0\ref\Chat.Application.dll
+D:\UnityProject\from_git\simple-chat\Client\Application\obj\Debug\net5.0\Chat.Application.pdb
+D:\UnityProject\from_git\simple-chat\Client\Application\bin\Debug\net5.0\Chat.Infrastructure.dll
+D:\UnityProject\from_git\simple-chat\Client\Application\bin\Debug\net5.0\Chat.Infrastructure.pdb
+D:\UnityProject\from_git\simple-chat\Client\Application\obj\Debug\net5.0\Chat.Application.csproj.CopyComplete

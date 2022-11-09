@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Chat.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\Infrastructure\bin\Debug\net5.0\Chat.Infrastructure.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>
