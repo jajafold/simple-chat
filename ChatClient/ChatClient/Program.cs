@@ -1,10 +1,21 @@
-﻿namespace ChatClient
+﻿using System;
+
+namespace ChatClient
 {
     class Program
     {
         private static void Main()
         {
-            var cl = new Client("127.0.0.1", 8888, "TEST");
+            var cl = new Client("127.0.0.1", 8888, new ConsoleWriter());
+            cl.Connect();
+        }
+    }
+
+    class ConsoleWriter : IWriter
+    {
+        public void WriteLine(string text)
+        {
+            Console.WriteLine(text);
         }
     }
 }

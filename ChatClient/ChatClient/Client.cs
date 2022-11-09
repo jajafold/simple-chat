@@ -13,31 +13,30 @@ namespace ChatClient
         public TcpClient TcpClient { get; }
         public NetworkStream NetworkStream { get; private set; }
 
-        public Client(string host, int port, string name = "")
+        private IWriter _writer;
+        private Thread _receiveThread;
+
+        public Client(string host, int port, IWriter writer, string name = "")
         {
-            Name = name == "" ? $"Guest#{host.GetHashCode() % 1000}" : name;
-            
             Host = host;
             Port = port;
+            Name = name;
             TcpClient = new TcpClient();
-
-            Connect(host, port);
+            _writer = writer;
         }
 
-        private void Connect(string host, int port)
+        public void Connect()
         {
             try
             {
-                TcpClient.Connect(host, port);
+                TcpClient.Connect(Host, Port);
                 NetworkStream = TcpClient.GetStream(); 
                 
                 var data = Encoding.Unicode.GetBytes(Name ?? string.Empty);
                 NetworkStream.Write(data, 0, data.Length);
                 
-                var receiveThread = new Thread(Receive);
-                receiveThread.Start(); //старт потока
-                Console.WriteLine($"Добро пожаловать, {Name}");
-                Send("");
+                _receiveThread = new Thread(Receive);
+                _receiveThread.Start();
             }
             catch (Exception e)
             {
@@ -48,13 +47,8 @@ namespace ChatClient
 
         public void Send(string msg)
         {
-            Console.WriteLine("Введите сообщение: ");
-            
-            while (true)
-            {
-                var data = Encoding.Unicode.GetBytes(Console.ReadLine() ?? string.Empty);
-                NetworkStream.Write(data, 0, data.Length);
-            }
+            var data = Encoding.Unicode.GetBytes(msg);
+            NetworkStream.Write(data, 0, data.Length);
         }
 
         public void Receive()
@@ -73,15 +67,13 @@ namespace ChatClient
                     }
                     catch
                     {
-                        Console.WriteLine("Подключение прервано!");
-                        Console.ReadLine();
+                        _writer.WriteLine("Подключение прервано!");
                         Disconnect();
                         throw;
                     }
-                    
                 } while (NetworkStream.DataAvailable);
-            
-                Console.WriteLine(builder.ToString());
+
+                _writer.WriteLine(builder.ToString());
             }
         }
 

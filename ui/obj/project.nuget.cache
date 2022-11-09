@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "28eZUF6X0QLEJJhB/33n9zPk8XO7ywJT1WaGyd0X9SNn6EDCm5BsgoK4an/pGAH04Q9KyizcJIisQbkzZerwHQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Оля\\Desktop\\simple-chat\\ui\\chat.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Оля\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.13\\microsoft.netcore.app.host.win-x64.5.0.13.nupkg.sha512"
+  ],
+  "logs": []
+}
