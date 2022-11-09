@@ -37,5 +37,10 @@ namespace chat
             chatWindow.SelectionStart = chatWindow.Text.Length;
             chatWindow.ScrollToCaret();
         }
+
+        private void chatWindow_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

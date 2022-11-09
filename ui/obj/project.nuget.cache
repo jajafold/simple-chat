@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "0eMDdkkR//c6Dgzts0k7Wi2ta8FmrEBqKzzFAQ36Px1afOCSM3qzBS1BoedENa5qqmOTQzLIYGP0YFnasboMog==",
+  "dgSpecHash": "28eZUF6X0QLEJJhB/33n9zPk8XO7ywJT1WaGyd0X9SNn6EDCm5BsgoK4an/pGAH04Q9KyizcJIisQbkzZerwHQ==",
   "success": true,
-  "projectFilePath": "D:\\UnityProject\\from_git\\simple-chat\\ui\\chat.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Оля\\Desktop\\simple-chat\\ui\\chat.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Оля\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.13\\microsoft.netcore.app.host.win-x64.5.0.13.nupkg.sha512"
+  ],
   "logs": []
 }

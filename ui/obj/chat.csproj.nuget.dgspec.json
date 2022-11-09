@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\UnityProject\\from_git\\simple-chat\\ui\\chat.csproj": {}
+    "C:\\Users\\Оля\\Desktop\\simple-chat\\ui\\chat.csproj": {}
   },
   "projects": {
-    "D:\\UnityProject\\from_git\\simple-chat\\ui\\chat.csproj": {
+    "C:\\Users\\Оля\\Desktop\\simple-chat\\ui\\chat.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\UnityProject\\from_git\\simple-chat\\ui\\chat.csproj",
+        "projectUniqueName": "C:\\Users\\Оля\\Desktop\\simple-chat\\ui\\chat.csproj",
         "projectName": "chat",
-        "projectPath": "D:\\UnityProject\\from_git\\simple-chat\\ui\\chat.csproj",
-        "packagesPath": "C:\\Users\\iayny\\.nuget\\packages\\",
-        "outputPath": "D:\\UnityProject\\from_git\\simple-chat\\ui\\obj\\",
+        "projectPath": "C:\\Users\\Оля\\Desktop\\simple-chat\\ui\\chat.csproj",
+        "packagesPath": "C:\\Users\\Оля\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Оля\\Desktop\\simple-chat\\ui\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\iayny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Оля\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0-windows"
+          "net5.0-windows7.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -49,6 +49,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[5.0.13, 5.0.13]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -57,7 +63,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
