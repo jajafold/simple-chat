@@ -44,14 +44,14 @@ namespace chat
             this.SendButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.SendButton.FlatAppearance.BorderSize = 2;
             this.SendButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.SendButton.Font = new System.Drawing.Font("Corbel", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.SendButton.Font = new System.Drawing.Font("Corbel", 26F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.SendButton.ForeColor = System.Drawing.Color.DodgerBlue;
             this.SendButton.Location = new System.Drawing.Point(746, 412);
             this.SendButton.Margin = new System.Windows.Forms.Padding(0);
             this.SendButton.Name = "SendButton";
             this.SendButton.Size = new System.Drawing.Size(114, 60);
             this.SendButton.TabIndex = 0;
-            this.SendButton.Text = "Отправить";
+            this.SendButton.Text = "➥";
             this.SendButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.SendButton.UseVisualStyleBackColor = false;
             this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
@@ -61,7 +61,7 @@ namespace chat
             this.inputMessageField.BackColor = System.Drawing.Color.White;
             this.inputMessageField.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.inputMessageField.Font = new System.Drawing.Font("Corbel", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.inputMessageField.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.inputMessageField.ForeColor = System.Drawing.Color.Black;
             this.inputMessageField.Location = new System.Drawing.Point(2, 412);
             this.inputMessageField.Margin = new System.Windows.Forms.Padding(2);
             this.inputMessageField.Name = "inputMessageField";
@@ -72,7 +72,7 @@ namespace chat
             // 
             // chatWindow
             // 
-            this.chatWindow.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.chatWindow.BackColor = System.Drawing.Color.Gainsboro;
             this.chatWindow.Font = new System.Drawing.Font("Corbel", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.chatWindow.Location = new System.Drawing.Point(15, 15);
             this.chatWindow.Margin = new System.Windows.Forms.Padding(4);

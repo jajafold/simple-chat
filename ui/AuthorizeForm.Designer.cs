@@ -51,7 +51,9 @@ namespace chat
             // 
             // richTextBox1
             // 
+            this.richTextBox1.BackColor = System.Drawing.Color.White;
             this.richTextBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.richTextBox1.ForeColor = System.Drawing.Color.Black;
             this.richTextBox1.Location = new System.Drawing.Point(119, 60);
             this.richTextBox1.Margin = new System.Windows.Forms.Padding(2);
             this.richTextBox1.Multiline = false;
@@ -64,7 +66,7 @@ namespace chat
             // 
             this.name.AutoSize = true;
             this.name.Font = new System.Drawing.Font("Corbel", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.name.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.name.ForeColor = System.Drawing.Color.DodgerBlue;
             this.name.Location = new System.Drawing.Point(39, 68);
             this.name.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.name.Name = "name";
@@ -76,7 +78,7 @@ namespace chat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(642, 269);
             this.Controls.Add(this.name);
             this.Controls.Add(this.richTextBox1);
