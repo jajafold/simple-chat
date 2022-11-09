@@ -27,24 +27,24 @@ namespace ChatServer
             {
                 Stream = Client.GetStream();
                 var message = GetMessage();
-                UserName = message;
+                UserName = message.Text;
 
-                message = UserName + " вошел в чат";
-                Server.BroadcastMessage(message, Id);
-                Console.WriteLine(message);
+                var messageHello = new Message($"{UserName} вошел в чат", DateTime.Now, "Server", "Server");
+                Server.BroadcastMessage(messageHello);
+                Console.WriteLine(messageHello);
                 while (true)
                     try
                     {
-                        message = GetMessage();
-                        message = string.Format("{0}: {1}", UserName, message);
-                        Console.WriteLine(message);
-                        Server.BroadcastMessage(message, Id);
+                        var messageSay = GetMessage();
+                        Console.WriteLine(messageSay);
+                        Server.BroadcastMessage(messageSay);
                     }
-                    catch
+                    catch (Exception e)
                     {
-                        message = string.Format("{0}: покинул чат", UserName);
-                        Console.WriteLine(message);
-                        Server.BroadcastMessage(message, Id);
+                        var messageBye = new Message
+                            ($"{UserName} покинул чат", DateTime.Now, "Server", "Server");
+                        Console.WriteLine(messageBye);
+                        Server.BroadcastMessage(messageBye);
                         break;
                     }
             }
@@ -67,7 +67,7 @@ namespace ChatServer
                 Client.Close();
         }
 
-        private string GetMessage()
+        private Message GetMessage()
         {
             var data = new byte[64];
             var builder = new StringBuilder();
@@ -76,8 +76,9 @@ namespace ChatServer
                 var bytes = Stream.Read(data, 0, data.Length);
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             } while (Stream.DataAvailable);
-
-            return builder.ToString();
+            
+            return builder.ToString() == "" ? throw new Exception(): new Message
+                (builder.ToString(), DateTime.Now, Id, UserName);
         }
     }
 }

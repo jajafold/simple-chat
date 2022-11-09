@@ -25,10 +25,11 @@ namespace ChatServer
                 Clients.Remove(client);
         }
 
-        void IServerObject.BroadcastMessage(string message, string id)
+        void IServerObject.BroadcastMessage(Message message)
         {
-            var data = Encoding.Unicode.GetBytes(message);
-            foreach (var t in Clients.Where(t => t.Id != id)) t.Stream.Write(data, 0, data.Length);
+            var data = Encoding.Unicode.GetBytes(message.ToString());
+            foreach (var t in Clients)
+                t.Stream.Write(data, 0, data.Length);
         }
 
         protected internal void Listen()
