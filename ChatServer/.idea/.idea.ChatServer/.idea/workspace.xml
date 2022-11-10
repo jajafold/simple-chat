@@ -5,17 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0fa66e0f-2eaf-4223-bdf8-ff0502a36598" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Messages/Message.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatServer/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatServer/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatServer/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatServer/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatServer/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatServer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatServer.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatServer.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClientObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClientObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IClientObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerInterfaces/IClientObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IServerObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerInterfaces/IServerObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Message.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Messages/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Messages/Message.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Messages/TextMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Messages/TextMessage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerInterfaces/IClientObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerInterfaces/IClientObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerInterfaces/IServerObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServerInterfaces/IServerObject.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ref/ChatServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ref/ChatServer.dll" afterDir="false" />
@@ -23,7 +20,6 @@
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ref/ChatServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ref/ChatServer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +76,7 @@
       <option name="presentableId" value="Default" />
       <updated>1667732408990</updated>
       <workItem from="1667732412515" duration="2505000" />
-      <workItem from="1668081784376" duration="1991000" />
+      <workItem from="1668081784376" duration="5451000" />
     </task>
     <servers />
   </component>
@@ -105,16 +101,29 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ChatServer.cs</url>
-          <line>58</line>
+          <line>62</line>
           <properties documentPath="$PROJECT_DIR$/ChatServer.cs" initialLine="58" containingFunctionPresentation="method 'Disconnect'">
             <startOffsets>
-              <option value="1706" />
+              <option value="1843" />
             </startOffsets>
             <endOffsets>
-              <option value="1725" />
+              <option value="1862" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatServer.cs</url>
+          <line>39</line>
+          <properties documentPath="$PROJECT_DIR$/ChatServer.cs" initialLine="36" containingFunctionPresentation="method 'Listen'">
+            <startOffsets>
+              <option value="1083" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1134" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

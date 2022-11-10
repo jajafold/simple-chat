@@ -1,6 +1,7 @@
 using System;
 using System.Net.Sockets;
 using System.Text;
+using ChatServer.Response;
 
 namespace ChatServer
 {
@@ -16,7 +17,7 @@ namespace ChatServer
 
         private TcpClient Client { get; }
         private IServerObject Server { get; }
-        private string UserName { get; set; }
+        public string UserName { get; set; }
 
         public string Id { get; set; }
         public NetworkStream Stream { get; set; }
@@ -30,21 +31,21 @@ namespace ChatServer
                 UserName = message.Text;
 
                 var messageHello = new TextMessage($"{UserName} вошел в чат", DateTime.Now, "Server", "Server");
-                Server.BroadcastMessage(messageHello);
+                Server.BroadcastResponse(new BasicResponse(messageHello));
                 Console.WriteLine(messageHello.ToFlatString());
                 while (true)
                     try
                     {
                         var messageSay = GetMessage();
                         Console.WriteLine(messageSay.ToFlatString());
-                        Server.BroadcastMessage(messageSay);
+                        Server.BroadcastResponse(new BasicResponse(messageSay));
                     }
                     catch (Exception e)
                     {
                         var messageBye = new TextMessage
                             ($"{UserName} покинул чат", DateTime.Now, "Server", "Server");
                         Console.WriteLine(messageBye.ToFlatString());
-                        Server.BroadcastMessage(messageBye);
+                        Server.BroadcastResponse(new UsersOnlineResponse(messageBye, Server.GetUserNamesOnline()));
                         break;
                     }
             }

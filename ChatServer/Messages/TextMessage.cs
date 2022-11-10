@@ -2,6 +2,7 @@ using System;
 
 namespace ChatServer
 {
+    [Serializable]
     public class TextMessage : Message
     {
         public string Text { get; }

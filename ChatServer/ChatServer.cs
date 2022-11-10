@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
+using ChatServer.Response;
 
 namespace ChatServer
 {
@@ -23,12 +25,13 @@ namespace ChatServer
             Clients.Remove(id);
         }
 
-        void IServerObject.BroadcastMessage(Message message)
+        void IServerObject.BroadcastResponse<TMessage>(IResponse<TMessage> response)
         {
-            var data = Encoding.Unicode.GetBytes(message.ToFlatString());
+            var data = Encoding.Unicode.GetBytes(JsonSerializer.Serialize(response));
             foreach (var kvp in Clients)
                 kvp.Value.Stream.Write(data, 0, data.Length);
         }
+        
 
         protected internal void Listen()
         {
@@ -63,6 +66,9 @@ namespace ChatServer
 
             Environment.Exit(0);
         }
+
+        public IEnumerable<string> GetUserNamesOnline() =>
+            Clients.Select(x => x.Value.UserName);
 
         public void Dispose()
         {
