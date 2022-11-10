@@ -10,6 +10,7 @@ namespace ChatServer
 
         private static void Main(string[] args)
         {
+            using var server = new ChatServer();
             try
             {
                 _server = new ChatServer();

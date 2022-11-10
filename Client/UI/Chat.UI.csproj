@@ -25,8 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Chat.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Application\bin\Debug\net5.0\Chat.Application.dll</HintPath>
+    <Reference Include="Chat.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Domain\bin\Debug\net5.0\Chat.Domain.dll</HintPath>
     </Reference>
     <Reference Include="Chat.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Infrastructure\bin\Debug\net5.0\Chat.Infrastructure.dll</HintPath>

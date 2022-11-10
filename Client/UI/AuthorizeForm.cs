@@ -3,6 +3,7 @@ using System.Windows.Forms;
 
 namespace Chat.UI
 {
+    // подумать что потом будет много разных форм ауторизы. Магический контракт про чат форм
     public partial class AuthorizeForm : Form
     {
         private ChatForm _chatForm;

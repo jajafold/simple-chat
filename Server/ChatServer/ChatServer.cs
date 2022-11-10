@@ -8,10 +8,11 @@ using System.Threading;
 
 namespace ChatServer
 {
-    public class ChatServer : IServerObject
+    //IDisposable
+    public class ChatServer : IServerObject, IDisposable
     {
         private static TcpListener TcpListener { get; set; }
-        public List<IClientObject> Clients { get; } = new();
+        public List<IClientObject> Clients { get; } = new(); //?? pain
 
         void IServerObject.AddConnection(IClientObject clientObject)
         {
@@ -63,6 +64,11 @@ namespace ChatServer
             foreach (var t in Clients) t.Close();
 
             Environment.Exit(0);
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

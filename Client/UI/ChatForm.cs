@@ -1,5 +1,5 @@
 ﻿using System;
-using Chat.Application;
+using Chat.Domain;
 using Chat.Infrastructure;
 using System.Windows.Forms;
 
