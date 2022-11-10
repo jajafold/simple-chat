@@ -31,21 +31,23 @@ namespace ChatServer
                 UserName = message.Text;
 
                 var messageHello = new TextMessage($"{UserName} вошел в чат", DateTime.Now, "Server", "Server");
-                Server.BroadcastResponse(new BasicResponse(messageHello));
+                Server.BroadcastResponse<UsersOnlineResponse, TextMessage>
+                    (new UsersOnlineResponse(messageHello, Server.GetUserNamesOnline()));
                 Console.WriteLine(messageHello.ToFlatString());
                 while (true)
                     try
                     {
                         var messageSay = GetMessage();
                         Console.WriteLine(messageSay.ToFlatString());
-                        Server.BroadcastResponse(new BasicResponse(messageSay));
+                        Server.BroadcastResponse<BasicResponse, TextMessage>(new BasicResponse(messageSay));
                     }
                     catch (Exception e)
                     {
                         var messageBye = new TextMessage
                             ($"{UserName} покинул чат", DateTime.Now, "Server", "Server");
                         Console.WriteLine(messageBye.ToFlatString());
-                        Server.BroadcastResponse(new UsersOnlineResponse(messageBye, Server.GetUserNamesOnline()));
+                        Server.BroadcastResponse<UsersOnlineResponse, TextMessage>
+                            (new UsersOnlineResponse(messageBye, Server.GetUserNamesOnline()));
                         break;
                     }
             }

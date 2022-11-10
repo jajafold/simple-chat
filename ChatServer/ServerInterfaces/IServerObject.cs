@@ -8,7 +8,9 @@ namespace ChatServer
     {
         internal void AddConnection(IClientObject clientObject);
         internal void RemoveConnection(string id);
-        internal void BroadcastResponse<TMessage>(IResponse<TMessage> response) where TMessage : Message;
+        internal void BroadcastResponse<TResponseType,TMessage>(TResponseType response) 
+            where TMessage : Message
+            where TResponseType : IResponse<TMessage>;
         IEnumerable<string> GetUserNamesOnline();
     }
 }

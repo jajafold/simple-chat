@@ -2,6 +2,7 @@ using System;
 
 namespace ChatServer
 {
+    [Serializable]
     public abstract class Message
     {
         public DateTime SendTime { get; }
