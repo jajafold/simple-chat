@@ -15,7 +15,7 @@ namespace ChatServer
         }
 
         private TcpClient Client { get; }
-        private IServerObject Server { get; } // объект сервера
+        private IServerObject Server { get; }
         private string UserName { get; set; }
 
         public string Id { get; set; }
@@ -29,21 +29,21 @@ namespace ChatServer
                 var message = GetMessage();
                 UserName = message.Text;
 
-                var messageHello = new Message($"{UserName} вошел в чат", DateTime.Now, "Server", "Server");
+                var messageHello = new TextMessage($"{UserName} вошел в чат", DateTime.Now, "Server", "Server");
                 Server.BroadcastMessage(messageHello);
-                Console.WriteLine(messageHello);
+                Console.WriteLine(messageHello.ToFlatString());
                 while (true)
                     try
                     {
                         var messageSay = GetMessage();
-                        Console.WriteLine(messageSay);
+                        Console.WriteLine(messageSay.ToFlatString());
                         Server.BroadcastMessage(messageSay);
                     }
                     catch (Exception e)
                     {
-                        var messageBye = new Message
+                        var messageBye = new TextMessage
                             ($"{UserName} покинул чат", DateTime.Now, "Server", "Server");
-                        Console.WriteLine(messageBye);
+                        Console.WriteLine(messageBye.ToFlatString());
                         Server.BroadcastMessage(messageBye);
                         break;
                     }
@@ -61,13 +61,11 @@ namespace ChatServer
 
         public void Close()
         {
-            if (Stream != null)
-                Stream.Close();
-            if (Client != null)
-                Client.Close();
+            Stream?.Close();
+            Client?.Close();
         }
 
-        private Message GetMessage()
+        private TextMessage GetMessage()
         {
             var data = new byte[64];
             var builder = new StringBuilder();
@@ -77,7 +75,7 @@ namespace ChatServer
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             } while (Stream.DataAvailable);
             
-            return builder.ToString() == "" ? throw new Exception(): new Message
+            return builder.ToString() == "" ? throw new Exception(): new TextMessage
                 (builder.ToString(), DateTime.Now, Id, UserName);
         }
     }

@@ -8,28 +8,26 @@ using System.Threading;
 
 namespace ChatServer
 {
-    public class ChatServer : IServerObject
+    public class ChatServer : IServerObject, IDisposable
     {
         private static TcpListener TcpListener { get; set; }
-        public List<IClientObject> Clients { get; } = new();
+        private Dictionary<string, IClientObject> Clients { get; } = new ();
 
         void IServerObject.AddConnection(IClientObject clientObject)
         {
-            Clients.Add(clientObject);
+            Clients[clientObject.Id] = clientObject;
         }
 
         void IServerObject.RemoveConnection(string id)
         {
-            var client = Clients.FirstOrDefault(c => c.Id == id);
-            if (client != null)
-                Clients.Remove(client);
+            Clients.Remove(id);
         }
 
         void IServerObject.BroadcastMessage(Message message)
         {
-            var data = Encoding.Unicode.GetBytes(message.ToString());
-            foreach (var t in Clients)
-                t.Stream.Write(data, 0, data.Length);
+            var data = Encoding.Unicode.GetBytes(message.ToFlatString());
+            foreach (var kvp in Clients)
+                kvp.Value.Stream.Write(data, 0, data.Length);
         }
 
         protected internal void Listen()
@@ -56,13 +54,19 @@ namespace ChatServer
             }
         }
 
-        protected internal void Disconnect()
+        private void Disconnect()
         {
-            TcpListener.Stop();
+            if (TcpListener != null)
+                TcpListener.Stop();
 
-            foreach (var t in Clients) t.Close();
+            foreach (var t in Clients) t.Value.Close();
 
             Environment.Exit(0);
+        }
+
+        public void Dispose()
+        {
+            //Disconnect();
         }
     }
 }
