@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "wPZuCduUv33YwVpRNidbvp2IuXPl4AZC3dgPwf0yKxB7fhcnamWcANpo6uFtIA3qlYWjDfa7dHrlfdlWmN5Zvw==",
+  "dgSpecHash": "gYIuCTKhG4WCY0PfsLazRzQHM1giNMq4L62psvlfRojMGFmV2kRDVd+gPaOultSOIHMtxhAh2WgvDyzsZ2uL2Q==",
   "success": true,
   "projectFilePath": "D:\\UnityProject\\from_git\\simple-chat\\Client\\UI\\Chat.UI.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\iayny\\.nuget\\packages\\ninject\\4.0.0-beta.1\\ninject.4.0.0-beta.1.nupkg.sha512",
+    "C:\\Users\\iayny\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.7.0\\system.reflection.emit.ilgeneration.4.7.0.nupkg.sha512",
+    "C:\\Users\\iayny\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512"
+  ],
   "logs": []
 }
