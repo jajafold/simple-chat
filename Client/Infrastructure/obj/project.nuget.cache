@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Q0LMEp4MRGPxWBfK6ii81E5Jrody+4TcPZbGWCVjXFe8FQRyum50Wwk9xO7cs6GlJFx1eIxhjLVRz69U0gtHEw==",
+  "dgSpecHash": "z+1nLFxLKobec5iqeOHZTu0G6FhvM1j4Y/ktDenmE55HmxkgocVcawpznygBpkvoNJsoo+ojPnMR5YT5MG3KBg==",
   "success": true,
-  "projectFilePath": "D:\\UnityProject\\from_git\\simple-chat\\Client\\Infrastructure\\Chat.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\Оля\\Desktop\\simple-chat\\Client\\Infrastructure\\Chat.Infrastructure.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\iayny\\.nuget\\packages\\ninject\\4.0.0-beta.1\\ninject.4.0.0-beta.1.nupkg.sha512",
-    "C:\\Users\\iayny\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.7.0\\system.reflection.emit.ilgeneration.4.7.0.nupkg.sha512",
-    "C:\\Users\\iayny\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512"
+    "C:\\Users\\Оля\\.nuget\\packages\\ninject\\4.0.0-beta.1\\ninject.4.0.0-beta.1.nupkg.sha512",
+    "C:\\Users\\Оля\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.7.0\\system.reflection.emit.ilgeneration.4.7.0.nupkg.sha512",
+    "C:\\Users\\Оля\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512"
   ],
   "logs": []
 }

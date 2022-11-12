@@ -35,6 +35,7 @@ namespace Chat.UI
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.inputMessageField = new System.Windows.Forms.RichTextBox();
             this.chatWindow = new System.Windows.Forms.RichTextBox();
+            this.ActiveUsers = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // SendButton
@@ -45,7 +46,7 @@ namespace Chat.UI
             this.SendButton.FlatAppearance.BorderSize = 2;
             this.SendButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SendButton.Font = new System.Drawing.Font("Corbel", 26F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.SendButton.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.SendButton.ForeColor = System.Drawing.Color.DimGray;
             this.SendButton.Location = new System.Drawing.Point(746, 412);
             this.SendButton.Margin = new System.Windows.Forms.Padding(0);
             this.SendButton.Name = "SendButton";
@@ -83,12 +84,25 @@ namespace Chat.UI
             this.chatWindow.Text = "";
             this.chatWindow.TextChanged += new System.EventHandler(this.chatWindow_TextChanged);
             // 
+            // ActiveUsers
+            // 
+            this.ActiveUsers.BackColor = System.Drawing.Color.DimGray;
+            this.ActiveUsers.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ActiveUsers.Font = new System.Drawing.Font("Corbel", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ActiveUsers.FormattingEnabled = true;
+            this.ActiveUsers.ItemHeight = 27;
+            this.ActiveUsers.Location = new System.Drawing.Point(843, 15);
+            this.ActiveUsers.Name = "ActiveUsers";
+            this.ActiveUsers.Size = new System.Drawing.Size(245, 380);
+            this.ActiveUsers.TabIndex = 4;
+            // 
             // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(140)))), ((int)(((byte)(158)))));
-            this.ClientSize = new System.Drawing.Size(860, 471);
+            this.ClientSize = new System.Drawing.Size(1088, 471);
+            this.Controls.Add(this.ActiveUsers);
             this.Controls.Add(this.chatWindow);
             this.Controls.Add(this.inputMessageField);
             this.Controls.Add(this.SendButton);
@@ -105,6 +119,7 @@ namespace Chat.UI
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.RichTextBox inputMessageField;
         internal System.Windows.Forms.RichTextBox chatWindow;
+        private System.Windows.Forms.ListBox ActiveUsers;
     }
 }
 

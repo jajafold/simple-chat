@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\UnityProject\\from_git\\simple-chat\\Client\\Domain\\Chat.Domain.csproj": {}
+    "C:\\Users\\Оля\\Desktop\\simple-chat\\Client\\Domain\\Chat.Domain.csproj": {}
   },
   "projects": {
-    "D:\\UnityProject\\from_git\\simple-chat\\Client\\Domain\\Chat.Domain.csproj": {
+    "C:\\Users\\Оля\\Desktop\\simple-chat\\Client\\Domain\\Chat.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\UnityProject\\from_git\\simple-chat\\Client\\Domain\\Chat.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Оля\\Desktop\\simple-chat\\Client\\Domain\\Chat.Domain.csproj",
         "projectName": "Chat.Domain",
-        "projectPath": "D:\\UnityProject\\from_git\\simple-chat\\Client\\Domain\\Chat.Domain.csproj",
-        "packagesPath": "C:\\Users\\iayny\\.nuget\\packages\\",
-        "outputPath": "D:\\UnityProject\\from_git\\simple-chat\\Client\\Domain\\obj\\",
+        "projectPath": "C:\\Users\\Оля\\Desktop\\simple-chat\\Client\\Domain\\Chat.Domain.csproj",
+        "packagesPath": "C:\\Users\\Оля\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Оля\\Desktop\\simple-chat\\Client\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\iayny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Оля\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -60,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
