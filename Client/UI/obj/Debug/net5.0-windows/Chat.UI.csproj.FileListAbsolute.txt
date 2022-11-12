@@ -22,4 +22,5 @@ D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Chat.Inf
 D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Chat.Infrastructure.pdb
 D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Chat.Domain.dll
 D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Chat.Domain.pdb
+D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Ninject.dll
 D:\UnityProject\from_git\simple-chat\Client\UI\obj\Debug\net5.0-windows\Chat.UI.csproj.CopyComplete

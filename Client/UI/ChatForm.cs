@@ -2,19 +2,25 @@
 using Chat.Domain;
 using Chat.Infrastructure;
 using System.Windows.Forms;
+using Ninject;
 
 namespace Chat.UI
 {
-    public partial class ChatForm : Form
+    public partial class ChatForm : Form, ICanInject
     {
         private readonly Client _client;
-        private readonly Writer<Chat> _chatWriter;
+
+        public void Inject()
+        {
+            DependencyInjector.Injector.Bind<IWritable>().To<Chat>().WithConstructorArgument(chatWindow);
+        }
+        
         public ChatForm(string name)
         {
             InitializeComponent();
-
-            _chatWriter = new Writer<Chat>(new Chat(chatWindow));
-            _client = new Client("127.0.0.1", 8888, _chatWriter, name);
+            Inject();
+            
+            _client = new Client("127.0.0.1", 8888, name);
             _client.Connect();
             FormClosed += FormClosedHandler;
             chatWindow.TextChanged += ChatWindowChangedHandler;

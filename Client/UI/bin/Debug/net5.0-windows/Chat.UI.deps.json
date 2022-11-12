@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v5.0": {
       "Chat.UI/1.0.0": {
         "dependencies": {
+          "Ninject": "4.0.0-beta.1",
           "Chat.Domain": "1.0.0.0",
           "Chat.Infrastructure": "1.0.0.0"
         },
@@ -15,6 +16,20 @@
           "Chat.UI.dll": {}
         }
       },
+      "Ninject/4.0.0-beta.1": {
+        "dependencies": {
+          "System.Reflection.Emit.ILGeneration": "4.7.0",
+          "System.Reflection.Emit.Lightweight": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Ninject.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.1"
+          }
+        }
+      },
+      "System.Reflection.Emit.ILGeneration/4.7.0": {},
+      "System.Reflection.Emit.Lightweight/4.7.0": {},
       "Chat.Domain/1.0.0.0": {
         "runtime": {
           "Chat.Domain.dll": {
@@ -38,6 +53,27 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Ninject/4.0.0-beta.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nLUSEPhzXRYrw5PKB6wQIOTWN2dgvlvjjzr1QaQC1Bq8J/ca2wKdURoUWwFwAuQjG4hxP7aEeBscmPCF/OgYBQ==",
+      "path": "ninject/4.0.0-beta.1",
+      "hashPath": "ninject.4.0.0-beta.1.nupkg.sha512"
+    },
+    "System.Reflection.Emit.ILGeneration/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AucBYo3DSI0IDxdUjKksBcQJXPHyoPyrCXYURW1WDsLI4M65Ar/goSHjdnHOAY9MiYDNKqDlIgaYm+zL2hA1KA==",
+      "path": "system.reflection.emit.ilgeneration/4.7.0",
+      "hashPath": "system.reflection.emit.ilgeneration.4.7.0.nupkg.sha512"
+    },
+    "System.Reflection.Emit.Lightweight/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-a4OLB4IITxAXJeV74MDx49Oq2+PsF6Sml54XAFv+2RyWwtDBcabzoxiiJRhdhx+gaohLh4hEGCLQyBozXoQPqA==",
+      "path": "system.reflection.emit.lightweight/4.7.0",
+      "hashPath": "system.reflection.emit.lightweight.4.7.0.nupkg.sha512"
     },
     "Chat.Domain/1.0.0.0": {
       "type": "reference",

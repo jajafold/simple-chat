@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using Chat.Infrastructure;
 
 namespace Chat.UI
 {

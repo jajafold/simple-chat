@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using Chat.Infrastructure;
+using Ninject;
 
 namespace Chat.Domain
 {
@@ -17,12 +18,12 @@ namespace Chat.Domain
         private readonly IWriter _writer;
         private readonly Thread _receiveThread;
 
-        public Client(string host, int port, IWriter writer, string name = "")
+        public Client(string host, int port, string name = "")
         {
             Host = host;
             Port = port;
             Name = name;
-            _writer = writer;
+            _writer = DependencyInjector.Injector.Get<Writer>();
             
             TcpClient = new TcpClient();
             _receiveThread = new Thread(Receive);
@@ -69,13 +70,14 @@ namespace Chat.Domain
                     }
                     catch
                     {
-                        _writer.WriteLine("Подключение прервано!");
+                        _writer.Write("Подключение прервано!");
                         Disconnect();
                         throw;
                     }
                 } while (NetworkStream.DataAvailable);
-
-                _writer.WriteLine(builder.ToString());
+                
+                //get writer
+                _writer.Write(builder.ToString());
             }
         }
 

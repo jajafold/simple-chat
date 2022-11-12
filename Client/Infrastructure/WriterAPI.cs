@@ -1,14 +1,14 @@
 ﻿namespace Chat.Infrastructure
 {
-    public class Writer<TOutput> : IWriter
-        where TOutput : IWritable
+    public class Writer : IWriter
     {
-        private readonly TOutput _output;
-        public Writer(TOutput output)
+        private readonly IWritable _output;
+        
+        public Writer(IWritable output)
         {
             _output = output;
         }
-        public void WriteLine(string text)
+        public void Write(string text)
         {
             _output.Write(text);
         }
