@@ -5,13 +5,13 @@ namespace ChatServer
     [Serializable]
     public abstract class Message
     {
-        public DateTime SendTime { get; }
-        public string SenderId { get; }
-        public string Name { get; }
+        public DateTime SendTime { get; set; }
+        public string SenderId { get; set; }
+        public string Name { get; set; }
 
-        public Message(DateTime time, string senderId, string name)
+        public Message(DateTime sendTime, string senderId, string name)
         {
-            SendTime = time;
+            SendTime = sendTime;
             SenderId = senderId;
             Name = name;
         }

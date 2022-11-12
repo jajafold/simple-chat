@@ -5,8 +5,8 @@ namespace ChatServer
     [Serializable]
     public class TextMessage : Message
     {
-        public string Text { get; }
-        public TextMessage(string text, DateTime time, string senderId, string name) : base(time, senderId, name)
+        public string Text { get; set; }
+        public TextMessage(string text, DateTime sendTime, string senderId, string name) : base(sendTime, senderId, name)
         {
             Text = text;
         }

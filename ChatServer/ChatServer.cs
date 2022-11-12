@@ -27,7 +27,8 @@ namespace ChatServer
 
         void IServerObject.BroadcastResponse<TResponseType, TMessage>(TResponseType response)
         {
-            var data = Encoding.Unicode.GetBytes(JsonSerializer.Serialize(response));
+            var data = Encoding.Unicode.GetBytes(typeof(TResponseType).AssemblyQualifiedName+
+                                                 JsonSerializer.Serialize(response));
             foreach (var kvp in Clients)
                 kvp.Value.Stream.Write(data, 0, data.Length);
         }

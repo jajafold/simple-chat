@@ -13,3 +13,5 @@
 /Users/maksimcevycelov/simple-chat/ChatServer/obj/Debug/net5.0/ref/ChatServer.dll
 /Users/maksimcevycelov/simple-chat/ChatServer/obj/Debug/net5.0/ChatServer.pdb
 /Users/maksimcevycelov/simple-chat/ChatServer/obj/Debug/net5.0/ChatServer.genruntimeconfig.cache
+/Users/maksimcevycelov/simple-chat/ChatServer/bin/Debug/net5.0/Newtonsoft.Json.dll
+/Users/maksimcevycelov/simple-chat/ChatServer/obj/Debug/net5.0/ChatServer.csproj.CopyComplete

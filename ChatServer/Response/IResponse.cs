@@ -2,8 +2,8 @@ using System;
 
 namespace ChatServer.Response
 {
-    public interface IResponse<out TMessageType> where TMessageType : Message
+    public interface IResponse<TMessageType> where TMessageType : Message
     {
-        public TMessageType Message { get; }
+        public TMessageType Message { get; set; }
     }
 }

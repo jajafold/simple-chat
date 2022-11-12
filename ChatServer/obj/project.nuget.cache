@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "mlR9OsuntfcqE+htrF2lmb6suq9Rk06xKBaliE2zxPLx2/zW24NT370km6I8U2PUIvfjeOcB5ULhLjnFj1g7ww==",
+  "dgSpecHash": "FXdx5x0rdPfU2cHVoLYsUoWi7LsL8s1jeUZxJrOeMKzbd7EAF6p8pGjBG5BAoxnviSTdkKEAFABVCgXYJaGyAQ==",
   "success": true,
   "projectFilePath": "/Users/maksimcevycelov/simple-chat/ChatServer/ChatServer.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/maksimcevycelov/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }
