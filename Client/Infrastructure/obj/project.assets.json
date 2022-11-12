@@ -176,19 +176,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Оля\\.nuget\\packages\\": {}
+    "C:\\Users\\iayny\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Оля\\Desktop\\simple-chat\\Client\\Infrastructure\\Chat.Infrastructure.csproj",
-      "projectName": "Chat.Infrastructure",
-      "projectPath": "C:\\Users\\Оля\\Desktop\\simple-chat\\Client\\Infrastructure\\Chat.Infrastructure.csproj",
-      "packagesPath": "C:\\Users\\Оля\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Оля\\Desktop\\simple-chat\\Client\\Infrastructure\\obj\\",
+      "projectUniqueName": "D:\\UnityProject\\from_git\\simple-chat\\Client\\Infrastructure\\Infrastructure.csproj",
+      "projectName": "Infrastructure",
+      "projectPath": "D:\\UnityProject\\from_git\\simple-chat\\Client\\Infrastructure\\Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\iayny\\.nuget\\packages\\",
+      "outputPath": "D:\\UnityProject\\from_git\\simple-chat\\Client\\Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Оля\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\iayny\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -234,7 +234,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

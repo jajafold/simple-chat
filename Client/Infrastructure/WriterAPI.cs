@@ -1,4 +1,4 @@
-﻿namespace Chat.Infrastructure
+﻿namespace Infrastructure
 {
     public class Writer : IWriter
     {

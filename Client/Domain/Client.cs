@@ -2,7 +2,8 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using Chat.Infrastructure;
+using Infrastructure;
+using Infrastructure.Response;
 using Ninject;
 
 namespace Chat.Domain
@@ -23,8 +24,8 @@ namespace Chat.Domain
             Host = host;
             Port = port;
             Name = name;
-            _writer = DependencyInjector.Injector.Get<Writer>();
-            
+            _writer = DependencyInjector.Injector.Get<Writer>(); //TODO: Реализовать через IChat
+
             TcpClient = new TcpClient();
             _receiveThread = new Thread(Receive);
         }
@@ -77,7 +78,20 @@ namespace Chat.Domain
                 } while (NetworkStream.DataAvailable);
                 
                 //get writer
-                _writer.Write(builder.ToString());
+                var jsonString = builder.ToString();
+                var serialized = Deserializer.Deserialize(jsonString);
+                var response = Convert.ChangeType(serialized.Obj, serialized.Type);
+
+                if (response is UsersOnlineResponse onlineResponse)
+                {
+                    response = onlineResponse;
+                }
+
+                if (response is BasicResponse basicResponse)
+                {
+                    _writer.Write(basicResponse.Message.ToFlatString());
+                }
+                    
             }
         }
 

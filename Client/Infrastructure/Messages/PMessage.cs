@@ -1,4 +1,4 @@
-namespace Chat.Infrastructure.Messages
+namespace Infrastructure.Messages
 {
     public interface IPersonalMessage
     {

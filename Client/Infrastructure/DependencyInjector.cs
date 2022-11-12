@@ -1,6 +1,6 @@
 ﻿using Ninject;
 
-namespace Chat.Infrastructure
+namespace Infrastructure
 {
     public static class DependencyInjector
     {

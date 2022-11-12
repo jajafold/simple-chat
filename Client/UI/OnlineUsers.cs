@@ -3,19 +3,18 @@ using Infrastructure;
 
 namespace Chat.UI
 {
-    //TODO: IChat
-    public class Chat : IWritable
+    public class OnlineUsers : IWritable
     {
-        private readonly RichTextBox _source;
+        private readonly ListBox _source;
 
-        public Chat(RichTextBox source)
+        public OnlineUsers(ListBox source)
         {
             _source = source;
         }
 
         public void Write(string text)
         {
-            _source.Text += text + '\n';
+            _source.Items.Add(text);
         }
     }
 }

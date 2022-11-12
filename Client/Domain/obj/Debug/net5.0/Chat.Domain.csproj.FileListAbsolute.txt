@@ -2,8 +2,6 @@ D:\UnityProject\from_git\simple-chat\Client\Domain\bin\Debug\net5.0\Chat.Domain.
 D:\UnityProject\from_git\simple-chat\Client\Domain\bin\Debug\net5.0\Chat.Domain.dll
 D:\UnityProject\from_git\simple-chat\Client\Domain\bin\Debug\net5.0\ref\Chat.Domain.dll
 D:\UnityProject\from_git\simple-chat\Client\Domain\bin\Debug\net5.0\Chat.Domain.pdb
-D:\UnityProject\from_git\simple-chat\Client\Domain\bin\Debug\net5.0\Chat.Infrastructure.dll
-D:\UnityProject\from_git\simple-chat\Client\Domain\bin\Debug\net5.0\Chat.Infrastructure.pdb
 D:\UnityProject\from_git\simple-chat\Client\Domain\obj\Debug\net5.0\Chat.Domain.csproj.AssemblyReference.cache
 D:\UnityProject\from_git\simple-chat\Client\Domain\obj\Debug\net5.0\Chat.Domain.GeneratedMSBuildEditorConfig.editorconfig
 D:\UnityProject\from_git\simple-chat\Client\Domain\obj\Debug\net5.0\Chat.Domain.AssemblyInfoInputs.cache
@@ -12,4 +10,5 @@ D:\UnityProject\from_git\simple-chat\Client\Domain\obj\Debug\net5.0\Chat.Domain.
 D:\UnityProject\from_git\simple-chat\Client\Domain\obj\Debug\net5.0\Chat.Domain.dll
 D:\UnityProject\from_git\simple-chat\Client\Domain\obj\Debug\net5.0\ref\Chat.Domain.dll
 D:\UnityProject\from_git\simple-chat\Client\Domain\obj\Debug\net5.0\Chat.Domain.pdb
-D:\UnityProject\from_git\simple-chat\Client\Domain\obj\Debug\net5.0\Chat.Domain.csproj.CopyComplete
+D:\UnityProject\from_git\simple-chat\Client\Domain\bin\Debug\net5.0\Infrastructure.dll
+D:\UnityProject\from_git\simple-chat\Client\Domain\bin\Debug\net5.0\Infrastructure.pdb

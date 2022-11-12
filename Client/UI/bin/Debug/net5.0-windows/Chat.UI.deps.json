@@ -10,7 +10,7 @@
         "dependencies": {
           "Ninject": "4.0.0-beta.1",
           "Chat.Domain": "1.0.0.0",
-          "Chat.Infrastructure": "1.0.0.0"
+          "Infrastructure": "1.0.0.0"
         },
         "runtime": {
           "Chat.UI.dll": {}
@@ -38,9 +38,9 @@
           }
         }
       },
-      "Chat.Infrastructure/1.0.0.0": {
+      "Infrastructure/1.0.0.0": {
         "runtime": {
-          "Chat.Infrastructure.dll": {
+          "Infrastructure.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -80,7 +80,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Chat.Infrastructure/1.0.0.0": {
+    "Infrastructure/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

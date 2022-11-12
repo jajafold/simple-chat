@@ -1,6 +1,6 @@
 ﻿using System;
 using Chat.Domain;
-using Chat.Infrastructure;
+using Infrastructure;
 using System.Windows.Forms;
 using Ninject;
 
@@ -13,6 +13,7 @@ namespace Chat.UI
         public void Inject()
         {
             DependencyInjector.Injector.Bind<IWritable>().To<Chat>().WithConstructorArgument(chatWindow);
+            DependencyInjector.Injector.Bind<IWritable>().To<OnlineUsers>().WithConstructorArgument(ActiveUsers);
         }
         
         public ChatForm(string name)

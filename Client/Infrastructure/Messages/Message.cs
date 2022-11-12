@@ -1,6 +1,6 @@
 using System;
 
-namespace Chat.Infrastructure.Messages
+namespace Infrastructure.Messages
 {
     [Serializable]
     public abstract class Message
