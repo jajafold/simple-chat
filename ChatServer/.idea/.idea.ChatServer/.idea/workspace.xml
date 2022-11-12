@@ -4,34 +4,7 @@
     <projectFile>ChatServer.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0fa66e0f-2eaf-4223-bdf8-ff0502a36598" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatServer/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatServer/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatServer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatServer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatServer.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatServer.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Messages/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Messages/Message.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Messages/PMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Messages/PMessage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Messages/TextMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Messages/TextMessage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Response/BasicResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Response/BasicResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Response/IResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Response/IResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Response/UsersOnlineResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Response/UsersOnlineResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ChatServer.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ref/ChatServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ref/ChatServer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/ChatServer.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/ChatServer.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ChatServer.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ref/ChatServer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ref/ChatServer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.restore.info" afterDir="false" />
-    </list>
+    <list default="true" id="0fa66e0f-2eaf-4223-bdf8-ff0502a36598" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -88,7 +61,7 @@
       <updated>1667732408990</updated>
       <workItem from="1667732412515" duration="2505000" />
       <workItem from="1668081784376" duration="6416000" />
-      <workItem from="1668264283341" duration="768000" />
+      <workItem from="1668264283341" duration="1070000" />
     </task>
     <servers />
   </component>
@@ -116,10 +89,10 @@
           <line>39</line>
           <properties documentPath="$PROJECT_DIR$/ChatServer.cs" initialLine="36" containingFunctionPresentation="method 'Listen'">
             <startOffsets>
-              <option value="1196" />
+              <option value="1177" />
             </startOffsets>
             <endOffsets>
-              <option value="1247" />
+              <option value="1228" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="5" />
