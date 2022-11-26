@@ -79,19 +79,19 @@ namespace Chat.Domain
                 
                 //get writer
                 var jsonString = builder.ToString();
-                var serialized = Deserializer.Deserialize(jsonString);
-                var response = Convert.ChangeType(serialized.Obj, serialized.Type);
+                var deserialized = Deserializer.Deserialize(jsonString);
 
-                if (response is UsersOnlineResponse onlineResponse)
+                switch (deserialized)
                 {
-                    response = onlineResponse;
+                    case UsersOnlineResponse onlineResponse:
+                    {
+                        var response = onlineResponse;
+                        break;
+                    }
+                    case BasicResponse basicResponse:
+                        _writer.Write(basicResponse.Message.ToFlatString());
+                        break;
                 }
-
-                if (response is BasicResponse basicResponse)
-                {
-                    _writer.Write(basicResponse.Message.ToFlatString());
-                }
-                    
             }
         }
 

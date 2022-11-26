@@ -12,7 +12,7 @@ namespace Chat.UI
 
         public void Inject()
         {
-            DependencyInjector.Injector.Bind<IWritable>().To<Chat>().WithConstructorArgument(chatWindow);
+            DependencyInjector.Injector.Bind<>().To<Chat>().WithConstructorArgument(chatWindow);
             DependencyInjector.Injector.Bind<IWritable>().To<OnlineUsers>().WithConstructorArgument(ActiveUsers);
         }
         
