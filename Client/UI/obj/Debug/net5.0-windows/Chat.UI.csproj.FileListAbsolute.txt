@@ -12,7 +12,6 @@ D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Chat.UI.
 D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Chat.UI.runtimeconfig.json
 D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Chat.UI.runtimeconfig.dev.json
 D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Chat.UI.dll
-D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\ref\Chat.UI.dll
 D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Chat.UI.pdb
 D:\UnityProject\from_git\simple-chat\Client\UI\obj\Debug\net5.0-windows\Chat.UI.dll
 D:\UnityProject\from_git\simple-chat\Client\UI\obj\Debug\net5.0-windows\ref\Chat.UI.dll
@@ -23,3 +22,6 @@ D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Chat.Dom
 D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Ninject.dll
 D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Infrastructure.dll
 D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Infrastructure.pdb
+D:\UnityProject\from_git\simple-chat\Client\UI\obj\Debug\net5.0-windows\Chat.UI.csproj.CopyComplete
+D:\UnityProject\from_git\simple-chat\Client\UI\obj\Debug\net5.0-windows\refint\Chat.UI.dll
+D:\UnityProject\from_git\simple-chat\Client\UI\bin\Debug\net5.0-windows\Newtonsoft.Json.dll

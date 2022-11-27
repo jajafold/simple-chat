@@ -3,28 +3,26 @@ using Chat.Domain;
 using Infrastructure;
 using System.Windows.Forms;
 using Ninject;
+using Ninject.Infrastructure.Language;
 
 namespace Chat.UI
 {
-    public partial class ChatForm : Form, ICanInject
+    public partial class ChatForm : Form
     {
         private readonly Client _client;
-
-        public void Inject()
-        {
-            DependencyInjector.Injector.Bind<>().To<Chat>().WithConstructorArgument(chatWindow);
-            DependencyInjector.Injector.Bind<IWritable>().To<OnlineUsers>().WithConstructorArgument(ActiveUsers);
-        }
         
         public ChatForm(string name)
         {
             InitializeComponent();
-            Inject();
+
+            _client = new Client("http://localhost:5034", 
+                name, 
+                new GlobalChatWriter(new Chat(chatWindow)),
+                new Writer(new OnlineUsers(ActiveUsers)));
             
-            _client = new Client("127.0.0.1", 8888, name);
-            _client.Connect();
-            FormClosed += FormClosedHandler;
+            _client.Join(Guid.NewGuid());
             chatWindow.TextChanged += ChatWindowChangedHandler;
+            chatWindow.Disposed += ChatWindowClosedHandler;
         }
 
         private void SendButton_Click(object sender, EventArgs e)
@@ -33,11 +31,6 @@ namespace Chat.UI
             _client.Send(msg);
             inputMessageField.Clear();
             inputMessageField.Focus();
-        }  
-
-        private void FormClosedHandler(object sender, EventArgs e)
-        {
-            _client.Disconnect();
         }
 
         private void ChatWindowChangedHandler(object sender, EventArgs e)
@@ -45,6 +38,8 @@ namespace Chat.UI
             chatWindow.SelectionStart = chatWindow.Text.Length;
             chatWindow.ScrollToCaret();
         }
+
+        private void ChatWindowClosedHandler(object sender, EventArgs e) => Environment.Exit(0);
 
         private void chatWindow_TextChanged(object sender, EventArgs e)
         {

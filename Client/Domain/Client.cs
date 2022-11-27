@@ -1,106 +1,50 @@
 ﻿using System;
-using System.Net.Sockets;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
-using System.Threading;
+using chatmana.Models;
 using Infrastructure;
-using Infrastructure.Response;
-using Ninject;
 
 namespace Chat.Domain
 {
-    public class Client : IClient
+    public class Client
     {
         public string Name { get; }
-        public string Host { get; }
-        public int Port { get; }
-        public TcpClient TcpClient { get; }
-        public NetworkStream NetworkStream { get; private set; }
 
-        private readonly IWriter _writer;
-        private readonly Thread _receiveThread;
+        private readonly HttpClient _httpClient = new();
+        private readonly Writer _chatWriter;
+        private readonly Writer _onlineUsersWriter;
+        private readonly string _uri;
+        private Guid? _currentRoom = null;
 
-        public Client(string host, int port, string name = "")
+        public Client(string uri, string name, Writer chatWriter, Writer onlineUsersWriter)
         {
-            Host = host;
-            Port = port;
             Name = name;
-            _writer = DependencyInjector.Injector.Get<Writer>(); //TODO: Реализовать через IChat
-
-            TcpClient = new TcpClient();
-            _receiveThread = new Thread(Receive);
+            _uri = uri;
+            _chatWriter = chatWriter;
+            _onlineUsersWriter = onlineUsersWriter;
         }
 
-        public void Connect()
+        public async void Join(Guid chatRoomId)
         {
-            try
-            {
-                TcpClient.Connect(Host, Port);
-                NetworkStream = TcpClient.GetStream(); 
-                
-                var data = Encoding.Unicode.GetBytes(Name ?? string.Empty);
-                NetworkStream.Write(data, 0, data.Length);
-                
-                _receiveThread.Start();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                Disconnect();
-            }
+            var serialized = (string) await _httpClient.GetFromJsonAsync(
+                $"{_uri}/User/Join?chatroomId={chatRoomId.ToString()}&login={Name}",
+                typeof(string));
+            var response = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseViewModel>(serialized!);
+            foreach (var name in response?.UserNames!)
+                _onlineUsersWriter.Write(name);
+            _currentRoom = response.RoomId;
         }
 
-        public void Send(string msg)
+        public async void Send(string message)
         {
-            var data = Encoding.Unicode.GetBytes(msg);
-            NetworkStream.Write(data, 0, data.Length);
-        }
-
-        public void Receive()
-        {
-            while (true)
-            {
-                var data = new byte[64];
-                var builder = new StringBuilder();
-
-                do
-                {
-                    try
-                    {
-                        var bytes = NetworkStream.Read(data, 0, data.Length);
-                        builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
-                    }
-                    catch
-                    {
-                        _writer.Write("Подключение прервано!");
-                        Disconnect();
-                        throw;
-                    }
-                } while (NetworkStream.DataAvailable);
-                
-                //get writer
-                var jsonString = builder.ToString();
-                var deserialized = Deserializer.Deserialize(jsonString);
-
-                switch (deserialized)
-                {
-                    case UsersOnlineResponse onlineResponse:
-                    {
-                        var response = onlineResponse;
-                        break;
-                    }
-                    case BasicResponse basicResponse:
-                        _writer.Write(basicResponse.Message.ToFlatString());
-                        break;
-                }
-            }
-        }
-
-        public void Disconnect()
-        {
-            NetworkStream?.Close();
-            TcpClient?.Close();
-            
-            Environment.Exit(0);
+            var response = await _httpClient.PostAsync(
+                $"{_uri}/Messages/Text?chatRoom={_currentRoom.ToString()}&name={Name}&message={message}", 
+                new StringContent(""));
+            var msg = await response.Content.ReadAsByteArrayAsync();
+            var encoded = Encoding.Convert(Encoding.Unicode, Encoding.Default, msg);
+            var text = Encoding.Default.GetString(encoded);
+            _chatWriter.Write(text);
         }
     }
 }

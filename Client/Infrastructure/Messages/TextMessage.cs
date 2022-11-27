@@ -6,7 +6,7 @@ namespace Infrastructure.Messages
     public class TextMessage : Message
     {
         public string Text { get; set; }
-        public TextMessage(string text, DateTime sendTime, string senderId, string name) : base(sendTime, senderId, name)
+        public TextMessage(string text, Guid chatroom, DateTime sendTime, string name) : base(sendTime, chatroom, name)
         {
             Text = text;
         }

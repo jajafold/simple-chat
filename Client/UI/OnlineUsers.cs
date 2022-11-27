@@ -14,6 +14,7 @@ namespace Chat.UI
 
         public void Write(string text)
         {
+            if (_source.Items.Contains(text)) return;
             _source.Items.Add(text);
         }
     }
