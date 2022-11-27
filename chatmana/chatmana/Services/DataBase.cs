@@ -21,6 +21,13 @@ public static class DataBase
             throw new InvalidOperationException($"Login {login} is already in use");
         Chatrooms[MainChat].Users.Add(login);
     }
+
+    public static void Leave(Guid chatRoomId, string login)
+    {
+        if (!Chatrooms[MainChat].Users.Contains(login))
+            throw new InvalidOperationException($"There's no {login} in room {chatRoomId.ToString()}");
+        Chatrooms[MainChat].Users.Remove(login);
+    }
     
     public static void PostMessage<T>(T message) where T : Message
     {

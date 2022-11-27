@@ -15,4 +15,10 @@ public class UserController : Controller
             (DataBase.Chatrooms[DataBase.MainChat].Users.ToResponseViewModel(DataBase.MainChat), Formatting.Indented);
         return new JsonResult(result);
     }
+
+    [HttpPost]
+    public void Leave(Guid chatRoomId, string login)
+    {
+        DataBase.Leave(chatRoomId, login);
+    }
 }

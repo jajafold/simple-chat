@@ -8,11 +8,11 @@ namespace chatmana.Controllers;
 public class MessagesController : Controller
 {
     [HttpPost]
-    public JsonResult Text(string message, string name, Guid chatRoom)
+    public string Text(string message, string name, Guid chatRoom)
     {
         var msg = new TextMessage(message, chatRoom, DateTime.Now, name);
         DataBase.PostMessage(msg);
-        return Json($"{msg.ToFlatString()}");
+        return $"{msg.ToFlatString()}";
     }
 
     [HttpPost]

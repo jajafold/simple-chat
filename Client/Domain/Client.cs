@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.RegularExpressions;
 using chatmana.Models;
 using Infrastructure;
 
@@ -41,10 +42,21 @@ namespace Chat.Domain
             var response = await _httpClient.PostAsync(
                 $"{_uri}/Messages/Text?chatRoom={_currentRoom.ToString()}&name={Name}&message={message}", 
                 new StringContent(""));
-            var msg = await response.Content.ReadAsByteArrayAsync();
-            var encoded = Encoding.Convert(Encoding.Unicode, Encoding.Default, msg);
-            var text = Encoding.Default.GetString(encoded);
-            _chatWriter.Write(text);
+            var msg = await response.Content.ReadAsStringAsync();
+            _chatWriter.Write(msg);
+        }
+
+        public async void Leave()
+        {
+            var response = await _httpClient.PostAsync(
+                $"{_uri}/User/Leave?chatRoomId={_currentRoom.ToString()}&login={Name}",
+                new StringContent(""));
+        }
+
+        private string ConvertToUTF8(string text)
+        {
+            return Encoding.UTF8.GetString(
+                Array.ConvertAll(Regex.Unescape(text).ToCharArray(), c => (byte) c));
         }
     }
 }

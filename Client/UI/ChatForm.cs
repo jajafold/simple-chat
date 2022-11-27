@@ -39,7 +39,11 @@ namespace Chat.UI
             chatWindow.ScrollToCaret();
         }
 
-        private void ChatWindowClosedHandler(object sender, EventArgs e) => Environment.Exit(0);
+        private void ChatWindowClosedHandler(object sender, EventArgs e)
+        {
+            _client.Leave();
+            Environment.Exit(0);
+        }
 
         private void chatWindow_TextChanged(object sender, EventArgs e)
         {
