@@ -8,8 +8,8 @@ public class OnlineController : Controller
 {
     public JsonResult GetUsersOnline(Guid id)
     {
-        DataBase.Join(DataBase.MainChat, "vasilich");
-        var result = JsonConvert.SerializeObject(DataBase.Chatrooms[DataBase.MainChat].Users);
+        var chatId = id == default ? DataBase.MainChat : id;
+        var result = JsonConvert.SerializeObject(DataBase.Chatrooms[chatId].Users);
         return new JsonResult(result);
     }
 }
