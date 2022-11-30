@@ -1,4 +1,4 @@
-﻿namespace chatmana.Models;
+﻿namespace Infrastructure.Models;
 
 public class ErrorViewModel
 {

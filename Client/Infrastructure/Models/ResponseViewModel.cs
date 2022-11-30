@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace chatmana.Models;
+namespace Infrastructure.Models;
 
 public class ResponseViewModel
 {

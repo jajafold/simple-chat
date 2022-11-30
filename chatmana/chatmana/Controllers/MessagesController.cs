@@ -2,6 +2,7 @@ using chatmana.Services;
 using Infrastructure.Messages;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Infrastructure.Models;
 
 namespace chatmana.Controllers;
 
@@ -15,23 +16,13 @@ public class MessagesController : Controller
         return $"{msg.ToFlatString()}";
     }
 
-    [HttpPost]
-    public JsonResult Test(string str)
-    {
-        return Json($"Successfully posted {str}!");
-    }
-    
     [HttpGet]
-    public JsonResult ChatRoomMessages(long timestamp, Guid chatroomId)
+    public JsonResult ChatRoomMessages(long timestamp, Guid chatRoomId)
     {
-        // DataBase.Messages.Add(new TextMessage("hello",
-        //     DataBase.MainChat, DateTime.Now, "vasya"));
-        // DataBase.Messages.Add(new TextMessage("hellovasya", 
-        //     DataBase.MainChat, DateTime.Now, "gena"));
         var result = JsonConvert.SerializeObject(DataBase.Messages
-            //.Where(x => x.ChatRoom == chatroomId)
-            //.Where(x => x.TimeStamp > timestamp -100)
+            .Where(x => x.ChatRoom == chatRoomId)
+            .Where(x => x.TimeStamp < timestamp - 100)
             .ToMessagesViewModel(), Formatting.Indented);
         return new JsonResult(result);
-    }
+    }   
 }

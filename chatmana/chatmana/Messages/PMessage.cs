@@ -1,6 +1,6 @@
 namespace Infrastructure.Messages
 {
-    public interface ersonalMessage
+    public interface IPersonalMessage
     {
         public string ReceiverId { get; set; }
     }

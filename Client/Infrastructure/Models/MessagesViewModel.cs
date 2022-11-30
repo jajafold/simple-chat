@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Infrastructure.Messages;
 
-namespace chatmana;
+namespace Infrastructure.Models;
 
 public static class MessagesViewModelExtensions
 {

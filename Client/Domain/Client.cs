@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
-using System.Text.RegularExpressions;
-using chatmana.Models;
+using System.Threading;
 using Infrastructure;
+using Infrastructure.Models;
 
 namespace Chat.Domain
 {
@@ -35,6 +34,9 @@ namespace Chat.Domain
             foreach (var name in response?.UserNames!)
                 _onlineUsersWriter.Write(name);
             _currentRoom = response.RoomId;
+            
+            var receivingThread = new Thread(GetNewMessages);
+            receivingThread.Start();
         }
 
         public async void Send(string message)
@@ -46,17 +48,36 @@ namespace Chat.Domain
             _chatWriter.Write(msg);
         }
 
+        public async void GetNewMessages()
+        {
+            while (true)
+            {
+                try
+                {
+                    var serialized = await _httpClient.GetFromJsonAsync<string>(
+                        $"{_uri}/Messages/ChatRoomMessages?timestamp={DateTime.Now.Ticks}&chatRoomId={_currentRoom.ToString()}"
+                        );
+                    _chatWriter.Write(serialized);
+                    // var response = Newtonsoft.Json.JsonConvert.DeserializeObject<MessagesViewModel>(serialized!);
+                    // foreach (var msg in response.Messages)
+                    // {
+                    //     _chatWriter.Write(msg.Content.ToFlatString());
+                    // }
+                    Thread.Sleep(1000);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+        }
+
         public async void Leave()
         {
             var response = await _httpClient.PostAsync(
                 $"{_uri}/User/Leave?chatRoomId={_currentRoom.ToString()}&login={Name}",
                 new StringContent(""));
-        }
-
-        private string ConvertToUTF8(string text)
-        {
-            return Encoding.UTF8.GetString(
-                Array.ConvertAll(Regex.Unescape(text).ToCharArray(), c => (byte) c));
         }
     }
 }

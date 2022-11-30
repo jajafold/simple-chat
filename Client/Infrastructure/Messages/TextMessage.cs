@@ -13,7 +13,7 @@ namespace Infrastructure.Messages
 
         public override string ToFlatString()
         {
-            return $"[{SendTime.Hour}:{SendTime.Minute}] {Name}: {Text}";
+            return $"[{SendTime.ToShortTimeString()}] {Name}: {Text}";
         }
     }
 }
