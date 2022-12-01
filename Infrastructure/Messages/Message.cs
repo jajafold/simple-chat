@@ -9,7 +9,7 @@ namespace Infrastructure.Messages
         public Guid ChatRoom { get; }
         public long TimeStamp { get; }
         public string Name { get; set; }
-        public string Text { get; }
+        public string Text { get; set; }
 
         public Message(DateTime sendTime, Guid chatRoom, string name)
         {
