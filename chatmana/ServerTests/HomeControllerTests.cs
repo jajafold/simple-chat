@@ -8,21 +8,21 @@ namespace ServerTests;
 
 public class HomeControllerTests
 {
-    private StandardKernel Container;
+    private StandardKernel _container;
 
     [SetUp]
     public void Setup()
     {
-        Container = new StandardKernel();
-        Container.Bind<IServerDataBase>().ToConstant(HomeDataBaseGenerator.DataBase);
-        Container.Bind<ISerializer>().To<Serializer>().InSingletonScope();
-        Container.Bind<IDeserializer>().To<Deserializer>().InSingletonScope();
+        _container = new StandardKernel();
+        _container.Bind<IServerDataBase>().ToConstant(HomeDataBaseGenerator.DataBase).InSingletonScope();
+        _container.Bind<ISerializer>().To<Serializer>().InSingletonScope();
+        _container.Bind<IDeserializer>().To<Deserializer>().InSingletonScope();
     }
 
     [Test]
     public void ResultNotNull()
     {
-        var controller = Container.Get<HomeController>();
+        var controller = _container.Get<HomeController>();
         var result = controller.Index().Value;
         Assert.IsNotNull(result);
     }
@@ -30,21 +30,22 @@ public class HomeControllerTests
     [Test]
     public void ResultDeserializes()
     {
-        var controller = Container.Get<HomeController>();
+        var controller = _container.Get<HomeController>();
         var result = controller.Index().Value;
-        var viewModel = Container.Get<Deserializer>().Deserialize<RoomsViewModel>(result.ToString());
+        var viewModel = _container.Get<Deserializer>().Deserialize<RoomsViewModel>(result.ToString());
         Assert.IsNotNull(viewModel);
     }
 
     [Test]
     public void ContentEqualsDataBase()
     {
-        var controller = Container.Get<HomeController>();
+        var controller = _container.Get<HomeController>();
         var result = controller.Index().Value;
-        var viewModel = Container.Get<Deserializer>().Deserialize<RoomsViewModel>(result.ToString());
-        Assert.AreEqual(viewModel.ChatRooms.Length, HomeDataBaseGenerator.DataBase.Chatrooms.Count);
-        Assert.AreEqual(viewModel.ChatRooms[0].Id, HomeDataBaseGenerator.DataBase.MainChat);
+        var viewModel = _container.Get<Deserializer>().Deserialize<RoomsViewModel>(result.ToString());
+        var db = _container.Get<IServerDataBase>();
+        Assert.AreEqual(viewModel.ChatRooms.Length, db.Chatrooms.Count);
+        Assert.AreEqual(viewModel.ChatRooms[0].Id, db.MainChat);
         Assert.AreEqual(viewModel.ChatRooms[0].ActiveUsers,
-            HomeDataBaseGenerator.DataBase.Chatrooms[HomeDataBaseGenerator.DataBase.MainChat].Users.Count);
+            db.Chatrooms[HomeDataBaseGenerator.DataBase.MainChat].Users!.Count);
     }
 }

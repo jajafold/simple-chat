@@ -17,8 +17,7 @@ public class OnlineController : Controller
 
     public JsonResult GetUsersOnline(Guid id)
     {
-        var chatId = id == default ? dataBase.MainChat : id;
-        var result = serializer.Serialize(dataBase.Chatrooms[chatId].Users);
+        var result = serializer.Serialize(dataBase.Chatrooms[id].Users);
         return new JsonResult(result);
     }
 }
