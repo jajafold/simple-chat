@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using Infrastructure;
-using Infrastructure.Messages;
+﻿using Infrastructure;
 using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IServerDataBase, ServerDataBase>();
+builder.Services.AddSingleton<ISerializer, Serializer>();
 
 
 var app = builder.Build();
