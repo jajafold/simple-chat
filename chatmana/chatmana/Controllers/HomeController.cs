@@ -7,11 +7,16 @@ namespace chatmana.Controllers;
 
 public class HomeController : Controller
 {
+    private IServerDataBase dataBase;
+    public HomeController(IServerDataBase dataBase)
+    {
+        this.dataBase = dataBase;
+    }
     [HttpGet]
     public JsonResult Index()
     {
         var result = JsonConvert.SerializeObject
-            (DataBase.Chatrooms.Values.ToList().ToHubsViewModel(), Formatting.Indented);
+            (dataBase.Chatrooms.Values.ToList().ToHubsViewModel(), Formatting.Indented);
         return new JsonResult(result);
     }
 }

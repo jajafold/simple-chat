@@ -8,11 +8,16 @@ namespace chatmana.Controllers;
 
 public class MessagesController : Controller
 {
+    private IServerDataBase dataBase;
+    public MessagesController(IServerDataBase dataBase)
+    {
+        this.dataBase = dataBase;
+    }
     [HttpPost]
     public string Text(string message, string name, Guid chatRoom)
     {
         var msg = new TextMessage(message, chatRoom, DateTime.Now, name);
-        DataBase.PostMessage(msg);
+        dataBase.PostMessage(msg);
         return $"{msg.ToFlatString()}";
     }
 
@@ -20,7 +25,7 @@ public class MessagesController : Controller
     public JsonResult ChatRoomMessages(long timestamp, Guid chatRoomId)
     {
         var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
-        var result = JsonConvert.SerializeObject(DataBase.Messages
+        var result = JsonConvert.SerializeObject(dataBase.Messages
             .Where(x => x.ChatRoom == chatRoomId)
             .Where(x => x.TimeStamp > timestamp)
             .ToMessagesViewModel(), Formatting.Indented, settings);

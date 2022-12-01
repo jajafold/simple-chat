@@ -7,18 +7,23 @@ namespace chatmana.Controllers;
 
 public class UserController : Controller
 {
+    private IServerDataBase dataBase;
+    public UserController(IServerDataBase dataBase)
+    {
+        this.dataBase = dataBase;
+    }
     [HttpGet]
     public JsonResult Join(Guid chatroomId, string login)
     {
-        DataBase.Join(DataBase.MainChat, login);
+        dataBase.Join(dataBase.MainChat, login);
         var result = JsonConvert.SerializeObject
-            (DataBase.Chatrooms[DataBase.MainChat].Users.ToResponseViewModel(DataBase.MainChat), Formatting.Indented);
+            (dataBase.Chatrooms[dataBase.MainChat].Users.ToResponseViewModel(dataBase.MainChat), Formatting.Indented);
         return new JsonResult(result);
     }
 
     [HttpPost]
     public void Leave(Guid chatRoomId, string login)
     {
-        DataBase.Leave(chatRoomId, login);
+        dataBase.Leave(chatRoomId, login);
     }
 }

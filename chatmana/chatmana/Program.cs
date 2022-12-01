@@ -1,7 +1,14 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using System.Collections;
+using Infrastructure;
+using Infrastructure.Messages;
+using Infrastructure.Services;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IServerDataBase, ServerDataBase>();
+
 
 var app = builder.Build();
 

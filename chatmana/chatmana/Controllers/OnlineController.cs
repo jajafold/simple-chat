@@ -6,10 +6,15 @@ namespace chatmana.Controllers;
 
 public class OnlineController : Controller
 {
+    private IServerDataBase dataBase;
+    public OnlineController(IServerDataBase dataBase)
+    {
+        this.dataBase = dataBase;
+    }
     public JsonResult GetUsersOnline(Guid id)
     {
-        var chatId = id == default ? DataBase.MainChat : id;
-        var result = JsonConvert.SerializeObject(DataBase.Chatrooms[chatId].Users);
+        var chatId = id == default ? dataBase.MainChat : id;
+        var result = JsonConvert.SerializeObject(dataBase.Chatrooms[chatId].Users);
         return new JsonResult(result);
     }
 }
