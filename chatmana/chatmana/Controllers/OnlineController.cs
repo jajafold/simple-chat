@@ -1,4 +1,4 @@
-using chatmana.Services;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 

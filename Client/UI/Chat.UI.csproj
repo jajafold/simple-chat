@@ -29,7 +29,7 @@
       <HintPath>..\Domain\bin\Debug\net5.0\Chat.Domain.dll</HintPath>
     </Reference>
     <Reference Include="Infrastructure">
-      <HintPath>..\Infrastructure\bin\Debug\net5.0-windows\Infrastructure.dll</HintPath>
+      <HintPath>..\..\Infrastructure\bin\Debug\net7.0-windows\Infrastructure.dll</HintPath>
     </Reference>
   </ItemGroup>
 

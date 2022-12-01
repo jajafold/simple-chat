@@ -4,6 +4,7 @@ using System.Net.Http.Json;
 using System.Threading;
 using Infrastructure;
 using Infrastructure.Models;
+using Newtonsoft.Json;
 
 namespace Chat.Domain
 {
@@ -30,7 +31,7 @@ namespace Chat.Domain
             var serialized = (string) await _httpClient.GetFromJsonAsync(
                 $"{_uri}/User/Join?chatroomId={chatRoomId.ToString()}&login={Name}",
                 typeof(string));
-            var response = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseViewModel>(serialized!);
+            var response = JsonConvert.DeserializeObject<ResponseViewModel>(serialized!);
             foreach (var name in response?.UserNames!)
                 _onlineUsersWriter.Write(name);
             _currentRoom = response.RoomId;
@@ -44,32 +45,24 @@ namespace Chat.Domain
             var response = await _httpClient.PostAsync(
                 $"{_uri}/Messages/Text?chatRoom={_currentRoom.ToString()}&name={Name}&message={message}", 
                 new StringContent(""));
-            var msg = await response.Content.ReadAsStringAsync();
-            _chatWriter.Write(msg);
         }
 
         public async void GetNewMessages()
         {
+            var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
+            var lastUpdated = DateTime.Now.Ticks;
             while (true)
             {
-                try
-                {
-                    var serialized = await _httpClient.GetFromJsonAsync<string>(
-                        $"{_uri}/Messages/ChatRoomMessages?timestamp={DateTime.Now.Ticks}&chatRoomId={_currentRoom.ToString()}"
+                Thread.Sleep(500);
+                var serialized = await _httpClient.GetFromJsonAsync<string>(
+                        $"{_uri}/Messages/ChatRoomMessages?timestamp={lastUpdated}&chatRoomId={_currentRoom.ToString()}"
                         );
-                    _chatWriter.Write(serialized);
-                    // var response = Newtonsoft.Json.JsonConvert.DeserializeObject<MessagesViewModel>(serialized!);
-                    // foreach (var msg in response.Messages)
-                    // {
-                    //     _chatWriter.Write(msg.Content.ToFlatString());
-                    // }
-                    Thread.Sleep(1000);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
+                var response = JsonConvert.DeserializeObject<MessagesViewModel>(serialized!, settings);
+                if (response.Messages.Length == 0) continue;
+                
+                lastUpdated = DateTime.Now.Ticks;
+                foreach (var msg in response.Messages)
+                    _chatWriter.Write(msg.Content.ToFlatString());
             }
         }
 

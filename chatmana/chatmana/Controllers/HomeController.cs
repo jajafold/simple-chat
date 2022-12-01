@@ -1,7 +1,6 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using chatmana.Models;
-using chatmana.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using Infrastructure.Models;
+using Infrastructure.Services;
 using Newtonsoft.Json;
 
 namespace chatmana.Controllers;

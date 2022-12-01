@@ -1,4 +1,4 @@
-using chatmana.Services;
+using Infrastructure.Services;
 using Infrastructure.Messages;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -19,10 +19,11 @@ public class MessagesController : Controller
     [HttpGet]
     public JsonResult ChatRoomMessages(long timestamp, Guid chatRoomId)
     {
+        var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
         var result = JsonConvert.SerializeObject(DataBase.Messages
             .Where(x => x.ChatRoom == chatRoomId)
-            .Where(x => x.TimeStamp < timestamp - 100)
-            .ToMessagesViewModel(), Formatting.Indented);
+            .Where(x => x.TimeStamp > timestamp)
+            .ToMessagesViewModel(), Formatting.Indented, settings);
         return new JsonResult(result);
     }   
 }

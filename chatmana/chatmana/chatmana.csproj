@@ -22,7 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Infrastructure">
-      <HintPath>..\..\Client\Infrastructure\bin\Debug\net5.0-windows\Infrastructure.dll</HintPath>
+      <HintPath>..\..\Infrastructure\bin\Debug\net7.0-windows\Infrastructure.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
