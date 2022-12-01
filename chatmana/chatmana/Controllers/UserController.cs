@@ -2,19 +2,20 @@ using Infrastructure;
 using Infrastructure.Models;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace chatmana.Controllers;
 
 public class UserController : Controller
 {
-    private IServerDataBase dataBase;
     private readonly ISerializer serializer;
+    private readonly IServerDataBase dataBase;
+
     public UserController(IServerDataBase dataBase, ISerializer serializer)
     {
         this.dataBase = dataBase;
         this.serializer = serializer;
     }
+
     [HttpGet]
     public JsonResult Join(Guid chatroomId, string login)
     {

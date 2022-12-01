@@ -1,21 +1,23 @@
 using Infrastructure;
-using Infrastructure.Services;
 using Infrastructure.Messages;
+using Infrastructure.Models;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Infrastructure.Models;
 
 namespace chatmana.Controllers;
 
 public class MessagesController : Controller
 {
-    private IServerDataBase dataBase;
     private readonly ISerializer serializer;
+    private readonly IServerDataBase dataBase;
+
     public MessagesController(IServerDataBase dataBase, ISerializer serializer)
     {
         this.dataBase = dataBase;
         this.serializer = serializer;
     }
+
     [HttpPost]
     public string Text(string message, string name, Guid chatRoom)
     {
@@ -33,5 +35,5 @@ public class MessagesController : Controller
             .Where(x => x.TimeStamp > timestamp)
             .ToMessagesViewModel(), Formatting.Indented, settings);
         return new JsonResult(result);
-    }   
+    }
 }

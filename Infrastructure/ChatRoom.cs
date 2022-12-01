@@ -6,11 +6,11 @@ namespace Infrastructure;
 public class ChatRoom
 {
     public readonly Guid Id;
-    public readonly List<string> Users;
+    public readonly List<string>? Users;
 
-    public ChatRoom(Guid id)
+    public ChatRoom(Guid id, List<string>? users = default ) 
     {
         Id = id;
-        Users = new List<string>();
+        Users = users ?? new List<string>();
     }
 }

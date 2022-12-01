@@ -4,7 +4,7 @@ namespace Infrastructure;
 
 public interface IDeserializer
 {
-    public T Deserialize<T>(string jsonString, JsonSerializerSettings settings);
+    public T Deserialize<T>(string jsonString, JsonSerializerSettings settings = default!);
 }
 
 public interface ISerializer
