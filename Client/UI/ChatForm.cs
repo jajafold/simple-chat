@@ -1,9 +1,8 @@
 ﻿using System;
-using Chat.Domain;
 using Infrastructure;
 using System.Windows.Forms;
-using Ninject;
-using Ninject.Infrastructure.Language;
+using Chat.Domain;
+using Infrastructure.Updater;
 
 namespace Chat.UI
 {
@@ -18,9 +17,16 @@ namespace Chat.UI
             _client = new Client("http://localhost:5034", 
                 name, 
                 new GlobalChatWriter(new Chat(chatWindow)),
-                new Writer(new OnlineUsers(ActiveUsers)));
-            
-            _client.Join(Guid.NewGuid());
+                new Updater<string>(new OnlineUsers(ActiveUsers)));
+            try
+            {
+                _client.Join(Guid.NewGuid());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Сервер недоступен");
+                throw;
+            }
             chatWindow.TextChanged += ChatWindowChangedHandler;
             chatWindow.Disposed += ChatWindowClosedHandler;
         }

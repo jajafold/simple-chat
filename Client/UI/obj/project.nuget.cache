@@ -1,14 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "19Ga1qn8IK95Wl5EUPQPM5PPGVu+YDwjk0w2+OgZqNRYCBIEp3/yqUWgJlLVByjkDkPad7mfHFo4dwR1DydV5Q==",
+  "dgSpecHash": "hYqKcLAZU0XkNVExaxk3RnBVV45hxFJWTuNZa1SpnoFB8WP09D8ARSy5Acv/QY8uGTYigmhtA5KOXI77Yb44BA==",
   "success": true,
   "projectFilePath": "D:\\UnityProject\\from_git\\simple-chat\\Client\\UI\\Chat.UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\iayny\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512",
-    "C:\\Users\\iayny\\.nuget\\packages\\ninject\\4.0.0-beta.1\\ninject.4.0.0-beta.1.nupkg.sha512",
-    "C:\\Users\\iayny\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.7.0\\system.reflection.emit.ilgeneration.4.7.0.nupkg.sha512",
-    "C:\\Users\\iayny\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512",
-    "C:\\Users\\iayny\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
+    "C:\\Users\\iayny\\.nuget\\packages\\ninject\\4.0.0-beta.1\\ninject.4.0.0-beta.1.nupkg.sha512"
   ],
   "logs": []
 }

@@ -6,10 +6,9 @@ namespace chatmana.Controllers;
 
 public class OnlineController : Controller
 {
-    public JsonResult GetUsersOnline(Guid id)
+    public JsonResult GetUsersOnline(Guid? chatRoomId)
     {
-        var chatId = id == default ? DataBase.MainChat : id;
-        var result = JsonConvert.SerializeObject(DataBase.Chatrooms[chatId].Users);
+        var result = JsonConvert.SerializeObject(DataBase.Chatrooms[DataBase.MainChat].Users);
         return new JsonResult(result);
     }
 }

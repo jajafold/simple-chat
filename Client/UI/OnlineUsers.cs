@@ -1,9 +1,11 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 using Infrastructure;
+using Infrastructure.Updater;
 
 namespace Chat.UI
 {
-    public class OnlineUsers : IWritable
+    public class OnlineUsers : IUpdatable<string>
     {
         private readonly ListBox _source;
 
@@ -12,10 +14,11 @@ namespace Chat.UI
             _source = source;
         }
 
-        public void Write(string text)
+        public void Update(IEnumerable<string> items)
         {
-            if (_source.Items.Contains(text)) return;
-            _source.Items.Add(text);
+            _source.Items.Clear();
+            foreach (var item in items)
+                _source.Items.Add(item);
         }
     }
 }
