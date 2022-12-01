@@ -14,7 +14,7 @@ public class HomeControllerTests
     public void Setup()
     {
         _container = new StandardKernel();
-        _container.Bind<IServerDataBase>().ToConstant(HomeDataBaseGenerator.DataBase).InSingletonScope();
+        _container.Bind<IServerDataBase>().ToConstant(new HomeDataBaseGenerator().DataBase);
         _container.Bind<ISerializer>().To<Serializer>().InSingletonScope();
         _container.Bind<IDeserializer>().To<Deserializer>().InSingletonScope();
     }
@@ -46,6 +46,6 @@ public class HomeControllerTests
         Assert.AreEqual(viewModel.ChatRooms.Length, db.Chatrooms.Count);
         Assert.AreEqual(viewModel.ChatRooms[0].Id, db.MainChat);
         Assert.AreEqual(viewModel.ChatRooms[0].ActiveUsers,
-            db.Chatrooms[HomeDataBaseGenerator.DataBase.MainChat].Users!.Count);
+            db.Chatrooms[db.MainChat].Users!.Count);
     }
 }

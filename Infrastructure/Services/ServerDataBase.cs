@@ -11,19 +11,24 @@ public class ServerDataBase : IServerDataBase
     public List<Message> Messages{ get; } = new();
     public Guid MainChat { get; set; } = Guid.NewGuid();
 
+    public ServerDataBase()
+    {
+        Chatrooms.TryAdd(MainChat, new ChatRoom(MainChat, new List<string>()));
+    }
+
     public void Join(Guid chatroom, string login)
     {
         //Stubbed with MainChat
-        if (Chatrooms[MainChat].Users.Contains(login))
+        if (Chatrooms[chatroom].Users.Contains(login))
             throw new InvalidOperationException($"Login {login} is already in use");
-        Chatrooms[MainChat].Users.Add(login);
+        Chatrooms[chatroom].Users.Add(login);
     }
 
     public void Leave(Guid chatRoomId, string login)
     {
-        if (!Chatrooms[MainChat].Users.Contains(login))
+        if (!Chatrooms[chatRoomId].Users.Contains(login))
             throw new InvalidOperationException($"There's no {login} in room {chatRoomId.ToString()}");
-        Chatrooms[MainChat].Users.Remove(login);
+        Chatrooms[chatRoomId].Users.Remove(login);
     }
     
     public void PostMessage<T>(T message) where T : Message

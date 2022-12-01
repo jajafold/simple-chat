@@ -13,7 +13,7 @@ public class OnlineControllerTests
     public void Setup()
     {
         _container = new StandardKernel();
-        _container.Bind<IServerDataBase>().ToConstant(OnlineDataBaseGenerator.DataBase).InSingletonScope();
+        _container.Bind<IServerDataBase>().ToConstant(new OnlineDataBaseGenerator().DataBase).InSingletonScope();
         _container.Bind<ISerializer>().To<Serializer>().InSingletonScope();
         _container.Bind<IDeserializer>().To<Deserializer>().InSingletonScope();
     }

@@ -3,14 +3,13 @@ using Infrastructure.Services;
 
 namespace ServerTests;
 
-public static class HomeDataBaseGenerator
+public class HomeDataBaseGenerator
 {
-    public static readonly IServerDataBase DataBase;
+    public readonly IServerDataBase DataBase;
 
-    static HomeDataBaseGenerator()
+    public HomeDataBaseGenerator()
     {
         DataBase = new ServerDataBase();
-        DataBase.Chatrooms.Add(DataBase.MainChat, new ChatRoom
-            (DataBase.MainChat, new List<string> {"Gena", "Vasya", "Petya"}));
+        DataBase.Chatrooms[DataBase.MainChat].Users!.AddRange(new List<string> {"Gena", "Vasya", "Petya"});
     }
 }

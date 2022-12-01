@@ -19,9 +19,9 @@ public class UserController : Controller
     [HttpGet]
     public JsonResult Join(Guid chatroomId, string login)
     {
-        dataBase.Join(dataBase.MainChat, login);
+        dataBase.Join(chatroomId, login);
         var result = serializer.Serialize
-            (dataBase.Chatrooms[dataBase.MainChat].Users.ToResponseViewModel(dataBase.MainChat));
+            (dataBase.Chatrooms[chatroomId].Users.ToResponseViewModel(chatroomId));
         return new JsonResult(result);
     }
 
