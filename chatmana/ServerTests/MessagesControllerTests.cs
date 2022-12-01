@@ -3,6 +3,7 @@ using Infrastructure;
 using Infrastructure.Messages;
 using Infrastructure.Models;
 using Infrastructure.Services;
+using Newtonsoft.Json;
 using Ninject;
 
 namespace ServerTests;
@@ -52,4 +53,42 @@ public class MessagesControllerTests
         Assert.Throws<InvalidOperationException>
             (()=> controller.Text(text, name, db.MainChat));
     }
+
+    [Test]
+    public void GetMessagesDoesNotReturnOutdatedMessages()
+    {
+        var controller = _container.Get<MessagesController>();
+        var db = _container.Get<IServerDataBase>();
+        var (text, name) = ("buba", "Vasya");
+        controller.Text(text, name, db.MainChat);
+        var resultJson = controller.ChatRoomMessages(DateTime.Now.Ticks, db.MainChat).Value;
+        var result = _container.Get<Deserializer>().Deserialize<MessagesViewModel>(resultJson.ToString(),
+            new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All});
+        Assert.AreEqual(result.Messages.Length, 0);
+    }
+    
+    [Test]
+    public void GetMessagesReturnsAllMessagesFromChat()
+    {
+        var controller = _container.Get<MessagesController>();
+        var db = _container.Get<IServerDataBase>();
+        var (text, name) = ("buba", "Vasya");
+        for (var i = 0; i < 10; i++)
+            controller.Text(text, name, db.MainChat);
+        controller.Text(text, "Dima", Guid.Empty);
+        var resultJson = controller.ChatRoomMessages(DateTime.MinValue.Ticks, db.MainChat).Value;
+        var result = _container.Get<Deserializer>().Deserialize<MessagesViewModel>(resultJson.ToString(),
+            new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All});
+        Assert.AreEqual(result.Messages.Length, 10);
+    }
+
+    [Test]
+    public void InvalidGuidThrowsInvalidOperationException()
+    {
+        var controller = _container.Get<MessagesController>();
+        var db = _container.Get<IServerDataBase>();
+        Assert.Throws<InvalidOperationException>
+            (() =>controller.ChatRoomMessages(DateTime.Now.Ticks, Guid.NewGuid()));
+    }
+    
 }

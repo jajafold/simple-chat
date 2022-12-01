@@ -25,10 +25,13 @@ public class MessagesController : Controller
         dataBase.PostMessage(msg);
         return $"{msg.ToFlatString()}";
     }
-
+    
+    //TODO : self-made exceptions
     [HttpGet]
     public JsonResult ChatRoomMessages(long timestamp, Guid chatRoomId)
     {
+        if (!dataBase.Chatrooms.ContainsKey(chatRoomId))
+            throw new InvalidOperationException($"chat {chatRoomId} is not exist");
         var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
         var result = serializer.Serialize(dataBase.Messages
             .Where(x => x.ChatRoom == chatRoomId)
