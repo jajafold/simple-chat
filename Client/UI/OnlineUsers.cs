@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using Infrastructure;
 using Infrastructure.Updater;
 
 namespace Chat.UI

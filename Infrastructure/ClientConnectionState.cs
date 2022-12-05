@@ -8,7 +8,16 @@ public enum ClientConnectionState
     Disconnected
 }
 
-public delegate void ClientConnectionCandler(ClientConnectionEventArgs args);
+public static class ClientConnection
+{
+    public delegate void ClientConnectionHandler(ClientConnectionEventArgs args);
+    public static event ClientConnectionHandler? NetworkStatusChange;
+
+    public static void OnNetworkStatusChange(ClientConnectionEventArgs args)
+    {
+        NetworkStatusChange?.Invoke(args);
+    }
+}
 
 public class ClientConnectionEventArgs : EventArgs
 {

@@ -17,8 +17,10 @@ namespace Chat.UI
             var username = richTextBox1.Text;
 
             _chatForm = new ChatForm(username);
-            _chatForm.Visible = true;
-            this.Visible = false;
+            //_chatForm.Visible = true;
+            //Visible = false;
+            _chatForm.Show(this);
+             Hide();
         }
     }
 }

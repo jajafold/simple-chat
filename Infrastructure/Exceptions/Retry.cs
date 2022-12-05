@@ -1,38 +1,50 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Exceptions;
 
 public class Retry
 {
-    public static TResult? Execute<TResult>(
-        Func<TResult> func,
-        ClientConnectionCandler connectionEventHandler,
-        out Exception? e,
-        int msInterval = 200,
-        int retryCount = 10
-    ) where TResult : class
+    public sealed class Executor
     {
-        TResult? result = null;
-        e = null;
+        public Exception? Exception { get; private set; }
+        public bool FinishedSuccessfully { get; private set; }
 
-        for (var iteration = 0; iteration < retryCount; iteration++)
+        public async Task<TResult?> Execute<TResult>(
+            Func<Task<TResult?>> func,
+            int msInterval = 50,
+            int retryCount = 5
+        )
         {
-            try
-            {
-                result = func();
-                connectionEventHandler.Invoke(new ClientConnectionEventArgs { State = ClientConnectionState.Alive});
-                break;
-            }
-            catch (Exception exception)
-            {
-                e = exception;
-                connectionEventHandler.Invoke(new ClientConnectionEventArgs { State = ClientConnectionState.Connecting});
-            }
+            TResult? result = default;
+            FinishedSuccessfully = false;
 
-            Thread.Sleep(msInterval);
+            for (var iteration = 0; iteration < retryCount; iteration++)
+            {
+                try
+                {
+                    result = await func.Invoke();
+                    
+                    ClientConnection.OnNetworkStatusChange(new ClientConnectionEventArgs {State = ClientConnectionState.Alive});
+                    FinishedSuccessfully = true;
+                    
+                    return result;
+                }
+                catch (Exception exception)
+                {
+                    Exception = exception;
+                    ClientConnection.OnNetworkStatusChange(new ClientConnectionEventArgs {State = ClientConnectionState.Connecting});
+                }
+
+                Thread.Sleep(msInterval);
+            }
+            
+            ClientConnection.OnNetworkStatusChange(new ClientConnectionEventArgs {State = ClientConnectionState.Disconnected});
+            FinishedSuccessfully = false;
+            
+            return result;
         }
-        
-        return result;
     }
+    
 }

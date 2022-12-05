@@ -86,7 +86,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\iayny\\.nuget\\packages\\": {}
+    "C:\\Users\\iayny\\.nuget\\packages\\": {},
+    "D:\\VS Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
@@ -97,8 +98,12 @@
       "packagesPath": "C:\\Users\\iayny\\.nuget\\packages\\",
       "outputPath": "D:\\UnityProject\\from_git\\simple-chat\\Client\\Domain\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\VS Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\iayny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

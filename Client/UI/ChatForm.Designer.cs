@@ -36,6 +36,8 @@ namespace Chat.UI
             this.inputMessageField = new System.Windows.Forms.RichTextBox();
             this.chatWindow = new System.Windows.Forms.RichTextBox();
             this.ActiveUsers = new System.Windows.Forms.ListBox();
+            this.networkStatusLabel = new System.Windows.Forms.Label();
+            this.networkStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // SendButton
@@ -47,10 +49,10 @@ namespace Chat.UI
             this.SendButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SendButton.Font = new System.Drawing.Font("Corbel", 26F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.SendButton.ForeColor = System.Drawing.Color.DimGray;
-            this.SendButton.Location = new System.Drawing.Point(746, 412);
+            this.SendButton.Location = new System.Drawing.Point(583, 330);
             this.SendButton.Margin = new System.Windows.Forms.Padding(0);
             this.SendButton.Name = "SendButton";
-            this.SendButton.Size = new System.Drawing.Size(114, 60);
+            this.SendButton.Size = new System.Drawing.Size(91, 48);
             this.SendButton.TabIndex = 0;
             this.SendButton.Text = "➥";
             this.SendButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
@@ -63,11 +65,11 @@ namespace Chat.UI
             this.inputMessageField.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.inputMessageField.Font = new System.Drawing.Font("Corbel", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.inputMessageField.ForeColor = System.Drawing.Color.Black;
-            this.inputMessageField.Location = new System.Drawing.Point(2, 412);
+            this.inputMessageField.Location = new System.Drawing.Point(12, 330);
             this.inputMessageField.Margin = new System.Windows.Forms.Padding(2);
             this.inputMessageField.Name = "inputMessageField";
             this.inputMessageField.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.inputMessageField.Size = new System.Drawing.Size(742, 60);
+            this.inputMessageField.Size = new System.Drawing.Size(569, 48);
             this.inputMessageField.TabIndex = 1;
             this.inputMessageField.Text = "";
             // 
@@ -75,14 +77,12 @@ namespace Chat.UI
             // 
             this.chatWindow.BackColor = System.Drawing.Color.Gainsboro;
             this.chatWindow.Font = new System.Drawing.Font("Corbel", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.chatWindow.Location = new System.Drawing.Point(15, 15);
-            this.chatWindow.Margin = new System.Windows.Forms.Padding(4);
+            this.chatWindow.Location = new System.Drawing.Point(12, 12);
             this.chatWindow.Name = "chatWindow";
             this.chatWindow.ReadOnly = true;
-            this.chatWindow.Size = new System.Drawing.Size(826, 390);
+            this.chatWindow.Size = new System.Drawing.Size(662, 313);
             this.chatWindow.TabIndex = 3;
             this.chatWindow.Text = "";
-            this.chatWindow.TextChanged += new System.EventHandler(this.chatWindow_TextChanged);
             // 
             // ActiveUsers
             // 
@@ -90,18 +90,43 @@ namespace Chat.UI
             this.ActiveUsers.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ActiveUsers.Font = new System.Drawing.Font("Corbel", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ActiveUsers.FormattingEnabled = true;
-            this.ActiveUsers.ItemHeight = 27;
-            this.ActiveUsers.Location = new System.Drawing.Point(843, 15);
+            this.ActiveUsers.ItemHeight = 22;
+            this.ActiveUsers.Location = new System.Drawing.Point(688, 44);
+            this.ActiveUsers.Margin = new System.Windows.Forms.Padding(2);
             this.ActiveUsers.Name = "ActiveUsers";
-            this.ActiveUsers.Size = new System.Drawing.Size(245, 380);
+            this.ActiveUsers.Size = new System.Drawing.Size(196, 332);
             this.ActiveUsers.TabIndex = 4;
+            // 
+            // networkStatusLabel
+            // 
+            this.networkStatusLabel.AutoSize = true;
+            this.networkStatusLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.networkStatusLabel.ForeColor = System.Drawing.Color.Black;
+            this.networkStatusLabel.Location = new System.Drawing.Point(686, 12);
+            this.networkStatusLabel.Name = "networkStatusLabel";
+            this.networkStatusLabel.Size = new System.Drawing.Size(56, 28);
+            this.networkStatusLabel.TabIndex = 5;
+            this.networkStatusLabel.Text = "Сеть:";
+            // 
+            // networkStatus
+            // 
+            this.networkStatus.AutoSize = true;
+            this.networkStatus.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.networkStatus.ForeColor = System.Drawing.Color.Black;
+            this.networkStatus.Location = new System.Drawing.Point(735, 12);
+            this.networkStatus.Name = "networkStatus";
+            this.networkStatus.Size = new System.Drawing.Size(24, 28);
+            this.networkStatus.TabIndex = 6;
+            this.networkStatus.Text = "...";
             // 
             // ChatForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(140)))), ((int)(((byte)(158)))));
-            this.ClientSize = new System.Drawing.Size(1088, 471);
+            this.ClientSize = new System.Drawing.Size(902, 390);
+            this.Controls.Add(this.networkStatus);
+            this.Controls.Add(this.networkStatusLabel);
             this.Controls.Add(this.ActiveUsers);
             this.Controls.Add(this.chatWindow);
             this.Controls.Add(this.inputMessageField);
@@ -110,6 +135,7 @@ namespace Chat.UI
             this.Name = "ChatForm";
             this.Text = "Chat";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -120,6 +146,8 @@ namespace Chat.UI
         private System.Windows.Forms.RichTextBox inputMessageField;
         internal System.Windows.Forms.RichTextBox chatWindow;
         private System.Windows.Forms.ListBox ActiveUsers;
+        private System.Windows.Forms.Label networkStatusLabel;
+        private System.Windows.Forms.Label networkStatus;
     }
 }
 
