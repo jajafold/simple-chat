@@ -57,7 +57,7 @@ namespace Chat.UI
 
         private void OnUnhandledException(ThreadExceptionEventArgs e)
         {
-            MessageBox.Show(e.Exception.Message);
+            MessageBox.Show(e.Exception.ToString());
         }
 
         private void ThreadExceptionCaught(object sender, ThreadExceptionEventArgs e)

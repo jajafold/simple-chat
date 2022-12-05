@@ -9,11 +9,9 @@ namespace chatmana.Controllers;
 public class MessagesController : Controller
 {
     [HttpPost]
-    public string Text(string message, string name, Guid chatRoom)
+    public void Text(string message, string name, Guid chatRoomId)
     {
-        var msg = new TextMessage(message, chatRoom, DateTime.Now, name);
-        DataBase.PostMessage(msg);
-        return $"{msg.ToFlatString()}";
+        DataBase.PostMessage(new TextMessage(message, chatRoomId, DateTime.Now, name));
     }
 
     [HttpGet]

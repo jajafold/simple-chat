@@ -9,7 +9,9 @@ using Infrastructure;
 using Infrastructure.Exceptions;
 using Infrastructure.Models;    
 using Infrastructure.Updater;
+using Infrastructure.Uri;
 using Newtonsoft.Json;
+using UriBuilder = Infrastructure.Uri.UriBuilder;
 
 namespace Chat.Domain;
 
@@ -22,19 +24,19 @@ public class Client
     
     private readonly Writer _chatWriter;
     private readonly Updater<string> _onlineUsersWriter;
-    private readonly string _uri;
+    private readonly string _host;
     private Guid? _currentRoom = null;
 
     private readonly Thread _receiveUpdate;
     private readonly Thread _onlineUsersUpdate;
 
-    public Client(string uri, string name, Writer chatWriter, Updater<string> onlineUsersWriter)
+    public Client(string host, string name, Writer chatWriter, Updater<string> onlineUsersWriter)
     {
         Name = name;
         ConnectionState = ClientConnectionState.Disconnected;
         ClientConnection.NetworkStatusChange += ChangeConnectionStatus;
         
-        _uri = uri;
+        _host = host;
         _chatWriter = chatWriter;
         _onlineUsersWriter = onlineUsersWriter;
 
@@ -45,16 +47,22 @@ public class Client
     private void ChangeConnectionStatus(ClientConnectionEventArgs e)
     {
         ConnectionState = e.State;
-        _chatWriter.Write(ConnectionState.ToString());
+        //_chatWriter.Write(ConnectionState.ToString());
     } 
 
     public async void Join(Guid chatRoomId)
     {
         var executor = new Retry.Executor();
+        var uri = new UriBuilder()
+            .AddHost(_host)
+            .AddFragment("User")
+            .AddFragment("Join")
+            .AddQuery("chatRoomId", chatRoomId)
+            .AddQuery("login", Name)
+            .ToString();
+        
         var result = await executor.Execute(
-             async () => await _httpClient.GetFromJsonAsync<string>(
-                $"{_uri}/User/Join?chatroomId={chatRoomId.ToString()}&login={Name}")
-             );
+             async () => await _httpClient.GetFromJsonAsync<string>(uri));
 
         if (!executor.FinishedSuccessfully)
         {
@@ -71,11 +79,18 @@ public class Client
     public async void Send(string message)
     {
         var executor = new Retry.Executor();
+        var uri = new UriBuilder()
+            .AddHost(_host)
+            .AddFragment("Messages")
+            .AddFragment("Text")
+            .AddQuery("chatRoomId", 
+                _currentRoom ?? throw new InvalidOperationException("The room does not contain a value"))
+            .AddQuery("name", Name)
+            .AddQuery("message", message)
+            .ToString();
+        
         var response = await executor.Execute(
-            async () => await _httpClient.PostAsync(
-                $"{_uri}/Messages/Text?chatRoom={_currentRoom.ToString()}&name={Name}&message={message}",
-                new StringContent(""))
-        );
+            async () => await _httpClient.PostAsync(uri, new StringContent("")));
         
         if (!executor.FinishedSuccessfully)
         {
@@ -88,14 +103,21 @@ public class Client
         var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
         var lastUpdated = DateTime.Now.Ticks;
         var executor = new Retry.Executor();
-        
+
         while (true)
         {
+            var uri = new UriBuilder()
+                .AddHost(_host)
+                .AddFragment("Messages")
+                .AddFragment("ChatRoomMessages")
+                .AddQuery("timestamp", lastUpdated)
+                .AddQuery("chatRoomId", 
+                    _currentRoom ?? throw new InvalidOperationException("The room does not contain a value"))
+                .ToString();
+            
             Thread.Sleep(500);
             var serialized = await executor.Execute(
-                    async () => await _httpClient.GetFromJsonAsync<string>(
-                        $"{_uri}/Messages/ChatRoomMessages?timestamp={lastUpdated}&chatRoomId={_currentRoom.ToString()}")
-            );
+                    async () => await _httpClient.GetFromJsonAsync<string>(uri));
 
             if (!executor.FinishedSuccessfully)
             {
@@ -122,13 +144,19 @@ public class Client
     {
         var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
         var executor = new Retry.Executor();
+        var uri = new UriBuilder()
+            .AddHost(_host)
+            .AddFragment("Online")
+            .AddFragment("GetUsersOnline")
+            .AddQuery("chatRoomId",
+                _currentRoom ?? throw new InvalidOperationException("The room does not contain a value"))
+            .ToString();
+        
         while (true)
         {
             Thread.Sleep(500);
             var serialized = await executor.Execute(
-                async () => await _httpClient.GetFromJsonAsync<string>(
-                    $"{_uri}/Online/GetUsersOnline?chatRoomId={_currentRoom.ToString()}")
-                );
+                async () => await _httpClient.GetFromJsonAsync<string>(uri));
 
             if (!executor.FinishedSuccessfully)
             {
@@ -150,10 +178,17 @@ public class Client
     public async void Leave()
     {
         var executor = new Retry.Executor();
+        var uri = new UriBuilder()
+            .AddHost(_host)
+            .AddFragment("User")
+            .AddFragment("Leave")
+            .AddQuery("chatRoomId",
+                _currentRoom ?? throw new InvalidOperationException("The room does not contain a value"))
+            .AddQuery("login", Name)
+            .ToString();
+        
         var response = await executor.Execute(
-            async () => await _httpClient.PostAsync(
-                $"{_uri}/User/Leave?chatRoomId={_currentRoom.ToString()}&login={Name}",
-                new StringContent("")));
+            async () => await _httpClient.PostAsync(uri, new StringContent("")));
         
         if (!executor.FinishedSuccessfully)
             throw new ConnectionException("Connection lost");

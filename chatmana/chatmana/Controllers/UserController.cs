@@ -8,7 +8,7 @@ namespace chatmana.Controllers;
 public class UserController : Controller
 {
     [HttpGet]
-    public JsonResult Join(Guid chatroomId, string login)
+    public JsonResult Join(Guid chatRoomId, string login)
     {
         DataBase.Join(DataBase.MainChat, login);
         var result = JsonConvert.SerializeObject
