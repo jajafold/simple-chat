@@ -1,3 +1,5 @@
+#pragma warning disable CA1416
+
 using Infrastructure.Models;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;

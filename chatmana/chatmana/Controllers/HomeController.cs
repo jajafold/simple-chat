@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿#pragma warning disable CA1416
+
+using Microsoft.AspNetCore.Mvc;
 using Infrastructure.Models;
 using Infrastructure.Services;
 using Newtonsoft.Json;
