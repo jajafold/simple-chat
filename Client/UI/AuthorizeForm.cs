@@ -6,7 +6,8 @@ namespace Chat.UI
     // подумать что потом будет много разных форм ауторизы. Магический контракт про чат форм
     public partial class AuthorizeForm : Form
     {
-        private ChatForm _chatForm;
+        private RoomSelection _roomSelection;
+
         public AuthorizeForm()
         {
             InitializeComponent();
@@ -16,10 +17,8 @@ namespace Chat.UI
         {
             var username = richTextBox1.Text;
 
-            _chatForm = new ChatForm(username);
-            //_chatForm.Visible = true;
-            //Visible = false;
-            _chatForm.Show(this);
+            _roomSelection = new RoomSelection(username);
+            _roomSelection.Show(this);
              Hide();
         }
     }
