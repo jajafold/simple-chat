@@ -30,11 +30,12 @@
         {
             this._buttonConnect = new System.Windows.Forms.Button();
             this._roomSelectionTable = new System.Windows.Forms.DataGridView();
+            this._DEBUG_selected = new System.Windows.Forms.Label();
+            this._buttonRoomCreation = new System.Windows.Forms.Button();
             this.roomName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.roomPermission = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.roomMembersCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this._DEBUG_selected = new System.Windows.Forms.Label();
-            this._buttonRoomCreation = new System.Windows.Forms.Button();
+            this.roomGuid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this._roomSelectionTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,7 +57,8 @@
             this._roomSelectionTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.roomName,
             this.roomPermission,
-            this.roomMembersCount});
+            this.roomMembersCount,
+            this.roomGuid});
             this._roomSelectionTable.Location = new System.Drawing.Point(12, 12);
             this._roomSelectionTable.Name = "_roomSelectionTable";
             this._roomSelectionTable.ReadOnly = true;
@@ -64,6 +66,24 @@
             this._roomSelectionTable.RowTemplate.Height = 29;
             this._roomSelectionTable.Size = new System.Drawing.Size(536, 376);
             this._roomSelectionTable.TabIndex = 2;
+            // 
+            // _DEBUG_selected
+            // 
+            this._DEBUG_selected.AutoSize = true;
+            this._DEBUG_selected.Location = new System.Drawing.Point(640, 134);
+            this._DEBUG_selected.Name = "_DEBUG_selected";
+            this._DEBUG_selected.Size = new System.Drawing.Size(50, 20);
+            this._DEBUG_selected.TabIndex = 3;
+            this._DEBUG_selected.Text = "label1";
+            // 
+            // _buttonRoomCreation
+            // 
+            this._buttonRoomCreation.Location = new System.Drawing.Point(394, 409);
+            this._buttonRoomCreation.Name = "_buttonRoomCreation";
+            this._buttonRoomCreation.Size = new System.Drawing.Size(154, 29);
+            this._buttonRoomCreation.TabIndex = 4;
+            this._buttonRoomCreation.Text = "Создать комнату";
+            this._buttonRoomCreation.UseVisualStyleBackColor = true;
             // 
             // roomName
             // 
@@ -92,23 +112,14 @@
             this.roomMembersCount.ReadOnly = true;
             this.roomMembersCount.Width = 110;
             // 
-            // _DEBUG_selected
+            // roomGuid
             // 
-            this._DEBUG_selected.AutoSize = true;
-            this._DEBUG_selected.Location = new System.Drawing.Point(640, 134);
-            this._DEBUG_selected.Name = "_DEBUG_selected";
-            this._DEBUG_selected.Size = new System.Drawing.Size(50, 20);
-            this._DEBUG_selected.TabIndex = 3;
-            this._DEBUG_selected.Text = "label1";
-            // 
-            // _buttonRoomCreation
-            // 
-            this._buttonRoomCreation.Location = new System.Drawing.Point(394, 409);
-            this._buttonRoomCreation.Name = "_buttonRoomCreation";
-            this._buttonRoomCreation.Size = new System.Drawing.Size(154, 29);
-            this._buttonRoomCreation.TabIndex = 4;
-            this._buttonRoomCreation.Text = "Создать комнату";
-            this._buttonRoomCreation.UseVisualStyleBackColor = true;
+            this.roomGuid.HeaderText = "ID комнаты";
+            this.roomGuid.MinimumWidth = 6;
+            this.roomGuid.Name = "roomGuid";
+            this.roomGuid.ReadOnly = true;
+            this.roomGuid.Visible = false;
+            this.roomGuid.Width = 125;
             // 
             // RoomSelection
             // 
@@ -130,10 +141,11 @@
         #endregion
         private System.Windows.Forms.Button _buttonConnect;
         private System.Windows.Forms.DataGridView _roomSelectionTable;
+        private System.Windows.Forms.Label _DEBUG_selected;
+        private System.Windows.Forms.Button _buttonRoomCreation;
         private System.Windows.Forms.DataGridViewTextBoxColumn roomName;
         private System.Windows.Forms.DataGridViewTextBoxColumn roomPermission;
         private System.Windows.Forms.DataGridViewTextBoxColumn roomMembersCount;
-        private System.Windows.Forms.Label _DEBUG_selected;
-        private System.Windows.Forms.Button _buttonRoomCreation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn roomGuid;
     }
 }

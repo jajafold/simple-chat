@@ -5,18 +5,20 @@ using Infrastructure;
 using System.Windows.Forms;
 using Chat.Domain;
 using Infrastructure.Exceptions;
+using Infrastructure.Updater;
 
 namespace Chat.UI
 {
     public partial class ChatForm : Form
     {
         private readonly Client _client;
-        private readonly Guid _connectTo;
-        
+
         public ChatForm(Client client)
         {
             InitializeComponent();
             _client = client;
+            _client.SetTo<Writer>(new GlobalChatWriter(new Chat(chatWindow)));
+            _client.SetTo(new Updater<string>(new OnlineUsers(ActiveUsers)));
             
             chatWindow.TextChanged += ChatWindowChangedHandler;
             chatWindow.Disposed += ChatWindowClosedHandler;
@@ -24,10 +26,6 @@ namespace Chat.UI
 
             networkStatus.ForeColor = Color.Gold;
             networkStatus.Text = @"Подключение...";
-
-            _connectTo = Guid.NewGuid();
-            
-            _client.Join(_connectTo);
         }
 
         private void OnConnectionException()
@@ -42,7 +40,8 @@ namespace Chat.UI
                     MessageBoxOptions.DefaultDesktopOnly
                 ) == DialogResult.Retry)
             {
-                _client.Join(_connectTo);
+                if (_client.CurrentRoom != null) 
+                    _client.Join(_client.CurrentRoom.Value);
                 TopMost = true;
             }
             else

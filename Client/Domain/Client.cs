@@ -13,6 +13,7 @@ namespace Chat.Domain;
 public class Client
 { 
     public string Name { get; }
+    public Guid? CurrentRoom { get; private set; }
 
     private readonly NetworkClient _networkClient;
     private Writer _chatWriter;
@@ -29,7 +30,7 @@ public class Client
     public Client(string host, string name)
     {
         Name = name;
-        
+
         _networkClient = new NetworkClient(host, name);
         _receiveUpdate = new Thread(GetNewMessages);
         _onlineUsersUpdate = new Thread(UpdateOnlineUsers);
@@ -53,6 +54,7 @@ public class Client
         _cancellationTokenB = false;
         await _networkClient.Join(chatRoomId);
 
+        CurrentRoom = chatRoomId;
         _cancellationTokenA = false;
         _receiveUpdate.Start();
         _onlineUsersUpdate.Start();
@@ -63,6 +65,7 @@ public class Client
         _cancellationTokenA = true;
         
         await _networkClient.Leave();
+        CurrentRoom = null;
         _cancellationTokenB = false;
     }
 

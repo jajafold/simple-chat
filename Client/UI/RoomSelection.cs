@@ -17,7 +17,7 @@ namespace Chat.UI
             InitializeComponent();
             _login = username;
             _client = new Client("http://localhost:5034", username);
-            _client.SetTo<Updater<RoomViewModel>>(
+            _client.SetTo(
                 new Updater<RoomViewModel>(new RoomsTable(_roomSelectionTable)));
 
             _roomSelectionTable.MultiSelect = false;
@@ -32,11 +32,26 @@ namespace Chat.UI
                 };
 
             _buttonConnect.Click +=
-                (sender, args) => {
-                    _DEBUG_selected.Text = _roomSelectionTable.SelectedRows[0].Cells[0].Value.ToString()!;
-                    // _chat = new ChatForm(_client);
-                    // _chat.Show(this);
-                    // Hide();
+                (sender, args) =>
+                {
+                    var selected = _roomSelectionTable.SelectedRows[0];
+                    _DEBUG_selected.Text = 
+                        $"{selected.Cells[0].Value}\n{selected.Cells[3].Value}";
+                    
+                    var chatID = selected.Cells[3].Value.ToString();
+                    try
+                    {
+                        if (Guid.TryParse(chatID, out var chatRoomId))
+                            _client.Join(chatRoomId);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+
+                    _chat = new ChatForm(_client); 
+                    _chat.Show(this);
+                    Hide();
                 };
 
             Closing += (sender, args) => { Environment.Exit(0); };
