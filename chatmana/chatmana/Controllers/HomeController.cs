@@ -12,9 +12,17 @@ public class HomeController : Controller
     [HttpGet]
     public JsonResult Index()
     {
+        var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
+        
         var result = JsonConvert.SerializeObject
-            (DataBase.Chatrooms.Values.ToList().ToHubsViewModel(), Formatting.Indented);
+            (DataBase.ChatRooms.Values.ToList().ToHubsViewModel(), Formatting.Indented, settings);
         return new JsonResult(result);
+    }
+
+    [HttpPost]
+    public void CreateRoom(string creatorName, string roomName)
+    {
+        DataBase.AddRoom(creatorName, roomName);
     }
 }
 

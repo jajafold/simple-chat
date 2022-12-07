@@ -12,9 +12,9 @@ public class UserController : Controller
     [HttpGet]
     public JsonResult Join(Guid chatRoomId, string login)
     {
-        DataBase.Join(DataBase.MainChat, login);
+        DataBase.Join(chatRoomId, login);
         var result = JsonConvert.SerializeObject
-            (DataBase.Chatrooms[DataBase.MainChat].Users.ToResponseViewModel(DataBase.MainChat), Formatting.Indented);
+            (DataBase.ChatRooms[chatRoomId].Users.ToResponseViewModel(chatRoomId), Formatting.Indented);
         return new JsonResult(result);
     }
 

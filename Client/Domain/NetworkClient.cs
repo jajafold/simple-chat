@@ -139,7 +139,33 @@ public class NetworkClient
         var users = JsonConvert.DeserializeObject<IEnumerable<string>>(serialized!, settings);
         return users.ToArray();
     }
-    
+
+    public async Task<RoomViewModel[]> UpdateRooms()
+    {
+        var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
+        var executor = new Retry.Executor();
+        var uri = new UriBuilder()
+            .AddHost(_host)
+            .AddFragment("Home")
+            .AddFragment("Index")
+            .ToString();
+
+        var serialized = await executor.Execute(
+            async () => await _httpClient.GetFromJsonAsync<string>(uri));
+        
+        if (!executor.FinishedSuccessfully)
+        {
+            if (executor.Exception is ConnectionException)
+                throw new ConnectionException("Connection lost");
+
+            throw new Exception(
+                $"Unhandled exception inside the {nameof(UpdateRooms)} executor: {executor.Exception}");
+        }
+
+        var rooms = JsonConvert.DeserializeObject<RoomsViewModel>(serialized, settings);
+        return rooms.ChatRooms;
+    }
+
     public async Task Leave()
     {
         var executor = new Retry.Executor();

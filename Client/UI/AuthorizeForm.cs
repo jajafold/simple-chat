@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
+using Infrastructure.Exceptions;
 
 namespace Chat.UI
 {
@@ -11,6 +13,8 @@ namespace Chat.UI
         public AuthorizeForm()
         {
             InitializeComponent();
+            Application.ThreadException += ThreadExceptionCaught;
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -20,6 +24,23 @@ namespace Chat.UI
             _roomSelection = new RoomSelection(username);
             _roomSelection.Show(this);
              Hide();
+        }
+
+        private void OnUnhandledException(object? o, UnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show(e.ExceptionObject.ToString());
+        }
+        
+        private void OnUnhandledThreadException(ThreadExceptionEventArgs e)
+        {
+            MessageBox.Show(e.Exception.ToString());
+        }
+
+        private void ThreadExceptionCaught(object sender, ThreadExceptionEventArgs e)
+        {
+            OnUnhandledThreadException(e);
+            
+            Activate();
         }
     }
 }

@@ -6,34 +6,41 @@ namespace Infrastructure.Services;
 
 public static class DataBase
 {
-    public static readonly Dictionary<Guid, ChatRoom> Chatrooms = new();
-    public static readonly List<string> Users = new();
+    public static readonly Dictionary<Guid, ChatRoom> ChatRooms = new();
     public static readonly List<Message> Messages = new();
-    public static readonly Guid MainChat = Guid.NewGuid();
 
     static DataBase()
     {
-        Chatrooms[MainChat] = new ChatRoom(MainChat);
+        AddRoom("SERVER1", "MAIN1");
+        AddRoom("SERVER2", "MAIN2");
+        AddRoom("SERVER3", "MAIN3");
+        AddRoom("SERVER4", "MAIN4");
+        AddRoom("SERVER5", "MAIN5");
     }
 
-    public static void Join(Guid chatroom, string login)
+    public static void AddRoom(string creator, string name)
     {
-        //Stubbed with MainChat
-        if (Chatrooms[MainChat].Users.Contains(login))
+        var room = new ChatRoom(creator, name);
+        ChatRooms.Add(room.Id, room);
+    }
+
+    public static void Join(Guid chatRoomId, string login)
+    {
+        if (ChatRooms[chatRoomId].Users.Contains(login))
             throw new InvalidOperationException($"Login {login} is already in use");
-        Chatrooms[MainChat].Users.Add(login);
+        ChatRooms[chatRoomId].Users.Add(login);
     }
 
     public static void Leave(Guid chatRoomId, string login)
     {
-        if (!Chatrooms[MainChat].Users.Contains(login))
+        if (!ChatRooms[chatRoomId].Users.Contains(login))
             throw new InvalidOperationException($"There's no {login} in room {chatRoomId.ToString()}");
-        Chatrooms[MainChat].Users.Remove(login);
+        ChatRooms[chatRoomId].Users.Remove(login);
     }
     
     public static void PostMessage<T>(T message) where T : Message
     {
-        if (!Chatrooms[message.ChatRoom].Users.Contains(message.Name))
+        if (!ChatRooms[message.ChatRoom].Users.Contains(message.Name))
             throw new InvalidOperationException($"Login {message.Name} is not in this room");
         Messages.Add(message);
     }
