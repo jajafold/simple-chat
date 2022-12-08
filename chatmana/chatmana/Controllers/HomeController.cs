@@ -23,7 +23,6 @@ public class HomeController : Controller
     public JsonResult CreateRoom(string creatorName, string roomName, string password, int capacity)
     {
         var createdRoomId = DataBase.AddRoom(creatorName, roomName, password == "" ? null : password, capacity);
-        DataBase.Join(createdRoomId, creatorName);  
         var serialized = JsonConvert.SerializeObject(createdRoomId);
         return new JsonResult(serialized);
     }

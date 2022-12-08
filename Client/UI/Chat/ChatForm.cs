@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using Chat.Domain;
 using Infrastructure;
+using Infrastructure.Messages;
+using Infrastructure.Models;
 using Infrastructure.UIEvents;
 using Infrastructure.Updater;
 
@@ -23,21 +25,31 @@ namespace Chat.UI.Chat
             
             chatWindow.TextChanged += ChatWindowChangedHandler;
             chatWindow.Disposed += ChatWindowClosedHandler;
-            ClientConnection.NetworkStatusChange += ChangeNetworkStatus;
+            ClientConnection.NetworkStatusChange += args => BeginInvoke(ChangeNetworkStatus, args);
 
             ChatEvents.ChatMessagesChange += args =>
             {
-                foreach (var message in args.Messages)
-                    _chatWriter.Write(message.Content.ToFlatString());
+                BeginInvoke(UpdateMessages, args);
             };
 
             ChatEvents.ChatUsersChange += args =>
             {
-                _userUpdater.Update(args.Users);
+                BeginInvoke(UpdateUsers, args);
             };
 
             networkStatus.ForeColor = Color.Gold;
             networkStatus.Text = @"Подключение...";
+        }
+
+        private void UpdateMessages(ChatMessagesChangeEventArgs args)
+        {
+            foreach (var message in args.Messages)
+                _chatWriter.Write(message.Content.ToFlatString());
+        }
+
+        private void UpdateUsers(ChatUsersChangeEventArgs args)
+        {
+            _userUpdater.Update(args.Users);
         }
 
         // private void OnConnectionException()

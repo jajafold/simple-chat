@@ -28,6 +28,7 @@ namespace Chat.UI.RoomSelection
                 var password = _cbIsPasswordSet.Checked ? _tbPassword.Text : null;
                 var roomId = await _creator.CreateRoom(_tbRoomName.Text, password, (int)_nudRoomCapacity.Value);
                 
+                _creator.Validate(roomId, password);
                 _chat = new ChatForm(_creator);
                 _chat.Show();
                 

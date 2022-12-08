@@ -80,10 +80,10 @@ namespace Chat.UI.RoomSelection
 
             RoomsEvents.RoomsTableChange += args =>
             {
-                BeginInvoke(Update1, args);
+                BeginInvoke(UpdateRooms, args);
             };
         }
-        private void Update1(RoomsTableChangeEventArgs e)
+        private void UpdateRooms(RoomsTableChangeEventArgs e)
         {
             _roomTableUpdater.Update(e.Rooms);
         }
