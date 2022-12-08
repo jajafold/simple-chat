@@ -10,37 +10,33 @@ using System.Threading.Tasks;
 using Infrastructure;
 using Infrastructure.Exceptions;
 using Infrastructure.Models;
+using Infrastructure.UIEvents;
 using Infrastructure.Updater;
+using Infrastructure.Worker;
 
 namespace Chat.Domain;
 
 public class Client
 { 
     public string Name { get; }
-    public Guid? CurrentRoom { get; private set; }
+    public Guid? CurrentRoom => _networkClient.CurrentRoom;
 
     private readonly NetworkClient _networkClient;
-    private Writer _chatWriter;
-    private Updater<string> _onlineUsersWriter;
-    private Updater<RoomViewModel> _roomsUpdater;
 
-    private readonly Thread _receiveUpdate;
-    private readonly Thread _onlineUsersUpdate;
-    private readonly Thread _roomsUpdate;
-    
-    private bool _cancellationTokenA;
-    private bool _cancellationTokenB;
+    private readonly CancelableWorker _updateMessages;
+    private readonly CancelableWorker _updateUsers;
+    private readonly CancelableWorker _updateRooms;
 
     public Client(string host, string name)
     {
         Name = name;
 
         _networkClient = new NetworkClient(host, name);
-        _receiveUpdate = new Thread(GetNewMessages);
-        _onlineUsersUpdate = new Thread(UpdateOnlineUsers);
-        _roomsUpdate = new Thread(UpdateRooms);
+        _updateMessages = new CancelableWorker(GetNewMessages, 200);
+        _updateUsers = new CancelableWorker(UpdateOnlineUsers, 200);
+        _updateRooms = new CancelableWorker(UpdateRooms, 200);
         
-        _roomsUpdate.Start();
+        _updateRooms.Start();
     }
 
     public void SetTo<T>(T fieldValue)
@@ -49,31 +45,45 @@ public class Client
         var field = typeof(Client)
             .GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
             .FirstOrDefault(x => x.FieldType == typeof(T));
+        
          if (field is null) throw new ArgumentException("Cannot find this type of field");
          field.SetValue(this, fieldValue);
     }
 
-    public async void Join(Guid chatRoomId, string? password)
+    public async void Join(Guid chatRoomId)
     {
-        _cancellationTokenB = false;
-        var confirmation = await _networkClient.Join(chatRoomId, password);
-        if (!confirmation.NeedsConfirmation)
-            throw new PasswordRequired($"Password required for room {chatRoomId}");
+        var confirmation = await _networkClient.TryJoin(chatRoomId);
         
-        //TODO: Это все нужно вынести в Validate, о шибки ловить в форме
-        CurrentRoom = chatRoomId;
-        _cancellationTokenA = false;
-        _receiveUpdate.Start();
-        _onlineUsersUpdate.Start();
+        if (confirmation.NeedsConfirmation)
+            throw new PasswordRequiredException($"Password required for room {chatRoomId}");
+        
+        //TODO: Это все нужно вынести в Validate, ошибки ловить в форме
+        AcceptJoining(chatRoomId);
+    }
+
+    public async void Validate(Guid chatRoomId, string? password)
+    {
+        var validation = await _networkClient.ValidatePassword(chatRoomId, password);
+        if (!validation.Success)
+            throw new IncorrectPasswordException($"Incorrect password \"{password}\" for room {chatRoomId}");
+        
+        AcceptJoining(chatRoomId);
+    }
+
+    private void AcceptJoining(Guid chatRoomId)
+    {
+        _updateRooms.Cancel();
+        _updateMessages.Start();
+        _updateUsers.Start();
     }
     
     public async void Leave()
     {
-        _cancellationTokenA = true;
-        
+        _updateUsers.Cancel();
+        _updateMessages.Cancel();
+
         await _networkClient.Leave();
-        CurrentRoom = null;
-        _cancellationTokenB = false;
+        _updateRooms.Start();
     }
 
     public async void Send(string message) => await _networkClient.Send(message);
@@ -82,34 +92,21 @@ public class Client
     
     private async void GetNewMessages()
     {
-        while (!_cancellationTokenA)
-        {
-            Thread.Sleep(200);
-            var messages = await _networkClient.GetNewMessages();
-            if (messages.Length == 0) continue;
+        var messages = await _networkClient.GetNewMessages();
+        if (messages.Length == 0) return;
             
-            foreach (var message in messages)
-                _chatWriter.Write(message.Content.ToFlatString());
-        }
+        ChatEvents.OnChatMessagesChange(new ChatMessagesChangeEventArgs {Messages = messages});
     }
 
     private async void UpdateOnlineUsers()
     {
-        while (!_cancellationTokenA)
-        {
-            Thread.Sleep(200);
-            var users = await _networkClient.UpdateOnlineUsers();
-            _onlineUsersWriter.Update(users);
-        }
+        var users = await _networkClient.UpdateOnlineUsers();
+        ChatEvents.OnChatUsersChange(new ChatUsersChangeEventArgs {Users = users});
     }
 
     private async void UpdateRooms()
     {
-        while (!_cancellationTokenB)
-        {
-            Thread.Sleep(200);
-            var rooms = await _networkClient.UpdateRooms();
-            _roomsUpdater.Update(rooms);
-        }
+        var rooms = await _networkClient.UpdateRooms();
+        RoomsEvents.OnRoomsTableChange(new RoomsTableChangeEventArgs {Rooms = rooms});
     }
 }

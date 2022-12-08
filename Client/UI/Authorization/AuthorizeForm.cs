@@ -37,7 +37,7 @@ namespace Chat.UI.Authorization
 
         private void ThreadExceptionCaught(object sender, ThreadExceptionEventArgs e)
         {
-            OnUnhandledThreadException(e);
+            //OnUnhandledThreadException(e);
             
             Activate();
         }

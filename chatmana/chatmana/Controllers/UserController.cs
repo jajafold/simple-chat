@@ -17,6 +17,8 @@ public class UserController : Controller
         
         var serialized = JsonConvert.SerializeObject
             (DataBase.ChatRooms[chatRoomId].ToConfirmationModel(), Formatting.Indented);
+        // var serialized = JsonConvert.SerializeObject(new ConfirmationModel
+        //     {NeedsConfirmation = false, RoomId = chatRoomId});
         
         return new JsonResult(serialized);
     }

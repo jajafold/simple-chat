@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Chat.Domain;
 using Infrastructure;
+using Infrastructure.UIEvents;
 using Infrastructure.Updater;
 
 namespace Chat.UI.Chat
@@ -10,16 +11,30 @@ namespace Chat.UI.Chat
     public partial class ChatForm : Form
     {
         private readonly Client _client;
+        private readonly Writer _chatWriter;
+        private readonly Updater<string> _userUpdater;
         public ChatForm(Client client)
         {
             InitializeComponent();
+            MessageBox.Show($"{client.Name} , {client.CurrentRoom}");
             _client = client;
-            _client.SetTo<Writer>(new GlobalChatWriter(new UI.Chat.Chat(chatWindow)));
-            _client.SetTo(new Updater<string>(new OnlineUsers(ActiveUsers)));
+            _chatWriter = new GlobalChatWriter(new Chat(chatWindow));
+            _userUpdater = new Updater<string>(new OnlineUsers(ActiveUsers));
             
             chatWindow.TextChanged += ChatWindowChangedHandler;
             chatWindow.Disposed += ChatWindowClosedHandler;
             ClientConnection.NetworkStatusChange += ChangeNetworkStatus;
+
+            ChatEvents.ChatMessagesChange += args =>
+            {
+                foreach (var message in args.Messages)
+                    _chatWriter.Write(message.Content.ToFlatString());
+            };
+
+            ChatEvents.ChatUsersChange += args =>
+            {
+                _userUpdater.Update(args.Users);
+            };
 
             networkStatus.ForeColor = Color.Gold;
             networkStatus.Text = @"Подключение...";

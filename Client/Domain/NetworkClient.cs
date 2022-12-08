@@ -35,7 +35,7 @@ public class NetworkClient
         _lastUpdated = DateTime.Now.Ticks;
     }
     
-    public async Task<ConfirmationModel> Join(Guid chatRoomId, string? password)
+    public async Task<ConfirmationModel> TryJoin(Guid chatRoomId)
     {
         var executor = new Executor();
         var uri = new UriBuilder()
@@ -43,7 +43,6 @@ public class NetworkClient
             .AddFragment("User")
             .AddFragment("Join")
             .AddQuery("chatRoomId", chatRoomId)
-            .AddQuery("password", password ?? "")
             .AddQuery("login", _login)
             .ToString();
         
@@ -64,7 +63,7 @@ public class NetworkClient
         return response;
     }
 
-    private async Task<ConfirmationResult> ValidatePassword(Guid chatRoomId, string? password)
+    public async Task<ConfirmationResult> ValidatePassword(Guid chatRoomId, string? password)
     {
         var executor = new Executor();
         var uri = new UriBuilder()
@@ -208,7 +207,7 @@ public class NetworkClient
             .AddFragment("CreateRoom")
             .AddQuery("creatorName", _login)
             .AddQuery("roomName", roomName)
-            .AddQuery("password", password is null ? "" : password)
+            .AddQuery("password", password ?? "")
             .AddQuery("capacity", capacity)
             .ToString();
 
@@ -224,6 +223,8 @@ public class NetworkClient
         }
 
         var createdRoomId = JsonConvert.DeserializeObject<Guid>(serialized);
+        CurrentRoom = createdRoomId;
+        
         return createdRoomId;
     }
 
