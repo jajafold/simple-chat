@@ -1,4 +1,6 @@
-﻿using Infrastructure;
+﻿#pragma warning disable CA1416
+
+using Microsoft.AspNetCore.Mvc;
 using Infrastructure.Models;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +21,19 @@ public class HomeController : Controller
     [HttpGet]
     public JsonResult Index()
     {
-        var result = serializer.Serialize
-            (dataBase.Chatrooms.Values.ToList().ToHubsViewModel());
+        var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
+        
+        var result = JsonConvert.SerializeObject
+            (DataBase.ChatRooms.Values.ToList().ToHubsViewModel(), Formatting.Indented, settings);
         return new JsonResult(result);
+    }
+
+    [HttpGet]
+    public JsonResult CreateRoom(string creatorName, string roomName, string password, int capacity)
+    {
+        var createdRoomId = DataBase.AddRoom(creatorName, roomName, password == "" ? null : password, capacity);
+        var serialized = JsonConvert.SerializeObject(createdRoomId);
+        return new JsonResult(serialized);
     }
 }
 

@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ZskL437LU9ETZl+SyfLTqegVCngaaqSg/W7tw48Xv7dvne1NlqxOnpGT80jh2XnBlHnAOIyS0NX7bG/NB15eUQ==",
+  "dgSpecHash": "/JVf7ceUdD2P4FW/9Z3IqTI/pE9T+cvdnJJHIJ9jGWGzG0SXw9DmW2jSTg1X/iYQ8b8kOEFvUAbk9YAvZwmA7Q==",
   "success": true,
   "projectFilePath": "/Users/maksimcevycelov/simple-chat/Client/UI/Chat.UI.csproj",
   "expectedPackageFiles": [
-    "/Users/maksimcevycelov/.nuget/packages/newtonsoft.json/13.0.2/newtonsoft.json.13.0.2.nupkg.sha512",
-    "/Users/maksimcevycelov/.nuget/packages/ninject/4.0.0-beta.1/ninject.4.0.0-beta.1.nupkg.sha512"
+    "C:\\Users\\iayny\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512",
+    "C:\\Users\\iayny\\.nuget\\packages\\ninject\\4.0.0-beta.1\\ninject.4.0.0-beta.1.nupkg.sha512"
   ],
   "logs": []
 }

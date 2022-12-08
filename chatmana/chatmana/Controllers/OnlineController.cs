@@ -1,4 +1,5 @@
-using Infrastructure;
+#pragma warning disable CA1416
+
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,9 +16,9 @@ public class OnlineController : Controller
         this.serializer = serializer;
     }
 
-    public JsonResult GetUsersOnline(Guid id)
+    public JsonResult GetUsersOnline(Guid chatRoomId)
     {
-        var result = serializer.Serialize(dataBase.Chatrooms[id].Users);
+        var result = JsonConvert.SerializeObject(DataBase.ChatRooms[chatRoomId].Users);
         return new JsonResult(result);
     }
 }

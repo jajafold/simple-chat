@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>11</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,9 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Chat.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Domain\bin\Debug\net5.0\Chat.Domain.dll</HintPath>
-    </Reference>
     <Reference Include="Infrastructure">
       <HintPath>..\..\Infrastructure\bin\Debug\net7.0-windows\Infrastructure.dll</HintPath>
     </Reference>
@@ -36,6 +34,10 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Ninject" Version="4.0.0-beta.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Chat.Domain.csproj" />
   </ItemGroup>
 
 </Project>

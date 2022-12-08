@@ -1,76 +1,112 @@
-﻿using System;
-using System.Net.Http;
-using System.Net.Http.Json;
+﻿#pragma warning disable CA1416
+
+#nullable enable
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Infrastructure;
+using Infrastructure.Exceptions;
 using Infrastructure.Models;
-using Newtonsoft.Json;
+using Infrastructure.UIEvents;
+using Infrastructure.Updater;
+using Infrastructure.Worker;
 
-namespace Chat.Domain
-{
-    public class Client
+namespace Chat.Domain;
+
+public class Client
+{ 
+    public string Name { get; }
+    public Guid? CurrentRoom => _networkClient.CurrentRoom;
+
+    private readonly NetworkClient _networkClient;
+
+    private readonly CancelableWorker _updateMessages;
+    private readonly CancelableWorker _updateUsers;
+    private readonly CancelableWorker _updateRooms;
+
+    public Client(string host, string name)
     {
-        public string Name { get; }
+        Name = name;
 
-        private readonly HttpClient _httpClient = new();
-        private readonly Writer _chatWriter;
-        private readonly Writer _onlineUsersWriter;
-        private readonly string _uri;
-        private Guid? _currentRoom = null;
+        _networkClient = new NetworkClient(host, name);
+        _updateMessages = new CancelableWorker(GetNewMessages, 200);
+        _updateUsers = new CancelableWorker(UpdateOnlineUsers, 200);
+        _updateRooms = new CancelableWorker(UpdateRooms, 200);
+        
+        _updateRooms.Start();
+    }
 
-        public Client(string uri, string name, Writer chatWriter, Writer onlineUsersWriter)
-        {
-            Name = name;
-            _uri = uri;
-            _chatWriter = chatWriter;
-            _onlineUsersWriter = onlineUsersWriter;
-        }
+    public void SetTo<T>(T fieldValue)
+    where T : class
+    {
+        var field = typeof(Client)
+            .GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
+            .FirstOrDefault(x => x.FieldType == typeof(T));
+        
+         if (field is null) throw new ArgumentException("Cannot find this type of field");
+         field.SetValue(this, fieldValue);
+    }
 
-        public async void Join(Guid chatRoomId)
-        {
-            var serialized = (string) await _httpClient.GetFromJsonAsync(
-                $"{_uri}/User/Join?chatroomId={chatRoomId.ToString()}&login={Name}",
-                typeof(string));
-            var response = JsonConvert.DeserializeObject<ResponseViewModel>(serialized!);
-            foreach (var name in response?.UserNames!)
-                _onlineUsersWriter.Write(name);
-            _currentRoom = response.RoomId;
+    public async void Join(Guid chatRoomId)
+    {
+        var confirmation = await _networkClient.TryJoin(chatRoomId);
+        
+        if (confirmation.NeedsConfirmation)
+            throw new PasswordRequiredException($"Password required for room {chatRoomId}");
+        
+        //TODO: Это все нужно вынести в Validate, ошибки ловить в форме
+        AcceptJoining(chatRoomId);
+    }
+
+    public async void Validate(Guid chatRoomId, string? password)
+    {
+        var validation = await _networkClient.ValidatePassword(chatRoomId, password);
+        if (!validation.Success)
+            throw new IncorrectPasswordException($"Incorrect password \"{password}\" for room {chatRoomId}");
+        
+        AcceptJoining(chatRoomId);
+    }
+
+    private void AcceptJoining(Guid chatRoomId)
+    {
+        _updateRooms.Cancel();
+        _updateMessages.Start();
+        _updateUsers.Start();
+    }
+    
+    public async void Leave()
+    {
+        _updateUsers.Cancel();
+        _updateMessages.Cancel();
+
+        await _networkClient.Leave();
+        _updateRooms.Start();
+    }
+
+    public async void Send(string message) => await _networkClient.Send(message);
+    public async Task<Guid> CreateRoom(string roomName, string? password, int capacity) =>
+        await _networkClient.CreateRoom(roomName, password, capacity);
+    
+    private async void GetNewMessages()
+    {
+        var messages = await _networkClient.GetNewMessages();
+        if (messages.Length == 0) return;
             
-            var receivingThread = new Thread(GetNewMessages);
-            receivingThread.Start();
-        }
+        ChatEvents.OnChatMessagesChange(new ChatMessagesChangeEventArgs {Messages = messages});
+    }
 
-        public async void Send(string message)
-        {
-            var response = await _httpClient.PostAsync(
-                $"{_uri}/Messages/Text?chatRoom={_currentRoom.ToString()}&name={Name}&message={message}", 
-                new StringContent(""));
-        }
+    private async void UpdateOnlineUsers()
+    {
+        var users = await _networkClient.UpdateOnlineUsers();
+        ChatEvents.OnChatUsersChange(new ChatUsersChangeEventArgs {Users = users});
+    }
 
-        public async void GetNewMessages()
-        {
-            var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
-            var lastUpdated = DateTime.Now.Ticks;
-            while (true)
-            {
-                Thread.Sleep(500);
-                var serialized = await _httpClient.GetFromJsonAsync<string>(
-                        $"{_uri}/Messages/ChatRoomMessages?timestamp={lastUpdated}&chatRoomId={_currentRoom.ToString()}"
-                        );
-                var response = JsonConvert.DeserializeObject<MessagesViewModel>(serialized!, settings);
-                if (response.Messages.Length == 0) continue;
-                
-                lastUpdated = DateTime.Now.Ticks;
-                foreach (var msg in response.Messages)
-                    _chatWriter.Write(msg.Content.ToFlatString());
-            }
-        }
-
-        public async void Leave()
-        {
-            var response = await _httpClient.PostAsync(
-                $"{_uri}/User/Leave?chatRoomId={_currentRoom.ToString()}&login={Name}",
-                new StringContent(""));
-        }
+    private async void UpdateRooms()
+    {
+        var rooms = await _networkClient.UpdateRooms();
+        RoomsEvents.OnRoomsTableChange(new RoomsTableChangeEventArgs {Rooms = rooms});
     }
 }

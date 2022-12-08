@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {
+    "net7.0-windows7.0": {
       "Newtonsoft.Json/13.0.2": {
         "type": "package",
         "compile": {
@@ -26,6 +26,20 @@
           "lib/net6.0/Ninject.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Chat.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.2",
+          "Ninject": "4.0.0-beta.1"
+        },
+        "compile": {
+          "bin/placeholder/Chat.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Chat.Domain.dll": {}
         }
       }
     }
@@ -77,16 +91,23 @@
         "ninject.4.0.0-beta.1.nupkg.sha512",
         "ninject.nuspec"
       ]
+    },
+    "Chat.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Domain/Chat.Domain.csproj",
+      "msbuildProject": "../Domain/Chat.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
-    "net7.0": [
+    "net7.0-windows7.0": [
+      "Chat.Domain >= 1.0.0",
       "Newtonsoft.Json >= 13.0.2",
       "Ninject >= 4.0.0-beta.1"
     ]
   },
   "packageFolders": {
-    "/Users/maksimcevycelov/.nuget/packages/": {}
+    "C:\\Users\\iayny\\.nuget\\packages\\": {},
+    "D:\\VS Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
@@ -97,19 +118,28 @@
       "packagesPath": "/Users/maksimcevycelov/.nuget/packages/",
       "outputPath": "/Users/maksimcevycelov/simple-chat/Client/UI/obj/",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\VS Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/maksimcevycelov/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\iayny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net7.0"
+        "net7.0-windows"
       ],
       "sources": {
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
-          "projectReferences": {}
+        "net7.0-windows7.0": {
+          "targetAlias": "net7.0-windows",
+          "projectReferences": {
+            "D:\\UnityProject\\from_git\\simple-chat\\Client\\Domain\\Chat.Domain.csproj": {
+              "projectPath": "D:\\UnityProject\\from_git\\simple-chat\\Client\\Domain\\Chat.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -119,8 +149,8 @@
       }
     },
     "frameworks": {
-      "net7.0": {
-        "targetAlias": "net7.0",
+      "net7.0-windows7.0": {
+        "targetAlias": "net7.0-windows",
         "dependencies": {
           "Newtonsoft.Json": {
             "target": "Package",

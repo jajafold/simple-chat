@@ -1,15 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "KVOnWgtirF4sbeext4LB69QDLj0tQ2ZpLJ/tyMoGactvO24lAt7/+UXn1MqC6OiWtTQeMfz7pBe91/vxnodEKQ==",
+  "dgSpecHash": "X60v/lEs3YqWj6fSINGz1Pcgij9eHsWpAnCkGobcgoe7Ufehm5GC2mkZxTglEidO0WldrcDc88R7drzgngFHMw==",
   "success": true,
   "projectFilePath": "/Users/maksimcevycelov/simple-chat/Client/Domain/Chat.Domain.csproj",
   "expectedPackageFiles": [
-    "/Users/maksimcevycelov/.nuget/packages/newtonsoft.json/13.0.2/newtonsoft.json.13.0.2.nupkg.sha512",
-    "/Users/maksimcevycelov/.nuget/packages/ninject/4.0.0-beta.1/ninject.4.0.0-beta.1.nupkg.sha512",
-    "/Users/maksimcevycelov/.nuget/packages/system.reflection.emit.ilgeneration/4.7.0/system.reflection.emit.ilgeneration.4.7.0.nupkg.sha512",
-    "/Users/maksimcevycelov/.nuget/packages/system.reflection.emit.lightweight/4.7.0/system.reflection.emit.lightweight.4.7.0.nupkg.sha512",
-    "/Users/maksimcevycelov/.nuget/packages/microsoft.netcore.app.ref/5.0.0/microsoft.netcore.app.ref.5.0.0.nupkg.sha512",
-    "/Users/maksimcevycelov/.nuget/packages/microsoft.aspnetcore.app.ref/5.0.0/microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512"
+    "C:\\Users\\iayny\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512",
+    "C:\\Users\\iayny\\.nuget\\packages\\ninject\\4.0.0-beta.1\\ninject.4.0.0-beta.1.nupkg.sha512"
   ],
   "logs": []
 }

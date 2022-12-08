@@ -1,4 +1,6 @@
-using Infrastructure;
+#pragma warning disable CA1416
+
+using Infrastructure.Services;
 using Infrastructure.Messages;
 using Infrastructure.Models;
 using Infrastructure.Services;
@@ -19,11 +21,9 @@ public class MessagesController : Controller
     }
 
     [HttpPost]
-    public string Text(string message, string name, Guid chatRoom)
+    public void Text(string message, string name, Guid chatRoomId)
     {
-        var msg = new TextMessage(message, chatRoom, DateTime.Now, name);
-        dataBase.PostMessage(msg);
-        return $"{msg.ToFlatString()}";
+        DataBase.PostMessage(new TextMessage(message, chatRoomId, DateTime.Now, name));
     }
     
     //TODO : self-made exceptions

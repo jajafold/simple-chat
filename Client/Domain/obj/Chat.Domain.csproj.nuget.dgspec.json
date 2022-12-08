@@ -13,18 +13,23 @@
         "packagesPath": "/Users/maksimcevycelov/.nuget/packages/",
         "outputPath": "/Users/maksimcevycelov/simple-chat/Client/Domain/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\VS Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/maksimcevycelov/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\iayny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "net7.0"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "net7.0": {
+            "targetAlias": "net7.0",
             "projectReferences": {}
           }
         },
@@ -35,8 +40,8 @@
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "net7.0": {
+          "targetAlias": "net7.0",
           "dependencies": {
             "Newtonsoft.Json": {
               "target": "Package",

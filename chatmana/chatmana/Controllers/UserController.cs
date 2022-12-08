@@ -1,4 +1,5 @@
-using Infrastructure;
+#pragma warning disable CA1416
+
 using Infrastructure.Models;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,26 @@ public class UserController : Controller
     }
 
     [HttpGet]
-    public JsonResult Join(Guid chatroomId, string login)
+    public JsonResult Join(Guid chatRoomId, string login)
     {
-        dataBase.Join(chatroomId, login);
-        var result = serializer.Serialize
-            (dataBase.Chatrooms[chatroomId].Users.ToResponseViewModel(chatroomId));
-        return new JsonResult(result);
+        if (!DataBase.ChatRooms[chatRoomId].RequiresPassword)
+            DataBase.Join(chatRoomId, login);
+        
+        var serialized = JsonConvert.SerializeObject
+            (DataBase.ChatRooms[chatRoomId].ToConfirmationModel(), Formatting.Indented);
+        
+        return new JsonResult(serialized);
+    }
+
+    [HttpGet]
+    public JsonResult Validate(Guid chatRoomId, string login, string password)
+    {
+        var success = password == DataBase.ChatRooms[chatRoomId].Password;
+        if (success) DataBase.Join(chatRoomId, login);
+        
+        return new JsonResult(JsonConvert.SerializeObject(
+            new ConfirmationResult {Success = success}
+        ));
     }
 
     [HttpPost]
