@@ -1,10 +1,14 @@
 ﻿#pragma warning disable CA1416
 
+#nullable enable
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Infrastructure;
+using Infrastructure.Exceptions;
 using Infrastructure.Models;
 using Infrastructure.Updater;
 
@@ -49,11 +53,14 @@ public class Client
          field.SetValue(this, fieldValue);
     }
 
-    public async void Join(Guid chatRoomId)
+    public async void Join(Guid chatRoomId, string? password)
     {
         _cancellationTokenB = false;
-        await _networkClient.Join(chatRoomId);
-
+        var confirmation = await _networkClient.Join(chatRoomId, password);
+        if (!confirmation.NeedsConfirmation)
+            throw new PasswordRequired($"Password required for room {chatRoomId}");
+        
+        //TODO: Это все нужно вынести в Validate, о шибки ловить в форме
         CurrentRoom = chatRoomId;
         _cancellationTokenA = false;
         _receiveUpdate.Start();
@@ -70,8 +77,9 @@ public class Client
     }
 
     public async void Send(string message) => await _networkClient.Send(message);
+    public async Task<Guid> CreateRoom(string roomName, string? password, int capacity) =>
+        await _networkClient.CreateRoom(roomName, password, capacity);
     
-
     private async void GetNewMessages()
     {
         while (!_cancellationTokenA)

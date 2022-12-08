@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using Infrastructure;
 
-namespace Chat.UI
+namespace Chat.UI.Chat
 {
     //TODO: IChat
     public class Chat : IWritable

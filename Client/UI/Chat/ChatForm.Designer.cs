@@ -1,7 +1,5 @@
 ﻿
-using System;
-
-namespace Chat.UI
+namespace Chat.UI.Chat
 {
     partial class ChatForm
     {

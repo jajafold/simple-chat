@@ -11,17 +11,19 @@ public static class DataBase
 
     static DataBase()
     {
-        AddRoom("SERVER1", "MAIN1");
-        AddRoom("SERVER2", "MAIN2");
-        AddRoom("SERVER3", "MAIN3");
-        AddRoom("SERVER4", "MAIN4");
-        AddRoom("SERVER5", "MAIN5");
+        AddRoom("SERVER1", "MAIN1", null, 0);
+        AddRoom("SERVER2", "MAIN2", null, 0);
+        AddRoom("SERVER3", "MAIN3", null, 0);
+        AddRoom("SERVER4", "MAIN4", null, 0);
+        AddRoom("SERVER5", "MAIN5", null, 0);
     }
 
-    public static void AddRoom(string creator, string name)
+    public static Guid AddRoom(string creator, string name, string? password, int capacity)
     {
-        var room = new ChatRoom(creator, name);
+        var room = new ChatRoom(creator, name, password, capacity);
         ChatRooms.Add(room.Id, room);
+
+        return room.Id;
     }
 
     public static void Join(Guid chatRoomId, string login)

@@ -12,6 +12,7 @@ using Infrastructure.Messages;
 using Infrastructure.Models;
 using Infrastructure.Uri;
 using Newtonsoft.Json;
+using static Infrastructure.Exceptions.Retry;
 using UriBuilder = Infrastructure.Uri.UriBuilder;
 
 namespace Chat.Domain;
@@ -34,14 +35,15 @@ public class NetworkClient
         _lastUpdated = DateTime.Now.Ticks;
     }
     
-    public async Task Join(Guid chatRoomId)
+    public async Task<ConfirmationModel> Join(Guid chatRoomId, string? password)
     {
-        var executor = new Retry.Executor();
+        var executor = new Executor();
         var uri = new UriBuilder()
             .AddHost(_host)
             .AddFragment("User")
             .AddFragment("Join")
             .AddQuery("chatRoomId", chatRoomId)
+            .AddQuery("password", password ?? "")
             .AddQuery("login", _login)
             .ToString();
         
@@ -53,10 +55,41 @@ public class NetworkClient
             throw new JoinChatRoomException("The connection was not established");
         }
             
-        var response = JsonConvert.DeserializeObject<ResponseViewModel>(result);
-        CurrentRoom = response.RoomId;
+        var response = JsonConvert.DeserializeObject<ConfirmationModel>(result);
+        if (!response.NeedsConfirmation)
+        {
+            CurrentRoom = response.RoomId;
+        }
+
+        return response;
     }
-    
+
+    private async Task<ConfirmationResult> ValidatePassword(Guid chatRoomId, string? password)
+    {
+        var executor = new Executor();
+        var uri = new UriBuilder()
+            .AddHost(_host)
+            .AddFragment("User")
+            .AddFragment("Validate")
+            .AddQuery("chatRoomId", chatRoomId)
+            .AddQuery("login", _login)
+            .AddQuery("password", password ?? "")
+            .ToString();
+        
+        var result = await executor.Execute(
+            async () => await _httpClient.GetFromJsonAsync<string>(uri));
+
+        if (!executor.FinishedSuccessfully)
+        {
+            throw new JoinChatRoomException("The connection was not established");
+        }
+
+        var validation = JsonConvert.DeserializeObject<ConfirmationResult>(result);
+        if (validation.Success) CurrentRoom = chatRoomId;
+        
+        return validation;
+    }
+
     public async Task Send(string message)
     {
         var executor = new Retry.Executor();
@@ -164,6 +197,34 @@ public class NetworkClient
 
         var rooms = JsonConvert.DeserializeObject<RoomsViewModel>(serialized, settings);
         return rooms.ChatRooms;
+    }
+
+    public async Task<Guid> CreateRoom(string roomName, string? password, int capacity)
+    {
+        var executor = new Retry.Executor();
+        var uri = new UriBuilder()
+            .AddHost(_host)
+            .AddFragment("Home")
+            .AddFragment("CreateRoom")
+            .AddQuery("creatorName", _login)
+            .AddQuery("roomName", roomName)
+            .AddQuery("password", password is null ? "" : password)
+            .AddQuery("capacity", capacity)
+            .ToString();
+
+        var serialized = await executor.Execute(
+            async () => await _httpClient.GetFromJsonAsync<string>(uri));
+
+        if (!executor.FinishedSuccessfully)
+        {
+            if (executor.Exception is ConnectionException)
+                throw new ConnectionException("Connection lost");
+            throw new Exception(
+                $"Unhandled exception inside the {nameof(CreateRoom)} executor: {executor.Exception}");
+        }
+
+        var createdRoomId = JsonConvert.DeserializeObject<Guid>(serialized);
+        return createdRoomId;
     }
 
     public async Task Leave()

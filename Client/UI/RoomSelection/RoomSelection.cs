@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Windows.Forms;
 using Chat.Domain;
+using Chat.UI.Chat;
 using Infrastructure.Models;
 using Infrastructure.Updater;
 
-namespace Chat.UI
+namespace Chat.UI.RoomSelection
 {
     public partial class RoomSelection : Form
     {
         private readonly string _login;
         private readonly Client _client;
-        private ChatForm _chat;
 
         public RoomSelection(string username)
         {
@@ -39,20 +39,14 @@ namespace Chat.UI
                         $"{selected.Cells[0].Value}\n{selected.Cells[3].Value}";
                     
                     var chatID = selected.Cells[3].Value.ToString();
-                    try
-                    {
-                        if (Guid.TryParse(chatID, out var chatRoomId))
-                            _client.Join(chatRoomId);
-                    }
-                    catch
-                    {
-                        throw;
-                    }
-
-                    _chat = new ChatForm(_client); 
-                    _chat.Show(this);
-                    Hide();
+                    var 
                 };
+
+            _buttonRoomCreation.Click += (sender, args) =>
+            {
+                var roomCreation = new RoomCreation(_client, this);
+                roomCreation.ShowDialog(this);
+            };
 
             Closing += (sender, args) => { Environment.Exit(0); };
         }

@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Drawing;
-using System.Threading;
-using Infrastructure;
 using System.Windows.Forms;
 using Chat.Domain;
-using Infrastructure.Exceptions;
+using Infrastructure;
 using Infrastructure.Updater;
 
-namespace Chat.UI
+namespace Chat.UI.Chat
 {
     public partial class ChatForm : Form
     {
         private readonly Client _client;
-
         public ChatForm(Client client)
         {
             InitializeComponent();
             _client = client;
-            _client.SetTo<Writer>(new GlobalChatWriter(new Chat(chatWindow)));
+            _client.SetTo<Writer>(new GlobalChatWriter(new UI.Chat.Chat(chatWindow)));
             _client.SetTo(new Updater<string>(new OnlineUsers(ActiveUsers)));
             
             chatWindow.TextChanged += ChatWindowChangedHandler;
@@ -28,25 +25,25 @@ namespace Chat.UI
             networkStatus.Text = @"Подключение...";
         }
 
-        private void OnConnectionException()
-        {
-            TopMost = false;
-            if (MessageBox.Show(
-                    "Возникли проблемы с соединением. Проверьте свое подключение к интернету и попробуйте еще раз",
-                    "Ошибка соединения",
-                    MessageBoxButtons.RetryCancel,
-                    MessageBoxIcon.Error,
-                    MessageBoxDefaultButton.Button1,
-                    MessageBoxOptions.DefaultDesktopOnly
-                ) == DialogResult.Retry)
-            {
-                if (_client.CurrentRoom != null) 
-                    _client.Join(_client.CurrentRoom.Value);
-                TopMost = true;
-            }
-            else
-                Environment.Exit(0);
-        }
+        // private void OnConnectionException()
+        // {
+        //     TopMost = false;
+        //     if (MessageBox.Show(
+        //             "Возникли проблемы с соединением. Проверьте свое подключение к интернету и попробуйте еще раз",
+        //             "Ошибка соединения",
+        //             MessageBoxButtons.RetryCancel,
+        //             MessageBoxIcon.Error,
+        //             MessageBoxDefaultButton.Button1,
+        //             MessageBoxOptions.DefaultDesktopOnly
+        //         ) == DialogResult.Retry)
+        //     {
+        //         if (_client.CurrentRoom != null) 
+        //             _client.Join(_client.CurrentRoom.Value, null);
+        //         TopMost = true;
+        //     }
+        //     else
+        //         Environment.Exit(0);
+        // }
 
         private void SendButton_Click(object sender, EventArgs e)
         {

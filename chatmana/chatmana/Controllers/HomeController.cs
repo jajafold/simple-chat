@@ -19,10 +19,12 @@ public class HomeController : Controller
         return new JsonResult(result);
     }
 
-    [HttpPost]
-    public void CreateRoom(string creatorName, string roomName)
+    [HttpGet]
+    public JsonResult CreateRoom(string creatorName, string roomName, string password, int capacity)
     {
-        DataBase.AddRoom(creatorName, roomName);
+        var createdRoom = DataBase.AddRoom(creatorName, roomName, password == "" ? null : password, capacity);
+        var serialized = JsonConvert.SerializeObject(createdRoom);
+        return new JsonResult(serialized);
     }
 }
 

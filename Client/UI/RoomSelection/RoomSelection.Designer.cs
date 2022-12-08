@@ -1,4 +1,4 @@
-﻿namespace Chat.UI
+﻿namespace Chat.UI.RoomSelection
 {
     partial class RoomSelection
     {

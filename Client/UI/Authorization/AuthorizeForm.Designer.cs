@@ -1,5 +1,5 @@
 ﻿
-namespace Chat.UI
+namespace Chat.UI.Authorization
 {
     partial class AuthorizeForm
     {

@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Infrastructure.Updater;
 
-namespace Chat.UI
+namespace Chat.UI.Chat
 {
     public class OnlineUsers : IUpdatable<string>
     {

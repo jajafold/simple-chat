@@ -1,6 +1,6 @@
 ﻿using Infrastructure;
 
-namespace Chat.UI
+namespace Chat.UI.Chat
 {
     public class GlobalChatWriter : Writer 
     {

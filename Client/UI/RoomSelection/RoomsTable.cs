@@ -4,12 +4,11 @@ using System.Windows.Forms;
 using Infrastructure.Models;
 using Infrastructure.Updater;
 
-namespace Chat.UI;
+namespace Chat.UI.RoomSelection;
 
 public class RoomsTable : IUpdatable<RoomViewModel>
 {
     private readonly DataGridView _source;
-    private readonly HashSet<RoomViewModel> _rows = new ();
 
     public RoomsTable(DataGridView source)
     {
@@ -24,15 +23,14 @@ public class RoomsTable : IUpdatable<RoomViewModel>
                 .Cast<DataGridViewRow>()
                 .Any(row => row.Cells[0].Value.ToString() == room.Name)) continue;
 
-            var capacity = room.MaxCapacity > 0 ? room.MaxCapacity.ToString() : "∞"; 
+            var capacity = room.MaxCapacity > 0 ? room.MaxCapacity.ToString() : "∞";
+            var protection = room.Protection ? "С паролем" : "Публичная";
             
             _source.Rows.Add(
                 room.Name, 
-                room.Protection, 
+                protection, 
                 $"[{room.ActiveUsers} / {capacity}]",
                 room.Id);
-            
-            _rows.Add(room);
         }
     }
 }

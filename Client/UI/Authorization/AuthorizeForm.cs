@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using Infrastructure.Exceptions;
 
-namespace Chat.UI
+namespace Chat.UI.Authorization
 {
     // подумать что потом будет много разных форм ауторизы. Магический контракт про чат форм
     public partial class AuthorizeForm : Form
     {
-        private RoomSelection _roomSelection;
+        private RoomSelection.RoomSelection _roomSelection;
 
         public AuthorizeForm()
         {
@@ -21,7 +20,7 @@ namespace Chat.UI
         {
             var username = richTextBox1.Text;
 
-            _roomSelection = new RoomSelection(username);
+            _roomSelection = new RoomSelection.RoomSelection(username);
             _roomSelection.Show(this);
              Hide();
         }
