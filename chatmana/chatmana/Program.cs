@@ -1,11 +1,13 @@
-﻿using Infrastructure;
+﻿#pragma warning disable CA1416
+
+using Infrastructure;
 using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<IServerDataBase, ServerDataBase>();
+builder.Services.AddSingleton<IServerDataBase, DataBase>();
 builder.Services.AddSingleton<ISerializer, Serializer>();
 
 

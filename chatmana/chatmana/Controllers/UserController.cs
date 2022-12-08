@@ -1,30 +1,32 @@
 #pragma warning disable CA1416
 
+using Infrastructure;
 using Infrastructure.Models;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace chatmana.Controllers;
 
 public class UserController : Controller
 {
-    private readonly ISerializer serializer;
-    private readonly IServerDataBase dataBase;
+    private readonly ISerializer _serializer;
+    private readonly IServerDataBase _dataBase;
 
     public UserController(IServerDataBase dataBase, ISerializer serializer)
     {
-        this.dataBase = dataBase;
-        this.serializer = serializer;
+        _dataBase = dataBase;
+        _serializer = serializer;
     }
 
     [HttpGet]
     public JsonResult Join(Guid chatRoomId, string login)
     {
-        if (!DataBase.ChatRooms[chatRoomId].RequiresPassword)
-            DataBase.Join(chatRoomId, login);
+        if (_dataBase.ChatRooms[chatRoomId].RequiresPassword)
+            _dataBase.Join(chatRoomId, login);
         
         var serialized = JsonConvert.SerializeObject
-            (DataBase.ChatRooms[chatRoomId].ToConfirmationModel(), Formatting.Indented);
+            (_dataBase.ChatRooms[chatRoomId].ToConfirmationModel(), Formatting.Indented);
         
         return new JsonResult(serialized);
     }
@@ -32,8 +34,8 @@ public class UserController : Controller
     [HttpGet]
     public JsonResult Validate(Guid chatRoomId, string login, string password)
     {
-        var success = password == DataBase.ChatRooms[chatRoomId].Password;
-        if (success) DataBase.Join(chatRoomId, login);
+        var success = password == _dataBase.ChatRooms[chatRoomId].Password;
+        if (success) _dataBase.Join(chatRoomId, login);
         
         return new JsonResult(JsonConvert.SerializeObject(
             new ConfirmationResult {Success = success}
@@ -43,6 +45,6 @@ public class UserController : Controller
     [HttpPost]
     public void Leave(Guid chatRoomId, string login)
     {
-        dataBase.Leave(chatRoomId, login);
+        _dataBase.Leave(chatRoomId, login);
     }
 }
