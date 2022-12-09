@@ -4,16 +4,15 @@ using Infrastructure;
 using Infrastructure.Models;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace chatmana.Controllers;
 
 public class UserController : Controller
 {
+    private readonly IDataBase _dataBase;
     private readonly ISerializer _serializer;
-    private readonly IServerDataBase _dataBase;
 
-    public UserController(IServerDataBase dataBase, ISerializer serializer)
+    public UserController(IDataBase dataBase, ISerializer serializer)
     {
         _dataBase = dataBase;
         _serializer = serializer;
@@ -22,22 +21,22 @@ public class UserController : Controller
     [HttpGet]
     public JsonResult Join(Guid chatRoomId, string login)
     {
-        if (_dataBase.ChatRooms[chatRoomId].RequiresPassword)
+        if (_dataBase.GetRoomById(chatRoomId).Password != null)
             _dataBase.Join(chatRoomId, login);
-        
-        var serialized = JsonConvert.SerializeObject
-            (_dataBase.ChatRooms[chatRoomId].ToConfirmationModel(), Formatting.Indented);
-        
+
+        var serialized = _serializer.Serialize
+            (_dataBase.GetRoomById(chatRoomId).ToConfirmationModel());
+
         return new JsonResult(serialized);
     }
 
     [HttpGet]
     public JsonResult Validate(Guid chatRoomId, string login, string password)
     {
-        var success = password == _dataBase.ChatRooms[chatRoomId].Password;
+        var success = password == _dataBase.GetRoomById(chatRoomId).Password;
         if (success) _dataBase.Join(chatRoomId, login);
-        
-        return new JsonResult(JsonConvert.SerializeObject(
+
+        return new JsonResult(_serializer.Serialize(
             new ConfirmationResult {Success = success}
         ));
     }

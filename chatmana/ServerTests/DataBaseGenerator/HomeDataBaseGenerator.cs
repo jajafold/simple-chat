@@ -1,4 +1,3 @@
-using Infrastructure;
 using Infrastructure.Services;
 
 namespace ServerTests;
@@ -9,7 +8,7 @@ public class HomeDataBaseGenerator
 
     public HomeDataBaseGenerator()
     {
-        DataBase = new ServerDataBase();
-        DataBase.Chatrooms[DataBase.MainChat].Users!.AddRange(new List<string> {"Gena", "Vasya", "Petya"});
+        DataBase = new DataBase();
+        DataBase.ChatRooms[DataBase.MainChat].Users!.AddRange(new List<string> {"Gena", "Vasya", "Petya"});
     }
 }

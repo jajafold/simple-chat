@@ -1,17 +1,25 @@
 ﻿#pragma warning disable CA1416
 
+using chatmana;
 using Infrastructure;
 using Infrastructure.Services;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<IServerDataBase, DataBase>();
-builder.Services.AddSingleton<ISerializer, Serializer>();
 
+var cnn = new SqliteConnection("Filename=chatdb.db");
+cnn.Open();
+builder.Services.AddDbContext
+    <ChatDbContext>(o => o.UseSqlite(cnn));
+builder.Services.AddSingleton<ISerializer, Serializer>();
+builder.Services.AddTransient<IDataBase, ChatDbContext>();
 
 var app = builder.Build();
+AddChatData(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -33,3 +41,22 @@ app.MapControllerRoute(
     "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+static void AddChatData(WebApplication app)
+{
+    var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetService<ChatDbContext>();
+
+
+    //db.Database.EnsureDeleted();
+    db!.Database.EnsureCreated();
+    if (!db.ChatRooms.Any())
+    {
+        db.ChatRooms.Add(new ChatRoom("Server1", "Main1"));
+        db.ChatRooms.Add(new ChatRoom("Server2", "Main2"));
+        db.ChatRooms.Add(new ChatRoom("Server3", "Main3"));
+        db.ChatRooms.Add(new ChatRoom("Server4", "Main4"));
+    }
+
+    db.SaveChanges();
+}

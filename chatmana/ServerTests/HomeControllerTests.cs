@@ -43,9 +43,9 @@ public class HomeControllerTests
         var result = controller.Index().Value;
         var viewModel = _container.Get<Deserializer>().Deserialize<RoomsViewModel>(result.ToString());
         var db = _container.Get<IServerDataBase>();
-        Assert.AreEqual(viewModel.ChatRooms.Length, db.Chatrooms.Count);
+        Assert.AreEqual(viewModel.ChatRooms.Length, db.ChatRooms.Count);
         Assert.AreEqual(viewModel.ChatRooms[0].Id, db.MainChat);
         Assert.AreEqual(viewModel.ChatRooms[0].ActiveUsers,
-            db.Chatrooms[db.MainChat].Users!.Count);
+            db.ChatRooms[db.MainChat].Users!.Count);
     }
 }

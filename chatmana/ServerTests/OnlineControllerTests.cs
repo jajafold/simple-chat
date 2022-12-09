@@ -35,7 +35,7 @@ public class OnlineControllerTests
         var otherChatResult = controller.GetUsersOnline(Guid.Empty).Value;
         Assert.AreNotEqual(mainChatResult, otherChatResult);
     }
-    
+
     [Test]
     public void CorrectContentAfterDeserialization()
     {
