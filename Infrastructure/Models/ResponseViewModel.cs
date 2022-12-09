@@ -5,8 +5,8 @@ namespace Infrastructure.Models;
 
 public class ResponseViewModel
 {
-    public IEnumerable<string> UserNames;
     public Guid RoomId;
+    public IEnumerable<string> UserNames;
 }
 
 public static class ResponseViewControllerExtensions

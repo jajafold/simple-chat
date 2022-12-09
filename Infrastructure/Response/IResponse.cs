@@ -1,8 +1,7 @@
 using Infrastructure.Messages;
 
-namespace Infrastructure.Response
+namespace Infrastructure.Response;
+
+public interface IResponse<TMessageType> where TMessageType : Message
 {
-    public interface IResponse<TMessageType> where TMessageType : Message
-    {
-    }
 }

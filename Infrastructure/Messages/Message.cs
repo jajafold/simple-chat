@@ -1,24 +1,30 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Messages
+namespace Infrastructure.Messages;
+
+[Serializable]
+[Keyless]
+[Table("Messages")]
+public class Message : IMessage
 {
-    [Serializable]
-    public abstract class Message : IMessage
+    public Message(DateTime sendTime, Guid chatRoom, string name)
     {
-        public DateTime SendTime { get; set; }
-        public Guid ChatRoom { get; }
-        public long TimeStamp { get; }
-        public string Name { get; set; }
-        public string Text { get; set; }
+        SendTime = sendTime;
+        ChatRoom = chatRoom;
+        TimeStamp = sendTime.Ticks;
+        Name = name;
+    }
 
-        public Message(DateTime sendTime, Guid chatRoom, string name)
-        {
-            SendTime = sendTime;
-            ChatRoom = chatRoom;
-            TimeStamp = sendTime.Ticks;
-            Name = name;
-        }
+    public DateTime SendTime { get; set; }
+    public Guid ChatRoom { get; set; }
+    public long TimeStamp { get; set; }
+    public string Name { get; set; }
+    public string Text { get; set; }
 
-        public abstract string ToFlatString();
+    public virtual string ToFlatString()
+    {
+        return "";
     }
 }

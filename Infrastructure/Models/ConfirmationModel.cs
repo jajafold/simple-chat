@@ -4,8 +4,8 @@ namespace Infrastructure.Models;
 
 public class ConfirmationModel
 {
-    public Guid RoomId;
     public bool NeedsConfirmation;
+    public Guid RoomId;
 }
 
 public class ConfirmationResult
@@ -17,6 +17,6 @@ public static class ConfirmationExtensions
 {
     public static ConfirmationModel ToConfirmationModel(this ChatRoom chatRoom)
     {
-        return new ConfirmationModel {RoomId = chatRoom.Id, NeedsConfirmation = chatRoom.RequiresPassword};
+        return new ConfirmationModel {RoomId = chatRoom.Id, NeedsConfirmation = chatRoom.Password != null};
     }
 }

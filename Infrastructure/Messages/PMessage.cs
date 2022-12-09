@@ -1,7 +1,6 @@
-namespace Infrastructure.Messages
+namespace Infrastructure.Messages;
+
+public interface IPersonalMessage
 {
-    public interface IPersonalMessage
-    {
-        public string ReceiverId { get; set; }
-    }
+    public string ReceiverId { get; set; }
 }

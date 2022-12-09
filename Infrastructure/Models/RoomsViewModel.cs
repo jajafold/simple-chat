@@ -11,10 +11,10 @@ public static class RoomsViewModelExtensions
         var hubsModels = chatRooms
             .Select(x => new RoomViewModel
             {
-                ActiveUsers = x.UsersCount, 
+                ActiveUsers = x.UsersCount,
                 Id = x.Id,
                 Name = x.Name,
-                Protection = x.RequiresPassword,
+                Protection = x.Password != null,
                 MaxCapacity = x.MaxUsers
             });
         return new RoomsViewModel {ChatRooms = hubsModels.ToArray()};
@@ -30,7 +30,7 @@ public class RoomViewModel
 {
     public int ActiveUsers;
     public Guid Id;
+    public int MaxCapacity;
     public string Name;
     public bool Protection;
-    public int MaxCapacity;
 }
