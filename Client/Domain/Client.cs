@@ -4,14 +4,9 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
-using Infrastructure;
 using Infrastructure.Exceptions;
-using Infrastructure.Models;
 using Infrastructure.UIEvents;
-using Infrastructure.Updater;
 using Infrastructure.Worker;
 
 namespace Chat.Domain;
@@ -39,25 +34,12 @@ public class Client
         _updateRooms.Start();
     }
 
-    public void SetTo<T>(T fieldValue)
-    where T : class
-    {
-        var field = typeof(Client)
-            .GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
-            .FirstOrDefault(x => x.FieldType == typeof(T));
-        
-         if (field is null) throw new ArgumentException("Cannot find this type of field");
-         field.SetValue(this, fieldValue);
-    }
-
     public async void Join(Guid chatRoomId)
     {
         var confirmation = await _networkClient.TryJoin(chatRoomId);
-        
         if (confirmation.NeedsConfirmation)
             throw new PasswordRequiredException($"Password required for room {chatRoomId}");
-        
-        //TODO: Это все нужно вынести в Validate, ошибки ловить в форме
+            
         AcceptJoining(chatRoomId);
     }
 
@@ -72,6 +54,7 @@ public class Client
 
     private void AcceptJoining(Guid chatRoomId)
     {
+        RoomJoining.OnUserJoinedRoom(new UserJoinedRoomEventArgs());
         _updateRooms.Cancel();
         _updateMessages.Start();
         _updateUsers.Start();

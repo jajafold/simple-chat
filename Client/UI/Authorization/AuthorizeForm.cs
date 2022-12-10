@@ -12,8 +12,6 @@ namespace Chat.UI.Authorization
         public AuthorizeForm()
         {
             InitializeComponent();
-            Application.ThreadException += ThreadExceptionCaught;
-            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -21,25 +19,8 @@ namespace Chat.UI.Authorization
             var username = richTextBox1.Text;
 
             _roomSelection = new RoomSelection.RoomSelection(username);
-            _roomSelection.Show(this);
+            _roomSelection.Show();
              Hide();
-        }
-
-        private void OnUnhandledException(object? o, UnhandledExceptionEventArgs e)
-        {
-            MessageBox.Show(e.ExceptionObject.ToString());
-        }
-        
-        private void OnUnhandledThreadException(ThreadExceptionEventArgs e)
-        {
-            MessageBox.Show(e.Exception.ToString());
-        }
-
-        private void ThreadExceptionCaught(object sender, ThreadExceptionEventArgs e)
-        {
-            OnUnhandledThreadException(e);
-            
-            Activate();
         }
     }
 }

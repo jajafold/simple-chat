@@ -1,3 +1,4 @@
+#pragma warning disable CA1416
 using chatmana.Controllers;
 using Infrastructure;
 using Infrastructure.Models;

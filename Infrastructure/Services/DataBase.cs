@@ -13,12 +13,6 @@ public class DataBase : IServerDataBase
     {
         ChatRooms = new Dictionary<Guid, ChatRoom>();
         Messages = new List<Message>();
-        
-        AddRoom("SERVER1", "MAIN1", null, 0);
-        AddRoom("SERVER2", "MAIN2", null, 0);
-        AddRoom("SERVER3", "MAIN3", null, 0);
-        AddRoom("SERVER4", "MAIN4", null, 0);
-        AddRoom("SERVER5", "MAIN5", null, 0);
     }
 
     public Guid AddRoom(string creator, string name, string? password, int capacity)

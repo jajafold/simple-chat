@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Chat.Domain;
 using Chat.UI.Chat;
@@ -18,25 +15,21 @@ namespace Chat.UI.RoomSelection
         private readonly Client _client;
         
         private readonly Updater<RoomViewModel> _roomTableUpdater;
+        private Form _securityForm;
 
         private Guid _selectedRoomId;
 
         public RoomSelection(string username)
         {
             InitializeComponent();
-            Application.ThreadException +=
-                (sender, args) =>
+            RoomJoining.TryJoinProtectedRoom +=
+                () =>
                 {
-                    if (args.Exception is PasswordRequiredException)
-                    {
-                        var securityForm = new PasswordRequired(_client, _selectedRoomId);
-                        securityForm.ShowDialog(this);
-                    }
-                    else
-                    {
-                        MessageBox.Show(args.Exception.ToString());
-                    }
+                    _securityForm = new PasswordRequired(_client, _selectedRoomId, this);
+                    _securityForm.Show();
                 };
+            
+            RoomJoining.IncorrectPasswordEntered += () => MessageBox.Show("Неправильный пароль!");;
             
             _login = username;
             _client = new Client("http://localhost:5034", username);
@@ -63,11 +56,6 @@ namespace Chat.UI.RoomSelection
                     _selectedRoomId = Guid.Parse(selected.Cells[3].Value.ToString());
                     
                     _client.Join(_selectedRoomId);
-                    
-                    var chat = new ChatForm(_client);
-                    chat.Show();
-                    
-                    Hide();
                 };
 
             _buttonRoomCreation.Click += (sender, args) =>
@@ -82,11 +70,18 @@ namespace Chat.UI.RoomSelection
             {
                 BeginInvoke(UpdateRooms, args);
             };
+
+            RoomJoining.UserJoinedRoom += args =>
+            {
+                var chat = new ChatForm(_client);
+                chat.Show();
+                    
+                Hide();
+            };
         }
         private void UpdateRooms(RoomsTableChangeEventArgs e)
         {
             _roomTableUpdater.Update(e.Rooms);
         }
-        
     }
 }

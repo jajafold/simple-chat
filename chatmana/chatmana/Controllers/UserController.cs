@@ -22,7 +22,7 @@ public class UserController : Controller
     [HttpGet]
     public JsonResult Join(Guid chatRoomId, string login)
     {
-        if (_dataBase.ChatRooms[chatRoomId].RequiresPassword)
+        if (!_dataBase.ChatRooms[chatRoomId].RequiresPassword)
             _dataBase.Join(chatRoomId, login);
         
         var serialized = JsonConvert.SerializeObject

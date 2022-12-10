@@ -18,7 +18,7 @@ namespace Chat.UI.Chat
         public ChatForm(Client client)
         {
             InitializeComponent();
-            MessageBox.Show($"{client.Name} , {client.CurrentRoom}");
+            //MessageBox.Show($"{client.Name}, {client.CurrentRoom}");
             _client = client;
             _chatWriter = new GlobalChatWriter(new Chat(chatWindow));
             _userUpdater = new Updater<string>(new OnlineUsers(ActiveUsers));
