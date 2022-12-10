@@ -1,11 +1,9 @@
 using System;
 using System.Linq;
-using Infrastructure;
 using Infrastructure.Messages;
-using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace chatmana;
+namespace Infrastructure.Services;
 
 public class ChatDbContext : DbContext, IDataBase
 {
