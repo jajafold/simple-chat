@@ -7,7 +7,7 @@ namespace Infrastructure.Services;
 public interface IServerDataBase
 {
     public Dictionary<Guid, ChatRoom> ChatRooms { get; }
-    public List<Message> Messages{ get; }
+    public List<Message> Messages { get; }
     public Guid AddRoom(string creator, string name, string? password, int capacity);
     public void Join(Guid chatroom, string login);
     public void Leave(Guid chatRoomId, string login);

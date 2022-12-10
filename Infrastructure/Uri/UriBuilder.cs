@@ -6,18 +6,20 @@ namespace Infrastructure.Uri;
 
 public class UriBuilder
 {
-    public string? Host { get; internal set; }
-    public List<string> Fragments { get; private set; } = new();
-    public Dictionary<string, string> Queries { get; private set; } = new ();
-
     public UriBuilder(string? host, List<string> fragments, Dictionary<string, string?> queries)
     {
         Host = host;
         Fragments = fragments;
         Queries = queries;
     }
-    
-    public UriBuilder() {}
+
+    public UriBuilder()
+    {
+    }
+
+    public string? Host { get; internal set; }
+    public List<string> Fragments { get; } = new();
+    public Dictionary<string, string> Queries { get; } = new();
 
     public override string ToString()
     {

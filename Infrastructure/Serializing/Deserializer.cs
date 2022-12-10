@@ -1,16 +1,13 @@
 ﻿#nullable enable
 
-using System;
-using System.Text.Json;
 using Newtonsoft.Json;
 
-namespace Infrastructure
+namespace Infrastructure;
+
+public class Deserializer : IDeserializer
 {
-    public class Deserializer : IDeserializer
+    public T Deserialize<T>(string jsonString, JsonSerializerSettings settings = default!)
     {
-        public T Deserialize<T>(string jsonString, JsonSerializerSettings settings = default!)
-        {
-            return JsonConvert.DeserializeObject<T>(jsonString, settings)!;
-        }
+        return JsonConvert.DeserializeObject<T>(jsonString, settings)!;
     }
 }

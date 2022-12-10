@@ -1,6 +1,7 @@
 ﻿using System;
 
 namespace Infrastructure;
+
 public enum ClientConnectionState
 {
     Alive,
@@ -11,6 +12,7 @@ public enum ClientConnectionState
 public static class ClientConnection
 {
     public delegate void ClientConnectionHandler(ClientConnectionEventArgs args);
+
     public static event ClientConnectionHandler? NetworkStatusChange;
 
     public static void OnNetworkStatusChange(ClientConnectionEventArgs args)

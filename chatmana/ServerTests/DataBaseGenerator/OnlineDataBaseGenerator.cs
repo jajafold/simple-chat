@@ -1,6 +1,5 @@
 using Infrastructure;
 using Infrastructure.Services;
-using ChatRoom = Infrastructure.ChatRoom;
 
 namespace ServerTests;
 

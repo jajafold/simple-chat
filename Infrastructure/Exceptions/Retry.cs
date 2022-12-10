@@ -25,26 +25,28 @@ public class Retry
                 try
                 {
                     result = await func.Invoke();
-                    
-                    ClientConnection.OnNetworkStatusChange(new ClientConnectionEventArgs {State = ClientConnectionState.Alive});
+
+                    ClientConnection.OnNetworkStatusChange(new ClientConnectionEventArgs
+                        {State = ClientConnectionState.Alive});
                     FinishedSuccessfully = true;
-                    
+
                     return result;
                 }
                 catch (Exception exception)
                 {
                     Exception = exception;
-                    ClientConnection.OnNetworkStatusChange(new ClientConnectionEventArgs {State = ClientConnectionState.Connecting});
+                    ClientConnection.OnNetworkStatusChange(new ClientConnectionEventArgs
+                        {State = ClientConnectionState.Connecting});
                 }
 
                 Thread.Sleep(msInterval);
             }
-            
-            ClientConnection.OnNetworkStatusChange(new ClientConnectionEventArgs {State = ClientConnectionState.Disconnected});
+
+            ClientConnection.OnNetworkStatusChange(new ClientConnectionEventArgs
+                {State = ClientConnectionState.Disconnected});
             FinishedSuccessfully = false;
-            
+
             return result;
         }
     }
-    
 }

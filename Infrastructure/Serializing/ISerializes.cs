@@ -9,5 +9,6 @@ public interface IDeserializer
 
 public interface ISerializer
 {
-    public string Serialize(object? value, Formatting formatting = Formatting.Indented, JsonSerializerSettings? settings = default);
+    public string Serialize(object? value, Formatting formatting = Formatting.Indented,
+        JsonSerializerSettings? settings = default);
 }

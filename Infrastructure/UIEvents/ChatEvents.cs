@@ -7,14 +7,16 @@ namespace Infrastructure.UIEvents;
 public static class ChatEvents
 {
     public delegate void ChatMessagesChangeHandler(ChatMessagesChangeEventArgs e);
+
+    public delegate void ChatUsersChangeHandler(ChatUsersChangeEventArgs e);
+
     public static event ChatMessagesChangeHandler? ChatMessagesChange;
-    
+
     public static void OnChatMessagesChange(ChatMessagesChangeEventArgs e)
     {
         ChatMessagesChange?.Invoke(e);
     }
 
-    public delegate void ChatUsersChangeHandler(ChatUsersChangeEventArgs e);
     public static event ChatUsersChangeHandler? ChatUsersChange;
 
     public static void OnChatUsersChange(ChatUsersChangeEventArgs e)

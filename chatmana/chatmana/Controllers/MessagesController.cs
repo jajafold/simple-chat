@@ -1,7 +1,6 @@
 #pragma warning disable CA1416
 
 using Infrastructure;
-using Infrastructure.Services;
 using Infrastructure.Messages;
 using Infrastructure.Models;
 using Infrastructure.Services;
@@ -12,10 +11,10 @@ namespace chatmana.Controllers;
 
 public class MessagesController : Controller
 {
+    private readonly IDataBase _dataBase;
     private readonly ISerializer _serializer;
-    private readonly IServerDataBase _dataBase;
 
-    public MessagesController(IServerDataBase dataBase, ISerializer serializer)
+    public MessagesController(IDataBase dataBase, ISerializer serializer)
     {
         _dataBase = dataBase;
         _serializer = serializer;
@@ -24,16 +23,16 @@ public class MessagesController : Controller
     [HttpPost]
     public void Text(string message, string name, Guid chatRoomId)
     {
-        _dataBase.PostMessage(new TextMessage(message, chatRoomId, DateTime.Now, name));
+        _dataBase.PostMessage<TextMessage>(new TextMessage(message, chatRoomId, DateTime.Now, name));
     }
-    
+
     //TODO : self-made exceptions
     [HttpGet]
     public JsonResult ChatRoomMessages(long timestamp, Guid chatRoomId)
     {
-        if (!_dataBase.ChatRooms.ContainsKey(chatRoomId))
+        if (!_dataBase.ChatRooms.Any(x => x.Id == chatRoomId))
             throw new InvalidOperationException($"chat {chatRoomId} is not exist");
-        
+
         var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
         var result = _serializer.Serialize(_dataBase.Messages
             .Where(x => x.ChatRoom == chatRoomId)

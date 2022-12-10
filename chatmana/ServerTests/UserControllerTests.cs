@@ -26,9 +26,9 @@ public class UserControllerTests
         var db = _container.Get<IServerDataBase>();
         var name = "Klava";
         controller.Join(db.MainChat, name);
-        Assert.Contains(name, db.Chatrooms[db.MainChat].Users);
+        Assert.Contains(name, db.ChatRooms[db.MainChat].Users);
     }
-    
+
     [Test]
     public void JoinReturnsRightResponseViewModel()
     {
@@ -38,9 +38,9 @@ public class UserControllerTests
         var result = _container.Get<IDeserializer>()
             .Deserialize<ResponseViewModel>(controller.Join(db.MainChat, name).Value.ToString());
         Assert.AreEqual(db.MainChat, result.RoomId);
-        CollectionAssert.AreEquivalent(db.Chatrooms[db.MainChat].Users, result.UserNames);
+        CollectionAssert.AreEquivalent(db.ChatRooms[db.MainChat].Users, result.UserNames);
     }
-    
+
     [Test]
     public void JoinResponseModelsAreNotEqual()
     {
@@ -63,7 +63,7 @@ public class UserControllerTests
         var name = "Gena";
         Assert.Throws<InvalidOperationException>(() => controller.Join(db.MainChat, name));
     }
-    
+
     //TODO : self-made exceptions
     [Test]
     public void JoinThrowsKeyNotFoundExceptionIfRoomDoesNotExists()
@@ -81,9 +81,9 @@ public class UserControllerTests
         var db = _container.Get<IServerDataBase>();
         var name = "Gena";
         controller.Leave(db.MainChat, name);
-        Assert.That(db.Chatrooms[db.MainChat].Users, Has.No.Member(name));
+        Assert.That(db.ChatRooms[db.MainChat].Users, Has.No.Member(name));
     }
-    
+
     //TODO : self-made exceptions
     [Test]
     public void LeaveThrowsKeyNotFoundExceptionIfRoomDoesNotExists()
@@ -93,7 +93,7 @@ public class UserControllerTests
         var name = "Gena";
         Assert.Throws<KeyNotFoundException>(() => controller.Leave(Guid.NewGuid(), name));
     }
-    
+
     //TODO: self-made exceptions
     [Test]
     public void LeaveThrowsInvalidOperationExceptionIfNameNotExists()

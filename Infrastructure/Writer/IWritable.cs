@@ -1,7 +1,6 @@
-﻿namespace Infrastructure
+﻿namespace Infrastructure;
+
+public interface IWritable
 {
-    public interface IWritable
-    {
-        public void Write(string text);
-    }
+    public void Write(string text);
 }
