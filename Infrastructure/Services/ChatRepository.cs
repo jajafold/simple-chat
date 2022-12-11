@@ -32,18 +32,17 @@ public class ChatRepository : IChatRepository
     public void Join(Guid chatroom, string login)
     {
         var room = GetRoomById(chatroom);
-        if (room.Users.Any(x => x == login))
+        if (room.Users.Count != 0 && room.Users.Any(x => x == login))
             throw new InvalidOperationException($"Login {login} is already in use");
         room.Users.Add(login);
         ChatContext.ChatRooms.Update(room);
         ChatContext.SaveChanges();
-        Console.WriteLine(room.Users.Count);
     }
 
     public void Leave(Guid chatRoomId, string login)
     {
         var room = GetRoomById(chatRoomId);
-        if (room.Users.All(user => user != login))
+        if (room.Users.Count != 0 && room.Users.All(user => user != login))
             throw new InvalidOperationException($"There's no {login} in room {chatRoomId.ToString()}");
         room.Users.Remove(login);
         ChatContext.ChatRooms.Update(room);
