@@ -20,7 +20,7 @@ public class MessagesController : Controller
         _serializer = serializer;
     }
 
-    [HttpGet]
+    [HttpPost]
     public void Text(string message, string name, Guid chatRoomId)
     {
         _repository.PostTextMessage(new TextMessage(message, chatRoomId, DateTime.Now, name));
