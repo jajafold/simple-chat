@@ -45,18 +45,12 @@ app.Run();
 static void AddChatData(WebApplication app)
 {
     var scope = app.Services.CreateScope();
-    var db = scope.ServiceProvider.GetService<ChatDbContext>();
-
-
-    //db.Database.EnsureDeleted();
-    db!.Database.EnsureCreated();
-    if (!db.ChatRooms.Any())
-    {
-        db.ChatRooms.Add(new ChatRoom("Server1", "Main1", Guid.NewGuid()));
-        db.ChatRooms.Add(new ChatRoom("Server2", "Main2", Guid.NewGuid()));
-        db.ChatRooms.Add(new ChatRoom("Server3", "Main3", Guid.NewGuid()));
-        db.ChatRooms.Add(new ChatRoom("Server4", "Main4", Guid.NewGuid()));
-    }
-
-    db.SaveChanges();
+    var chatRepository = scope.ServiceProvider.GetService<IChatRepository>();
+    
+    chatRepository.ChatContext.Database.EnsureCreated();
+    if (chatRepository.ChatRooms.Any()) return;
+    chatRepository.AddRoom("Server1", "Main1", "", 0);
+    chatRepository.AddRoom("Server2", "Main2", "", 0);
+    chatRepository.AddRoom("Server3", "Main3", "", 0);
+    chatRepository.AddRoom("Server4", "Main4", "", 0);
 }
