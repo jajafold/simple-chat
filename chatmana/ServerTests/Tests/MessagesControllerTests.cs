@@ -7,20 +7,15 @@ using Microsoft.Extensions.DependencyInjection;
 namespace ServerTests;
 
 [TestFixture(typeof(ChatTestFixture))]
-public class MessagesControllerTests<T> where T : IDbFixture, new()
+public class MessagesControllerTests<T> : ControllerTests<T> where T : IDbFixture, new()
 {
     private MessagesController _controller;
-    private IDeserializer _deserializer;
-    private T _dbFixture;
-    private Func<IChatRepository> GetRepository { get; set; }
     
     [SetUp]
-    public void Setup()
+    public new void Setup()
     {
-        _dbFixture = new T();
-        _controller = _dbFixture.ServiceProvider.GetService<MessagesController>();
-        _deserializer = _dbFixture.ServiceProvider.GetService<IDeserializer>();
-        GetRepository = () => _dbFixture.ServiceProvider.GetService<IRepositoryGenerator>().ConfigureRepository();
+        base.Setup();
+        _controller = _dbFixture.ServiceProvider.GetService<MessagesController>()!;
     }
 
     [Test]
