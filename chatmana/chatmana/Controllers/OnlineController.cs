@@ -8,19 +8,19 @@ namespace chatmana.Controllers;
 
 public class OnlineController : Controller
 {
-    private readonly IDataBase _dataBase;
+    private readonly IChatRepository _repository;
     private readonly ISerializer _serializer;
 
-    public OnlineController(IDataBase dataBase, ISerializer serializer)
+    public OnlineController(IChatRepository repository, ISerializer serializer)
     {
-        _dataBase = dataBase;
+        _repository = repository;
         _serializer = serializer;
     }
 
     public JsonResult GetUsersOnline(Guid chatRoomId)
     {
         var result = _serializer.Serialize
-            (_dataBase.GetRoomById(chatRoomId).Users);
+            (_repository.GetRoomById(chatRoomId).Users);
         return new JsonResult(result);
     }
 }

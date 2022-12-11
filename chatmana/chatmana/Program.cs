@@ -2,6 +2,7 @@
 
 using chatmana;
 using Infrastructure;
+using Infrastructure.Messages;
 using Infrastructure.Services;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var cnn = new SqliteConnection("Filename=chatdb.db");
-cnn.Open();
 builder.Services.AddDbContext
-    <ChatDbContext>(o => o.UseSqlite(cnn));
+    <ChatDbContext>(o => o.UseSqlite("Filename=chatdb.db"),
+        ServiceLifetime.Transient);
 builder.Services.AddSingleton<ISerializer, Serializer>();
-builder.Services.AddTransient<IDataBase, ChatDbContext>();
+builder.Services.AddTransient<IChatRepository, ChatRepository>();
 
 var app = builder.Build();
 AddChatData(app);

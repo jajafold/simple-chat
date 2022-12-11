@@ -2,50 +2,51 @@ using chatmana.Controllers;
 using Infrastructure;
 using Infrastructure.Models;
 using Infrastructure.Services;
-using Ninject;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ServerTests;
 
-public class HomeControllerTests
+[TestFixture(typeof(HomeTestFixture))]
+public class HomeControllerTests<T> where T : IDbFixture, new()
 {
-    private StandardKernel _container;
+    private HomeController _controller;
+    private IDeserializer _deserializer;
+    private T _dbFixture;
+    private Func<IChatRepository> GetRepository { get; set; }
 
     [SetUp]
     public void Setup()
     {
-        _container = new StandardKernel();
-        _container.Bind<IServerDataBase>().ToConstant(new HomeDataBaseGenerator().DataBase);
-        _container.Bind<ISerializer>().To<Serializer>().InSingletonScope();
-        _container.Bind<IDeserializer>().To<Deserializer>().InSingletonScope();
+        _dbFixture = new T();
+        _controller = _dbFixture.ServiceProvider.GetService<HomeController>();
+        _deserializer = _dbFixture.ServiceProvider.GetService<IDeserializer>();
+        GetRepository = () => _dbFixture.ServiceProvider.GetService<IDataBaseGenerator>().ConfigureDataBase();
     }
 
     [Test]
     public void ResultNotNull()
     {
-        var controller = _container.Get<HomeController>();
-        var result = controller.Index().Value;
+        var result = _controller.Index().Value;
         Assert.IsNotNull(result);
     }
 
     [Test]
     public void ResultDeserializes()
     {
-        var controller = _container.Get<HomeController>();
-        var result = controller.Index().Value;
-        var viewModel = _container.Get<Deserializer>().Deserialize<RoomsViewModel>(result.ToString());
+        var result = _controller.Index().Value;
+        var viewModel = _deserializer.Deserialize<RoomsViewModel>(result.ToString());
         Assert.IsNotNull(viewModel);
     }
 
     [Test]
     public void ContentEqualsDataBase()
     {
-        var controller = _container.Get<HomeController>();
-        var result = controller.Index().Value;
-        var viewModel = _container.Get<Deserializer>().Deserialize<RoomsViewModel>(result.ToString());
-        var db = _container.Get<IServerDataBase>();
-        Assert.AreEqual(viewModel.ChatRooms.Length, db.ChatRooms.Count);
-        Assert.AreEqual(viewModel.ChatRooms[0].Id, db.MainChat);
+        var db = GetRepository();
+        var result = _controller.Index().Value;
+        var viewModel = _deserializer.Deserialize<RoomsViewModel>(result.ToString());
+        Assert.AreEqual(viewModel.ChatRooms.Length, db.ChatRooms.Count());
+        Assert.AreEqual(viewModel.ChatRooms[0].Id, db.ChatRooms.First().Id);
         Assert.AreEqual(viewModel.ChatRooms[0].ActiveUsers,
-            db.ChatRooms[db.MainChat].Users!.Count);
+            db.ChatRooms.First().Users.Count);
     }
 }

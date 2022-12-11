@@ -1,14 +1,21 @@
+using Infrastructure;
 using Infrastructure.Services;
 
 namespace ServerTests;
 
-public class HomeDataBaseGenerator
+public class HomeDataBaseGenerator : IDataBaseGenerator
 {
-    public readonly IServerDataBase DataBase;
+    private IDataBase DataBase { get; }
 
-    public HomeDataBaseGenerator()
+    public HomeDataBaseGenerator(IDataBase dataBase)
     {
-        DataBase = new DataBase();
-        DataBase.ChatRooms[DataBase.MainChat].Users!.AddRange(new List<string> {"Gena", "Vasya", "Petya"});
+        DataBase = dataBase;
+        ((ChatDbContext) dataBase).Database.EnsureCreated();
+    }
+
+    public IDataBase ConfigureDataBase()
+    {
+        DataBase.ChatRooms.Add(new ChatRoom("1", "1"));
+        return DataBase;
     }
 }
