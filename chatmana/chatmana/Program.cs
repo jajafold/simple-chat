@@ -15,7 +15,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext
     <ChatDbContext>(o => o.UseSqlite("Filename=chatdb.db"),
         ServiceLifetime.Transient);
-builder.Services.AddSingleton<ISerializer, Serializer>();
+builder.Services.AddTransient<ISerializer, Serializer>();
 builder.Services.AddTransient<IChatRepository, ChatRepository>();
 
 var app = builder.Build();

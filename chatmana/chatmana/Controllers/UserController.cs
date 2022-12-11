@@ -21,11 +21,12 @@ public class UserController : Controller
     [HttpGet]
     public JsonResult Join(Guid chatRoomId, string login)
     {
-        if (_repository.GetRoomById(chatRoomId).Password != null)
+        var room = _repository.GetRoomById(chatRoomId);
+        if (room.Password != null)
             _repository.Join(chatRoomId, login);
 
         var serialized = _serializer.Serialize
-            (_repository.GetRoomById(chatRoomId).ToConfirmationModel());
+            (room.ToConfirmationModel());
 
         return new JsonResult(serialized);
     }
