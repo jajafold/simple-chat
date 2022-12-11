@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ServerTests;
 
-[TestFixture(typeof(HomeTestFixture))]
+[TestFixture(typeof(ChatTestFixture))]
 public class HomeControllerTests<T> where T : IDbFixture, new()
 {
     private HomeController _controller;
@@ -20,7 +20,7 @@ public class HomeControllerTests<T> where T : IDbFixture, new()
         _dbFixture = new T();
         _controller = _dbFixture.ServiceProvider.GetService<HomeController>();
         _deserializer = _dbFixture.ServiceProvider.GetService<IDeserializer>();
-        GetRepository = () => _dbFixture.ServiceProvider.GetService<IDataBaseGenerator>().ConfigureDataBase();
+        GetRepository = () => _dbFixture.ServiceProvider.GetService<IRepositoryGenerator>().ConfigureRepository();
     }
 
     [Test]
@@ -46,7 +46,6 @@ public class HomeControllerTests<T> where T : IDbFixture, new()
         var viewModel = _deserializer.Deserialize<RoomsViewModel>(result.ToString());
         Assert.AreEqual(viewModel.ChatRooms.Length, db.ChatRooms.Count());
         Assert.AreEqual(viewModel.ChatRooms[0].Id, db.ChatRooms.First().Id);
-        Assert.AreEqual(viewModel.ChatRooms[0].ActiveUsers,
-            db.ChatRooms.First().Users.Count);
+        Assert.AreEqual(db.ChatRooms.First().Users.Count,viewModel.ChatRooms[0].ActiveUsers);
     }
 }
