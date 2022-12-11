@@ -17,12 +17,6 @@ public class HomeController : Controller
     {
         _dataBase = dataBase;
         _serializer = serializer;
-        
-        _dataBase.AddRoom("SERVER1", "MAIN1", "123", 10);
-        _dataBase.AddRoom("SERVER2", "MAIN2", "123", 0);
-        _dataBase.AddRoom("SERVER3", "MAIN3", null, 0);
-        _dataBase.AddRoom("SERVER4", "MAIN4", null, 0);
-        _dataBase.AddRoom("SERVER5", "MAIN5", null, 0);
     }
 
     [HttpGet]
