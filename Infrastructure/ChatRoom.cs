@@ -11,16 +11,17 @@ public class ChatRoom
     public ChatRoom(
         string admin,
         string name,
+        Guid id,
         string? password = null,
         int maxUsers = 0)
     {
         if (password is not null) Password = password;
         if (maxUsers is not 0) MaxUsers = maxUsers;
 
-        Id = Guid.NewGuid();
+        Id = id;
         Admin = admin;
         Name = name;
-        Users = new List<User>();
+        Users = new List<string>();
     }
 
     public string Name { get; set; }
@@ -29,6 +30,6 @@ public class ChatRoom
     public string? Password { get; set; }
 
     [Key] public Guid Id { get; set; }
-    public List<User> Users { get; set; }
+    public List<string> Users { get; set; }
     public int UsersCount => Users.Count;
 }

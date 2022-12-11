@@ -11,30 +11,30 @@ namespace chatmana.Controllers;
 
 public class MessagesController : Controller
 {
-    private readonly IDataBase _dataBase;
+    private readonly IChatRepository _repository;
     private readonly ISerializer _serializer;
 
-    public MessagesController(IDataBase dataBase, ISerializer serializer)
+    public MessagesController(IChatRepository dataBase, ISerializer serializer)
     {
-        _dataBase = dataBase;
+        _repository = dataBase;
         _serializer = serializer;
     }
 
     [HttpPost]
     public void Text(string message, string name, Guid chatRoomId)
     {
-        _dataBase.PostMessage<TextMessage>(new TextMessage(message, chatRoomId, DateTime.Now, name));
+        _repository.PostTextMessage(new TextMessage(message, chatRoomId, DateTime.Now, name));
     }
 
     //TODO : self-made exceptions
     [HttpGet]
     public JsonResult ChatRoomMessages(long timestamp, Guid chatRoomId)
     {
-        if (!_dataBase.ChatRooms.Any(x => x.Id == chatRoomId))
+        if (!_repository.ContainsRoom(chatRoomId))
             throw new InvalidOperationException($"chat {chatRoomId} is not exist");
 
         var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
-        var result = _serializer.Serialize(_dataBase.Messages
+        var result = _serializer.Serialize(_repository.AllMessages
             .Where(x => x.ChatRoom == chatRoomId)
             .Where(x => x.TimeStamp > timestamp)
             .ToMessagesViewModel(), Formatting.Indented, settings);

@@ -10,12 +10,12 @@ namespace chatmana.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly IDataBase _dataBase;
+    private readonly IChatRepository _repository;
     private readonly ISerializer _serializer;
 
-    public HomeController(IDataBase dataBase, ISerializer serializer)
+    public HomeController(IChatRepository repository, ISerializer serializer)
     {
-        _dataBase = dataBase;
+        _repository = repository;
         _serializer = serializer;
     }
 
@@ -25,14 +25,14 @@ public class HomeController : Controller
         var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
 
         var result = _serializer.Serialize
-            (_dataBase.ChatRooms.ToHubsViewModel(), Formatting.Indented, settings);
+            (_repository.ChatRooms.ToHubsViewModel(), Formatting.Indented, settings);
         return new JsonResult(result);
     }
 
     [HttpGet]
     public JsonResult CreateRoom(string creatorName, string roomName, string password, int capacity)
     {
-        var createdRoomId = _dataBase.AddRoom(creatorName, roomName, password == "" ? null : password, capacity);
+        var createdRoomId = _repository.AddRoom(creatorName, roomName, password == "" ? null : password, capacity);
         var serialized = _serializer.Serialize(createdRoomId);
         return new JsonResult(serialized);
     }

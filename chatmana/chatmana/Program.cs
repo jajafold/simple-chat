@@ -2,6 +2,7 @@
 
 using chatmana;
 using Infrastructure;
+using Infrastructure.Messages;
 using Infrastructure.Services;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var cnn = new SqliteConnection("Filename=chatdb.db");
-cnn.Open();
 builder.Services.AddDbContext
-    <ChatDbContext>(o => o.UseSqlite(cnn));
-builder.Services.AddSingleton<ISerializer, Serializer>();
-builder.Services.AddTransient<IDataBase, ChatDbContext>();
+    <ChatDbContext>(o => o.UseSqlite("Filename=chatdb.db"),
+        ServiceLifetime.Transient);
+builder.Services.AddTransient<ISerializer, Serializer>();
+builder.Services.AddTransient<IChatRepository, ChatRepository>();
 
 var app = builder.Build();
 AddChatData(app);
@@ -52,10 +52,10 @@ static void AddChatData(WebApplication app)
     db!.Database.EnsureCreated();
     if (!db.ChatRooms.Any())
     {
-        db.ChatRooms.Add(new ChatRoom("Server1", "Main1"));
-        db.ChatRooms.Add(new ChatRoom("Server2", "Main2"));
-        db.ChatRooms.Add(new ChatRoom("Server3", "Main3"));
-        db.ChatRooms.Add(new ChatRoom("Server4", "Main4"));
+        db.ChatRooms.Add(new ChatRoom("Server1", "Main1", Guid.NewGuid()));
+        db.ChatRooms.Add(new ChatRoom("Server2", "Main2", Guid.NewGuid()));
+        db.ChatRooms.Add(new ChatRoom("Server3", "Main3", Guid.NewGuid()));
+        db.ChatRooms.Add(new ChatRoom("Server4", "Main4", Guid.NewGuid()));
     }
 
     db.SaveChanges();
