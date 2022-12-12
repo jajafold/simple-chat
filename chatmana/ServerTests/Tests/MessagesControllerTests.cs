@@ -25,7 +25,7 @@ public class MessagesControllerTests<T> : ControllerTests<T> where T : IDbFixtur
         var (text, name) = ("buba", "Vasya");
         var chatId = repository.ChatRooms.First().Id;
         _controller.Text(text, name, chatId);
-        Assert.IsTrue(repository.AllMessages.Any(x => x.Name == name && x.Text == text));
+        Assert.That(repository.AllMessages.Any(x => x.Name == name && x.Text == text), Is.True);
     }
 
     //TODO : self-made exceptions

@@ -23,8 +23,8 @@ public class UserControllerTests<T> : ControllerTests<T> where T : IDbFixture, n
     {
         var repository = GetRepository();
         var room = repository.ChatRooms.First().Id;
-        var name = "Klava";
-        _controller.Join(room, name);
+        var name = "Petrovich";
+        _controller.Validate(room, name, null);
         Assert.Contains(name, repository.GetRoomById(room).Users);
     }
 
@@ -35,9 +35,9 @@ public class UserControllerTests<T> : ControllerTests<T> where T : IDbFixture, n
         var name = "Bitch";
         var room = repository.ChatRooms.First().Id;
         var result = _deserializer
-            .Deserialize<ResponseViewModel>(_controller.Join(room, name).Value.ToString());
+            .Deserialize<ConfirmationModel>(_controller.Join(room, name).Value.ToString());
         Assert.AreEqual(room, result.RoomId);
-        CollectionAssert.AreEquivalent(repository.GetRoomById(room).Users, result.UserNames);
+        Assert.AreEqual(false, result.NeedsConfirmation);
     }
 
     [Test]
@@ -67,9 +67,8 @@ public class UserControllerTests<T> : ControllerTests<T> where T : IDbFixture, n
     [Test]
     public void JoinThrowsInvalidOperationExceptionIfRoomDoesNotExists()
     {
-        var repository = GetRepository();
         var name = "Gena";
-        Assert.Throws<KeyNotFoundException>(() => _controller.Join(Guid.NewGuid(), name));
+        Assert.Throws<InvalidOperationException>(() => _controller.Join(Guid.NewGuid(), name));
     }
 
     [Test]
@@ -84,10 +83,10 @@ public class UserControllerTests<T> : ControllerTests<T> where T : IDbFixture, n
 
     //TODO : self-made exceptions
     [Test]
-    public void LeaveThrowsKeyNotFoundExceptionIfRoomDoesNotExists()
+    public void LeaveThrowsInvalidOperationExceptionIfRoomDoesNotExists()
     {
         var repository = GetRepository();
         var name = "Gena";
-        Assert.Throws<KeyNotFoundException>(() => _controller.Leave(Guid.NewGuid(), name));
+        Assert.Throws<InvalidOperationException>(() => _controller.Leave(Guid.NewGuid(), name));
     }
 }

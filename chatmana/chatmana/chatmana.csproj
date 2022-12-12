@@ -18,6 +18,7 @@
         <_ContentIncludedByDefault Remove="Views\_ViewStart.cshtml" />
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
             <PrivateAssets>all</PrivateAssets>
@@ -26,8 +27,8 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="Infrastructure">
-            <HintPath>..\..\Infrastructure\bin\Debug\net7.0-windows\Infrastructure.dll</HintPath>
-        </Reference>
+      <Reference Include="Infrastructure">
+        <HintPath>..\..\Infrastructure\bin\Debug\net7.0\Infrastructure.dll</HintPath>
+      </Reference>
     </ItemGroup>
 </Project>

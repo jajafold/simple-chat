@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using chatmana;
 using Infrastructure.Messages;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services;
 

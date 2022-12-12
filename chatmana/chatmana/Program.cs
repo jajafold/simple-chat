@@ -1,10 +1,7 @@
 ﻿#pragma warning disable CA1416
 
-using chatmana;
 using Infrastructure;
-using Infrastructure.Messages;
 using Infrastructure.Services;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

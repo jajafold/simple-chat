@@ -7,7 +7,7 @@ using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace chatmana;
+namespace Infrastructure;
 
 public class ChatDbContext : DbContext
 {
