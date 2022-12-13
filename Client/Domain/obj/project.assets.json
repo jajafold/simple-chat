@@ -5,19 +5,27 @@
       "Newtonsoft.Json/13.0.2": {
         "type": "package",
         "compile": {
-          "lib/net6.0/Newtonsoft.Json.dll": {}
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net6.0/Newtonsoft.Json.dll": {}
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Ninject/4.0.0-beta.1": {
         "type": "package",
         "compile": {
-          "lib/net6.0/Ninject.dll": {}
+          "lib/net6.0/Ninject.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net6.0/Ninject.dll": {}
+          "lib/net6.0/Ninject.dll": {
+            "related": ".xml"
+          }
         }
       }
     }
@@ -78,24 +86,31 @@
     ]
   },
   "packageFolders": {
-    "/Users/maksimcevycelov/.nuget/packages/": {}
+    "C:\\Users\\iayny\\.nuget\\packages\\": {},
+    "D:\\VS Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/maksimcevycelov/simple-chat/Client/Domain/Chat.Domain.csproj",
+      "projectUniqueName": "D:\\UnityProject\\from_git\\simple-chat\\Client\\Domain\\Chat.Domain.csproj",
       "projectName": "Chat.Domain",
-      "projectPath": "/Users/maksimcevycelov/simple-chat/Client/Domain/Chat.Domain.csproj",
-      "packagesPath": "/Users/maksimcevycelov/.nuget/packages/",
-      "outputPath": "/Users/maksimcevycelov/simple-chat/Client/Domain/obj/",
+      "projectPath": "D:\\UnityProject\\from_git\\simple-chat\\Client\\Domain\\Chat.Domain.csproj",
+      "packagesPath": "C:\\Users\\iayny\\.nuget\\packages\\",
+      "outputPath": "D:\\UnityProject\\from_git\\simple-chat\\Client\\Domain\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\VS Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/maksimcevycelov/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\iayny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -129,7 +144,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -138,7 +154,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
