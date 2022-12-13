@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Infrastructure.Messages;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services;
 

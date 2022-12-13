@@ -22,7 +22,7 @@ public class UserController : Controller
     public JsonResult Join(Guid chatRoomId, string login)
     {
         var room = _repository.GetRoomById(chatRoomId);
-        if (room.Password != null)
+        if (room.Password == null)
             _repository.Join(chatRoomId, login);
 
         var serialized = _serializer.Serialize
@@ -32,7 +32,7 @@ public class UserController : Controller
     }
 
     [HttpGet]
-    public JsonResult Validate(Guid chatRoomId, string login, string password)
+    public JsonResult Validate(Guid chatRoomId, string login, string? password)
     {
         var success = password == _repository.GetRoomById(chatRoomId).Password;
         if (success) _repository.Join(chatRoomId, login);

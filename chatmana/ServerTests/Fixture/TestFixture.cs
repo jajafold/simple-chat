@@ -13,7 +13,7 @@ public class ChatTestFixture : IDbFixture
     {
         var serviceCollection = new ServiceCollection();
         serviceCollection
-            .AddDbContext<ChatDbContext>(o => o.UseSqlite("DataSource=file::memory:?cache=shared"),
+            .AddDbContext<ChatDbContext>(o => o.UseSqlite("Filename=:memory:?cache=shared"),
                 ServiceLifetime.Transient);
         serviceCollection.AddTransient<HomeController, HomeController>();
         serviceCollection.AddTransient<MessagesController, MessagesController>();
@@ -22,7 +22,7 @@ public class ChatTestFixture : IDbFixture
         serviceCollection.AddTransient<ISerializer, Serializer>();
         serviceCollection.AddTransient<IDeserializer, Deserializer>();
         serviceCollection.AddTransient<ChatDbContext, ChatDbContext>();
-        serviceCollection.AddTransient<IChatRepository, ChatRepository>();
+        serviceCollection.AddSingleton<IChatRepository, ChatRepository>();
         serviceCollection.AddTransient<IRepositoryGenerator, RepositoryGenerator>();
 
         ServiceProvider = serviceCollection.BuildServiceProvider();

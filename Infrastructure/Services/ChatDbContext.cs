@@ -5,7 +5,7 @@ using Infrastructure.Messages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace Infrastructure.Services;
+namespace Infrastructure;
 
 public class ChatDbContext : DbContext
 {
