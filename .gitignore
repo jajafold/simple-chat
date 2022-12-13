@@ -20,6 +20,8 @@ x64/
 [Oo]bj/
 # build folder is nowadays used for build scripts and should not be ignored
 #build/
+/.idea
+/.vs
 
 # NuGet Packages
 *.nupkg
