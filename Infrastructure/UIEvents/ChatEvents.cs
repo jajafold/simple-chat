@@ -7,8 +7,8 @@ namespace Infrastructure.UIEvents;
 public static class ChatEvents
 {
     public delegate void ChatMessagesChangeHandler(ChatMessagesChangeEventArgs e);
-
     public delegate void ChatUsersChangeHandler(ChatUsersChangeEventArgs e);
+    public delegate void ChatWindowClosedHandler();
 
     public static event ChatMessagesChangeHandler? ChatMessagesChange;
 
@@ -18,10 +18,15 @@ public static class ChatEvents
     }
 
     public static event ChatUsersChangeHandler? ChatUsersChange;
-
     public static void OnChatUsersChange(ChatUsersChangeEventArgs e)
     {
         ChatUsersChange?.Invoke(e);
+    }
+
+    public static event ChatWindowClosedHandler? ChatWindowClosed;
+    public static void OnChatWindowClosed()
+    {
+        ChatWindowClosed?.Invoke();
     }
 }
 

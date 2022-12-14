@@ -75,9 +75,11 @@ namespace Chat.UI.RoomSelection
             {
                 var chat = new ChatForm(_client);
                 chat.Show();
-                    
+
                 Hide();
             };
+
+            ChatEvents.ChatWindowClosed += Show;
         }
         private void UpdateRooms(RoomsTableChangeEventArgs e)
         {

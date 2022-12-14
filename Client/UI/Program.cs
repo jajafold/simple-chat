@@ -38,6 +38,9 @@ namespace Chat.UI
                 case IncorrectPasswordException:
                     RoomJoining.OnIncorrectPasswordEntered();
                     break;
+                default:
+                    MessageBox.Show(e.Exception.ToString());
+                    break;
             }
             
             //MessageBox.Show($"In Program.cs :{e.Exception.Message}");

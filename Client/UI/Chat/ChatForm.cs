@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using Chat.Domain;
 using Infrastructure;
@@ -25,7 +26,7 @@ namespace Chat.UI.Chat
             
             chatWindow.TextChanged += ChatWindowChangedHandler;
             chatWindow.Disposed += ChatWindowClosedHandler;
-            ClientConnection.NetworkStatusChange += args => BeginInvoke(ChangeNetworkStatus, args);
+            ClientConnection.NetworkStatusChange += UpdateNetworkStatusUI;
 
             ChatEvents.ChatMessagesChange += args =>
             {
@@ -89,7 +90,14 @@ namespace Chat.UI.Chat
         private void ChatWindowClosedHandler(object sender, EventArgs e)
         {
             _client.Leave();
+            ClientConnection.NetworkStatusChange -= UpdateNetworkStatusUI;
             Environment.Exit(0);
+            // ChatEvents.OnChatWindowClosed();
+        }
+
+        private void UpdateNetworkStatusUI(ClientConnectionEventArgs e)
+        {
+            BeginInvoke(ChangeNetworkStatus, e);
         }
 
         private void ChangeNetworkStatus(ClientConnectionEventArgs e)
