@@ -15,6 +15,11 @@ public class ChatRepository : IChatRepository
 
     public IEnumerable<ChatRoom> AllChatRooms => ChatContext.ChatRooms.ToArray();
     public IEnumerable<Message> AllMessages => ChatContext.TextMessages.ToArray();
+    public IEnumerable<Message> GetMessagesWith(Guid chatRoomId, long timestamp)
+    {
+        return AllMessages.Where(x => x.ChatRoom == chatRoomId)
+            .Where(x => x.TimeStamp > timestamp);
+    }
 
     public ChatDbContext ChatContext { get; }
 

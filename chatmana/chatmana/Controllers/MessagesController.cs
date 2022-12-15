@@ -34,9 +34,7 @@ public class MessagesController : Controller
             throw new InvalidOperationException($"chat {chatRoomId} is not exist");
 
         var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
-        var result = _serializer.Serialize(_repository.AllMessages
-            .Where(x => x.ChatRoom == chatRoomId)
-            .Where(x => x.TimeStamp > timestamp)
+        var result = _serializer.Serialize(_repository.GetMessagesWith(chatRoomId, timestamp)
             .ToMessagesViewModel(), Formatting.Indented, settings);
         return new JsonResult(result);
     }
