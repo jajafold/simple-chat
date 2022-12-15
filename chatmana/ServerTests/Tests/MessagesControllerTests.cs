@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace ServerTests;
 
 [TestFixture(typeof(ChatTestFixture))]
-public class MessagesControllerTests<T> : ControllerTests<T> where T : IDbFixture, new()
+public class MessagesDbTests<T> : DbTests<T> where T : IDbFixture, new()
 {
     private MessagesController _controller;
     
@@ -23,7 +23,7 @@ public class MessagesControllerTests<T> : ControllerTests<T> where T : IDbFixtur
     {
         var repository = GetRepository();
         var (text, name) = ("buba", "Vasya");
-        var chatId = repository.ChatRooms.First().Id;
+        var chatId = repository.AllChatRooms.First().Id;
         _controller.Text(text, name, chatId);
         Assert.That(repository.AllMessages.Any(x => x.Name == name && x.Text == text), Is.True);
     }
@@ -45,6 +45,6 @@ public class MessagesControllerTests<T> : ControllerTests<T> where T : IDbFixtur
         var db = GetRepository();
         var (text, name) = ("buba", "Vasyanich");
         Assert.Throws<InvalidOperationException>
-            (()=> _controller.Text(text, name, db.ChatRooms.First().Id));
+            (()=> _controller.Text(text, name, db.AllChatRooms.First().Id));
     }
 }

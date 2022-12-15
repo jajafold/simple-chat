@@ -25,7 +25,7 @@ public class HomeController : Controller
         var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
 
         var result = _serializer.Serialize
-            (_repository.ChatRooms.ToHubsViewModel(), Formatting.Indented, settings);
+            (_repository.AllChatRooms.ToHubsViewModel(), Formatting.Indented, settings);
         return new JsonResult(result);
     }
 

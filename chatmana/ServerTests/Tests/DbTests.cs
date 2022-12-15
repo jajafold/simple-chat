@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace ServerTests;
 
 [TestFixture(typeof(ChatTestFixture))]
-public abstract class ControllerTests<TDbFixture> where TDbFixture : IDbFixture, new()
+public abstract class DbTests<TDbFixture> where TDbFixture : IDbFixture, new()
 {
     protected IDeserializer _deserializer;
     protected TDbFixture _dbFixture;

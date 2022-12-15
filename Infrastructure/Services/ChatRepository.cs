@@ -8,18 +8,16 @@ namespace Infrastructure.Services;
 
 public class ChatRepository : IChatRepository
 {
-    //Расширяемо при добавлении других типов сообщений
-    public IEnumerable<Message> AllMessages { get; }
-    public IEnumerable<ChatRoom> ChatRooms { get; }
-    public ChatDbContext ChatContext { get; }
-
     public ChatRepository(ChatDbContext dbContext)
     {
         ChatContext = dbContext;
-        AllMessages = ChatContext.TextMessages;
-        ChatRooms = ChatContext.ChatRooms;
     }
-    
+
+    public IEnumerable<ChatRoom> AllChatRooms => ChatContext.ChatRooms.ToArray();
+    public IEnumerable<Message> AllMessages => ChatContext.TextMessages.ToArray();
+
+    public ChatDbContext ChatContext { get; }
+
     public Guid AddRoom(string creator, string name, string? password, int capacity)
     {
         var id = Guid.NewGuid();
@@ -50,7 +48,7 @@ public class ChatRepository : IChatRepository
 
     public bool ContainsRoom(Guid chatRoomId)
     {
-        return ChatRooms.Any(x => x.Id == chatRoomId);
+        return ChatContext.ChatRooms.Any(x => x.Id == chatRoomId);
     }
 
     public void PostTextMessage<T>(T message) where T : TextMessage

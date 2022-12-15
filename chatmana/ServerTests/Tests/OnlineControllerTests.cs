@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace ServerTests;
 
 [TestFixture(typeof(ChatTestFixture))]
-public class OnlineControllerTests<T> : ControllerTests<T> where T : IDbFixture, new()
+public class OnlineDbTests<T> : DbTests<T> where T : IDbFixture, new()
 {
     private OnlineController _controller;
     
@@ -30,8 +30,8 @@ public class OnlineControllerTests<T> : ControllerTests<T> where T : IDbFixture,
     public void NotSameResultsOnNotSameRooms()
     {
         var repository = GetRepository();
-        var roomOne = repository.ChatRooms.First().Id;
-        var roomTwo = repository.ChatRooms.Last().Id;
+        var roomOne = repository.AllChatRooms.First().Id;
+        var roomTwo = repository.AllChatRooms.Last().Id;
         var mainChatResult = _controller.GetUsersOnline(roomOne).Value;
         var otherChatResult = _controller.GetUsersOnline(roomTwo).Value;
         Assert.AreNotEqual(mainChatResult, otherChatResult);
@@ -41,7 +41,7 @@ public class OnlineControllerTests<T> : ControllerTests<T> where T : IDbFixture,
     public void CorrectContentAfterDeserialization()
     {
         var repository = GetRepository();
-        var room = repository.ChatRooms.First().Id;
+        var room = repository.AllChatRooms.First().Id;
         var mainChatResult = _deserializer
             .Deserialize<List<string>>(_controller.GetUsersOnline(room).Value!.ToString()!);
         CollectionAssert.AreEqual(repository.GetRoomById(room).Users, mainChatResult);

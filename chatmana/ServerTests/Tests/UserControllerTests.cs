@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace ServerTests;
 
 [TestFixture(typeof(ChatTestFixture))]
-public class UserControllerTests<T> : ControllerTests<T> where T : IDbFixture, new()
+public class UserDbTests<T> : DbTests<T> where T : IDbFixture, new()
 {
     private UserController _controller;
     
@@ -22,7 +22,7 @@ public class UserControllerTests<T> : ControllerTests<T> where T : IDbFixture, n
     public void JoinUserIsAdded()
     {
         var repository = GetRepository();
-        var room = repository.ChatRooms.First().Id;
+        var room = repository.AllChatRooms.First().Id;
         var name = "Petrovich";
         _controller.Validate(room, name, null);
         Assert.Contains(name, repository.GetRoomById(room).Users);
@@ -33,7 +33,7 @@ public class UserControllerTests<T> : ControllerTests<T> where T : IDbFixture, n
     {
         var repository = GetRepository();
         var name = "Bitch";
-        var room = repository.ChatRooms.First().Id;
+        var room = repository.AllChatRooms.First().Id;
         var result = _deserializer
             .Deserialize<ConfirmationModel>(_controller.Join(room, name).Value.ToString());
         Assert.AreEqual(room, result.RoomId);
@@ -44,7 +44,7 @@ public class UserControllerTests<T> : ControllerTests<T> where T : IDbFixture, n
     public void JoinResponseModelsAreNotEqual()
     {
         var repository = GetRepository();
-        var room = repository.ChatRooms.First().Id;
+        var room = repository.AllChatRooms.First().Id;
         var nameOne = "Klava";
         var nameTwo = "Koka";
         var resultMain = _deserializer
@@ -60,7 +60,7 @@ public class UserControllerTests<T> : ControllerTests<T> where T : IDbFixture, n
     {
         var repository = GetRepository();
         var name = "Dima";
-        Assert.Throws<InvalidOperationException>(() => _controller.Join(repository.ChatRooms.First().Id, name));
+        Assert.Throws<InvalidOperationException>(() => _controller.Join(repository.AllChatRooms.First().Id, name));
     }
 
     //TODO : self-made exceptions
@@ -76,7 +76,7 @@ public class UserControllerTests<T> : ControllerTests<T> where T : IDbFixture, n
     {
         var repository = GetRepository();
         var name = "Dima";
-        var room = repository.ChatRooms.First().Id;
+        var room = repository.AllChatRooms.First().Id;
         _controller.Leave(room, name);
         Assert.That(repository.GetRoomById(room).Users, Has.No.Member(name));
     }
