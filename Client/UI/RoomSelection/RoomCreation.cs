@@ -27,8 +27,9 @@ namespace Chat.UI.RoomSelection
             {
                 var password = _cbIsPasswordSet.Checked ? _tbPassword.Text : null;
                 var roomId = await _creator.CreateRoom(_tbRoomName.Text, password, (int)_nudRoomCapacity.Value);
-
-                _creator.Validate(roomId, password);
+                if (!roomId.HasValue) return;
+                
+                _creator.Validate(roomId.Value, password);
                 Close();
             };
         }

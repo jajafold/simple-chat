@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -34,8 +35,31 @@ public class NetworkClient
         _login = login;
         _lastUpdated = DateTime.Now.Ticks;
     }
-    
-    public async Task<ConfirmationModel> TryJoin(Guid chatRoomId)
+
+    public async Task<int> Ping()
+    {
+        var response = default(int);
+        var executor = new Executor();
+        var uri = new UriBuilder()
+            .AddHost(_host)
+            .AddFragment("Home")
+            .AddFragment("Ping")
+            .AddQuery("timeRepresentation", DateTime.Now.ToString(CultureInfo.InvariantCulture))
+            .ToString();
+
+        var result = await executor.Execute(
+            async () => await _httpClient.GetFromJsonAsync<string>(uri));
+
+        if (!executor.FinishedSuccessfully)
+        {
+            throw new ConnectionException($"Connection lost [{nameof(Ping)}]", executor.Exception);
+        }
+        
+        response = JsonConvert.DeserializeObject<int>(result);
+        return response;
+    }
+
+    public async Task<ConfirmationModel?> TryJoin(Guid chatRoomId)
     {
         var executor = new Executor();
         var uri = new UriBuilder()
@@ -50,9 +74,7 @@ public class NetworkClient
             async () => await _httpClient.GetFromJsonAsync<string>(uri));
 
         if (!executor.FinishedSuccessfully)
-        {
-            throw new JoinChatRoomException("The connection was not established");
-        }
+            return null;
             
         var response = JsonConvert.DeserializeObject<ConfirmationModel>(result);
         if (!response.NeedsConfirmation)
@@ -63,7 +85,7 @@ public class NetworkClient
         return response;
     }
 
-    public async Task<ConfirmationResult> ValidatePassword(Guid chatRoomId, string? password)
+    public async Task<ConfirmationResult?> ValidatePassword(Guid chatRoomId, string? password)
     {
         var executor = new Executor();
         var uri = new UriBuilder()
@@ -79,9 +101,7 @@ public class NetworkClient
             async () => await _httpClient.GetFromJsonAsync<string>(uri));
 
         if (!executor.FinishedSuccessfully)
-        {
-            throw new JoinChatRoomException("The connection was not established");
-        }
+            return null;
 
         var validation = JsonConvert.DeserializeObject<ConfirmationResult>(result);
         if (validation.Success) CurrentRoom = chatRoomId;
@@ -104,17 +124,12 @@ public class NetworkClient
         
         var response = await executor.Execute(
             async () => await _httpClient.PostAsync(uri, new StringContent("")));
-        
-        if (!executor.FinishedSuccessfully)
-        {
-            throw new SendMessageException("Connection lost");
-        }
     }
     
-    public async Task<MessageViewModel<IMessage>[]> GetNewMessages()
+    public async Task<MessageViewModel<IMessage>[]?> GetNewMessages()
     {
         var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
-        var executor = new Retry.Executor();
+        var executor = new Executor();
         
         var uri = new UriBuilder()
             .AddHost(_host)
@@ -129,13 +144,8 @@ public class NetworkClient
             async () => await _httpClient.GetFromJsonAsync<string>(uri));
 
         if (!executor.FinishedSuccessfully)
-        {
-            if (executor.Exception is ConnectionException)
-                throw new ConnectionException("Connection lost");
-            
-            throw new Exception(
-                $"Unhandled exception inside the {nameof(GetNewMessages)} executor: {executor.Exception}");
-        }
+            return null;
+        
         
         var response = JsonConvert.DeserializeObject<MessagesViewModel>(serialized!, settings);
         if (response.Messages.Length == 0) return Array.Empty<MessageViewModel<IMessage>>();
@@ -144,7 +154,7 @@ public class NetworkClient
         return response.Messages;
     }
     
-    public async Task<string[]> UpdateOnlineUsers()
+    public async Task<string[]?> UpdateOnlineUsers()
     {
         var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
         var executor = new Retry.Executor();
@@ -160,19 +170,13 @@ public class NetworkClient
             async () => await _httpClient.GetFromJsonAsync<string>(uri));
 
         if (!executor.FinishedSuccessfully)
-        {
-            if (executor.Exception is ConnectionException)
-                throw new ConnectionException("Connection lost");
-
-            throw new Exception(
-                $"Unhandled exception inside the {nameof(UpdateOnlineUsers)} executor: {executor.Exception}");
-        }
+            return null;
         
         var users = JsonConvert.DeserializeObject<IEnumerable<string>>(serialized!, settings);
         return users.ToArray();
     }
 
-    public async Task<RoomViewModel[]> UpdateRooms()
+    public async Task<RoomViewModel[]?> UpdateRooms()
     {
         var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
         var executor = new Retry.Executor();
@@ -181,26 +185,20 @@ public class NetworkClient
             .AddFragment("Home")
             .AddFragment("Index")
             .ToString();
-
-        var serialized = await executor.Execute(
-            async () => await _httpClient.GetFromJsonAsync<string>(uri));
         
-        if (!executor.FinishedSuccessfully)
-        {
-            if (executor.Exception is ConnectionException)
-                throw new ConnectionException("Connection lost");
+        var serialized = await executor.Execute(
+            () => _httpClient.GetFromJsonAsync<string>(uri));
 
-            throw new Exception(
-                $"Unhandled exception inside the {nameof(UpdateRooms)} executor: {executor.Exception}");
-        }
+        if (!executor.FinishedSuccessfully)
+            return null;
 
         var rooms = JsonConvert.DeserializeObject<RoomsViewModel>(serialized, settings);
         return rooms.ChatRooms;
     }
 
-    public async Task<Guid> CreateRoom(string roomName, string? password, int capacity)
+    public async Task<Guid?> CreateRoom(string roomName, string? password, int capacity)
     {
-        var executor = new Retry.Executor();
+        var executor = new Executor();
         var uri = new UriBuilder()
             .AddHost(_host)
             .AddFragment("Home")
@@ -215,12 +213,7 @@ public class NetworkClient
             async () => await _httpClient.GetFromJsonAsync<string>(uri));
 
         if (!executor.FinishedSuccessfully)
-        {
-            if (executor.Exception is ConnectionException)
-                throw new ConnectionException("Connection lost");
-            throw new Exception(
-                $"Unhandled exception inside the {nameof(CreateRoom)} executor: {executor.Exception}");
-        }
+            return null;
 
         var createdRoomId = JsonConvert.DeserializeObject<Guid>(serialized);
         CurrentRoom = createdRoomId;
@@ -242,8 +235,5 @@ public class NetworkClient
         
         var response = await executor.Execute(
             async () => await _httpClient.PostAsync(uri, new StringContent("")));
-        
-        if (!executor.FinishedSuccessfully)
-            throw new ConnectionException("Connection lost");
     }
 }

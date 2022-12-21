@@ -46,7 +46,7 @@ static void AddChatData(WebApplication app)
     
     chatRepository.ChatContext.Database.EnsureCreated();
     if (chatRepository.ChatRooms.Any()) return;
-    chatRepository.AddRoom("Server1", "Main1", null, 0);
+    chatRepository.AddRoom("Server1", "Main1", null, 1);
     chatRepository.AddRoom("Server2", "Main2", null, 0);
     chatRepository.AddRoom("Server3", "Main3", null, 0);
     chatRepository.AddRoom("Server4", "Main4", null, 0);

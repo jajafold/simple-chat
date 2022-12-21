@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Worker;
 
@@ -31,10 +32,17 @@ public class CancelableWorker
 
     private void DoWork()
     {
-        while (!_cancellationToken)
+        try
         {
-            Thread.Sleep(_delay);
-            _work.Invoke();
+            while (!_cancellationToken) { 
+                Thread.Sleep(_delay);
+                _work.Invoke();
+            }
+        }
+        catch (Exception e)
+        {
+            _cancellationToken = true;
+            throw;
         }
     }
 }

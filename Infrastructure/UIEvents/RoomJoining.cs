@@ -27,6 +27,13 @@ public static class RoomJoining
     {
         IncorrectPasswordEntered?.Invoke();
     }
+
+    public delegate void TryJoinFullRoomHandler();
+    public static event TryJoinFullRoomHandler? TryJoinFullRoom;
+    public static void OnTryJoinFullRoom()
+    {
+        TryJoinFullRoom?.Invoke();
+    }
 }
 
 public class UserJoinedRoomEventArgs : EventArgs { }

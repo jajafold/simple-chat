@@ -19,24 +19,16 @@ namespace Chat.UI.Chat
         public ChatForm(Client client)
         {
             InitializeComponent();
-            //MessageBox.Show($"{client.Name}, {client.CurrentRoom}");
             _client = client;
             _chatWriter = new GlobalChatWriter(new Chat(chatWindow));
             _userUpdater = new Updater<string>(new OnlineUsers(ActiveUsers));
             
             chatWindow.TextChanged += ChatWindowChangedHandler;
             chatWindow.Disposed += ChatWindowClosedHandler;
+            
             ClientConnection.NetworkStatusChange += UpdateNetworkStatusUI;
-
-            ChatEvents.ChatMessagesChange += args =>
-            {
-                BeginInvoke(UpdateMessages, args);
-            };
-
-            ChatEvents.ChatUsersChange += args =>
-            {
-                BeginInvoke(UpdateUsers, args);
-            };
+            ChatEvents.ChatMessagesChange += UpdateMessages;
+            ChatEvents.ChatUsersChange += UpdateUsers;
 
             networkStatus.ForeColor = Color.Gold;
             networkStatus.Text = @"Подключение...";
@@ -52,26 +44,6 @@ namespace Chat.UI.Chat
         {
             _userUpdater.Update(args.Users);
         }
-
-        // private void OnConnectionException()
-        // {
-        //     TopMost = false;
-        //     if (MessageBox.Show(
-        //             "Возникли проблемы с соединением. Проверьте свое подключение к интернету и попробуйте еще раз",
-        //             "Ошибка соединения",
-        //             MessageBoxButtons.RetryCancel,
-        //             MessageBoxIcon.Error,
-        //             MessageBoxDefaultButton.Button1,
-        //             MessageBoxOptions.DefaultDesktopOnly
-        //         ) == DialogResult.Retry)
-        //     {
-        //         if (_client.CurrentRoom != null) 
-        //             _client.Join(_client.CurrentRoom.Value, null);
-        //         TopMost = true;
-        //     }
-        //     else
-        //         Environment.Exit(0);
-        // }
 
         private void SendButton_Click(object sender, EventArgs e)
         {
@@ -89,16 +61,18 @@ namespace Chat.UI.Chat
 
         private void ChatWindowClosedHandler(object sender, EventArgs e)
         {
-            _client.Leave();
             ClientConnection.NetworkStatusChange -= UpdateNetworkStatusUI;
-            Environment.Exit(0);
-            // ChatEvents.OnChatWindowClosed();
+            ChatEvents.ChatMessagesChange -= UpdateMessages;
+            ChatEvents.ChatUsersChange -= UpdateUsers;
+            _client.Leave();
+            
+            //Environment.Exit(0);
+            ChatEvents.OnChatWindowClosed();
         }
 
-        private void UpdateNetworkStatusUI(ClientConnectionEventArgs e)
-        {
-            BeginInvoke(ChangeNetworkStatus, e);
-        }
+        private void UpdateNetworkStatusUI(ClientConnectionEventArgs e) => BeginInvoke(ChangeNetworkStatus, e);
+        private void UpdateMessagesUI(ChatMessagesChangeEventArgs e) => BeginInvoke(UpdateMessages);
+        private void UpdateUsersUI(ChatUsersChangeEventArgs e) => BeginInvoke(UpdateUsers);
 
         private void ChangeNetworkStatus(ClientConnectionEventArgs e)
         {
@@ -107,7 +81,7 @@ namespace Chat.UI.Chat
             {
                 case ClientConnectionState.Alive:
                     networkStatus.ForeColor = Color.Green;
-                    networkStatus.Text = @"Подключен";
+                    networkStatus.Text = $@"Подключен [{e.Ping} ms]";
                     break;
                 case ClientConnectionState.Connecting:
                     networkStatus.ForeColor = Color.Gold;
