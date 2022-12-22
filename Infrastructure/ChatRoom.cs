@@ -32,4 +32,5 @@ public class ChatRoom
     [Key] public Guid Id { get; set; }
     public List<string> Users { get; set; }
     public int UsersCount => Users.Count;
+    public bool CanFit =>  MaxUsers == 0 || UsersCount < MaxUsers;
 }

@@ -14,7 +14,7 @@ public class Retry
         public async Task<TResult?> Execute<TResult>(
             Func<Task<TResult?>> func,
             int msInterval = 50,
-            int retryCount = 5
+            int retryCount = 3
         )
         {
             TResult? result = default;
@@ -25,9 +25,7 @@ public class Retry
                 try
                 {
                     result = await func.Invoke();
-
-                    ClientConnection.OnNetworkStatusChange(new ClientConnectionEventArgs
-                        {State = ClientConnectionState.Alive});
+                    
                     FinishedSuccessfully = true;
 
                     return result;
@@ -35,15 +33,10 @@ public class Retry
                 catch (Exception exception)
                 {
                     Exception = exception;
-                    ClientConnection.OnNetworkStatusChange(new ClientConnectionEventArgs
-                        {State = ClientConnectionState.Connecting});
                 }
 
                 Thread.Sleep(msInterval);
             }
-
-            ClientConnection.OnNetworkStatusChange(new ClientConnectionEventArgs
-                {State = ClientConnectionState.Disconnected});
             FinishedSuccessfully = false;
 
             return result;

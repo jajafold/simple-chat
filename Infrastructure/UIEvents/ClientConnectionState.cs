@@ -24,4 +24,5 @@ public static class ClientConnection
 public class ClientConnectionEventArgs : EventArgs
 {
     public ClientConnectionState State;
+    public int Ping;
 }

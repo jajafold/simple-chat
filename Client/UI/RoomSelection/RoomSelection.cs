@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Chat.Domain;
 using Chat.UI.Chat;
+using Infrastructure;
 using Infrastructure.Models;
 using Infrastructure.Updater;
 using Infrastructure.Exceptions;
@@ -74,10 +75,19 @@ namespace Chat.UI.RoomSelection
             RoomJoining.UserJoinedRoom += args =>
             {
                 var chat = new ChatForm(_client);
-                chat.Show();
-                    
+                chat.Show(this);
+
                 Hide();
             };
+
+            RoomJoining.TryJoinFullRoom += () =>
+            {
+                MessageBox.Show("Комната заполнена.");
+            };
+
+            Shutdown.ClientShutdown += () => BeginInvoke(_client.Shutdown);
+
+            ChatEvents.ChatWindowClosed += Show;
         }
         private void UpdateRooms(RoomsTableChangeEventArgs e)
         {
