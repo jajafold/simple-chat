@@ -75,4 +75,9 @@ public class ChatRepository : IChatRepository
         ChatContext.Database.EnsureDeleted();
         ChatContext.Database.EnsureCreated();
     }
+
+    public void Create()
+    {
+        ChatContext.Database.EnsureCreated();
+    }
 }

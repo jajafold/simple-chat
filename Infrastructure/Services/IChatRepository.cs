@@ -17,4 +17,5 @@ public interface IChatRepository
     public IEnumerable<ChatRoom> AllChatRooms { get; }
     public IEnumerable<Message> AllMessages { get; }
     public IEnumerable<Message> GetMessagesWith(Guid chatRoomId, long timestamp);
+    public void Create();
 }

@@ -33,7 +33,7 @@ public class HomeController : Controller
     [HttpGet]
     public JsonResult CreateRoom(string creatorName, string roomName, string password, int capacity)
     {
-        var similarRooms = _repository.ChatRooms.Where(room => room.Name == roomName).ToList();
+        var similarRooms = _repository.AllChatRooms.Where(room => room.Name == roomName).ToList();
         var createdRoomId = _repository.AddRoom(
             creatorName, 
             similarRooms.Count == 0 ? $"{roomName}" : $"{roomName}({similarRooms.Count}) ", 

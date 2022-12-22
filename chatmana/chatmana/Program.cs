@@ -44,8 +44,8 @@ static void AddChatData(WebApplication app)
     var scope = app.Services.CreateScope();
     var chatRepository = scope.ServiceProvider.GetService<IChatRepository>();
     
-    chatRepository.ChatContext.Database.EnsureCreated();
-    if (chatRepository.ChatRooms.Any()) return;
+    chatRepository.Create();
+    if (chatRepository.AllChatRooms.Any()) return;
     chatRepository.AddRoom("Server1", "Main1", null, 1);
     chatRepository.AddRoom("Server2", "Main2", null, 0);
     chatRepository.AddRoom("Server3", "Main3", null, 0);
